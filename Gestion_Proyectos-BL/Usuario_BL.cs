@@ -42,10 +42,15 @@ namespace Gestion_Proyectos_BL
             return res;
         }
         
-        public void IniciarSesion(Usuario_BE usuario)
+        public void IniciarSesion(Usuario_BE usuario, IEnumerable<string> permisosLectura, IEnumerable<string> permisosEscritura)
         {
             HttpContext.Current.Session["usuario"] = usuario;
-            HttpContext.Current.Session.Timeout = 20;
+            HttpContext.Current.Session["permisosLectura"] = permisosLectura;
+            HttpContext.Current.Session["permisosEscritura"] = permisosEscritura;
+            HttpContext.Current.Session["filtrosGerencia"] = new List<int>();
+            HttpContext.Current.Session["filtrosMember"] = new List<int>();
+            HttpContext.Current.Session["filtrosEstado"] = new List<string>();
+            HttpContext.Current.Session.Timeout = 480;
         }
         public void CerrarSesion()
         {
