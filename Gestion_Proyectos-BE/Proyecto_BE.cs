@@ -32,9 +32,10 @@ namespace Gestion_Proyectos_BE
         public List<int> ListaDesarrolladores { get; set; }
         public List<string> AliasCoordinadores { get; set; }
         public List<string> AliasDesarrolladores { get; set; }
-        //public List<Usuario> listaMemberes;
+        
+        public List<Usuario_BE> ListaMemberes { get; set; }
 
-        //public IEnumerable<Tarea> tareas;
+        public IEnumerable<Tarea_BE> Tareas { get; set; }
 
         public string getColorAvance()
         {
