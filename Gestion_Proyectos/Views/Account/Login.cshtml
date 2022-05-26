@@ -29,7 +29,7 @@
 
                 @if (!string.IsNullOrEmpty(ViewBag.mensaje))
                 {
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger" id="success-alert" role="alert">
                         @ViewBag.mensaje
                     </div>
                 }
@@ -39,7 +39,7 @@
                     <input name="token" hidden value="" id="txtToken" />
 
                     <div class="input-group mb-3">
-                        <input required type="email" class="form-control" placeholder="Correo electrónico ADEX" name="correo">
+                        <input  type="email" class="form-control" placeholder="Correo electrónico ADEX" name="correo" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input required type="password" class="form-control" placeholder="Clave" name="clave">
+                        <input type="password" class="form-control" placeholder="Clave" name="clave" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -74,7 +74,7 @@
     <!-- Bootstrap 4 -->
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="~/dist/js/adminlte.min.js"></script>
+    <script src="~/dist/js/adminlte"></script>
 
     <script src="https://www.google.com/recaptcha/api.js?render=6LdxtNEcAAAAAFs56glWJN50iQNMz7qQKmLWzbwF"></script>
 
@@ -89,6 +89,10 @@
                     });
                 });
             });
+            $("#success-alert").fadeTo(4000, 500).slideUp(500, function () {
+                $("#success-alert").slideUp(500);
+            });
+
         });
 
     </script>
