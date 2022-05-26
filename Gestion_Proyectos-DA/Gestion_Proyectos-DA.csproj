@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Conexion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuario_DA.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gestion_Proyectos-BE\Gestion_Proyectos-BE.csproj">

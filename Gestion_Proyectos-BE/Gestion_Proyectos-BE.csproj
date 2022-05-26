@@ -41,15 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Area.cs" />
-    <Compile Include="Encuesta.cs" />
-    <Compile Include="Gerencia.cs" />
-    <Compile Include="Permiso.cs" />
+    <Compile Include="Area_BE.cs" />
+    <Compile Include="Encuesta_BE.cs" />
+    <Compile Include="Gerencia_BE.cs" />
+    <Compile Include="Permiso_BE.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Proyecto.cs" />
-    <Compile Include="Rol.cs" />
-    <Compile Include="Tarea.cs" />
-    <Compile Include="Usuario.cs" />
+    <Compile Include="Proyecto_BE.cs" />
+    <Compile Include="Rol_BE.cs" />
+    <Compile Include="Tarea_BE.cs" />
+    <Compile Include="Usuario_BE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
