@@ -82,6 +82,18 @@ namespace Gestion_Proyectos_BL
             }
         }
 
+        public IEnumerable<Usuario_BE> GetMembers()
+        {
+            try
+            {
+                var members = _usuarioDA.ListarTeamMembers();
+                return members;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener team members ==> {ex.Message}");
+            }
+        }
 
         public int GetRol(int id)
         {
@@ -95,5 +107,7 @@ namespace Gestion_Proyectos_BL
                 throw new Exception($"Error al obtener rol ==> {ex.Message}");
             }
         }
+
+
     }
 }

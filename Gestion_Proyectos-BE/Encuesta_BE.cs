@@ -8,7 +8,7 @@ namespace Gestion_Proyectos_BE
 {
     public class Encuesta_BE
     {
-        public int IddEncuesta { get; set; }
+        public int IdEncuesta { get; set; }
         public int IdProyecto { get; set; }
         public DateTime FechaCreacion { get; set; }
         public int IdUsuarioSponsor { get; set; }

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gerencia_BL.cs" />
     <Compile Include="Proyecto_BL.cs" />
     <Compile Include="Usuario_BL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

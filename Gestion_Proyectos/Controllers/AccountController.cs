@@ -61,7 +61,7 @@ namespace Gestion_Proyectos.Controllers
                             }
                             else
                             {
-                                return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Index", "Proyecto");
                             }
                         }
                         else
