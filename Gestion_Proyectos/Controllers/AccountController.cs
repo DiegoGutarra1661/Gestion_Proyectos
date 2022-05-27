@@ -45,21 +45,31 @@ namespace Gestion_Proyectos.Controllers
             {
                 if (_usuarioBL.EstaEnAD(correo, clave))
                 {
-
-
                     var usuario = _usuarioBL.Login(correo);
                     if (usuario != null)
                     {
-                        _usuarioBL.IniciarSesion(usuario);
-                        if (!string.IsNullOrEmpty(rutaOrigen))
+                        var idRol = _usuarioBL.GetRol(usuario.IdUsuario);
+                        if (idRol != 0)
                         {
-                            return Redirect(rutaOrigen);
+
+                            var permisosLectura = _usuarioBL.GetPermisosLectura(usuario.IdUsuario, idRol);
+                            var permisosEscritura = _usuarioBL.GetPermisosEscritura(usuario.IdUsuario, idRol);
+                            _usuarioBL.IniciarSesion(usuario,permisosLectura,permisosEscritura);
+                            if (!string.IsNullOrEmpty(rutaOrigen))
+                            {
+                                return Redirect(rutaOrigen);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            ViewBag.mensaje = "Usted no tiene un rol asignado. Por favor comuníquese con el administrador";
+                            ViewBag.rutaOrigen = rutaOrigen;
+                            return View();
                         }
-
                     }
                     else
                     {

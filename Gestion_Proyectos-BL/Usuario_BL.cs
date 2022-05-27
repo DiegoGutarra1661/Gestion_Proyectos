@@ -56,5 +56,44 @@ namespace Gestion_Proyectos_BL
         {
             HttpContext.Current.Session.Abandon();
         }
+
+        public IEnumerable<string> GetPermisosLectura(int idUsuario, int idRol)
+        {
+            try
+            {
+                var permisos = _usuarioDA.ListarPermisosLectura(idUsuario,idRol);
+                return permisos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener permisos de lectura ==> {ex.Message}");
+            }
+        }
+        public IEnumerable<string> GetPermisosEscritura(int idUsuario, int idRol)
+        {
+            try
+            {
+                var permisos = _usuarioDA.ListarPermisosEscritura(idUsuario, idRol);
+                return permisos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener permisos de escritura ==> {ex.Message}");
+            }
+        }
+
+
+        public int GetRol(int id)
+        {
+            try
+            {
+                var rol = _usuarioDA.ValidarRol(id);
+                return rol;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener rol ==> {ex.Message}");
+            }
+        }
     }
 }
