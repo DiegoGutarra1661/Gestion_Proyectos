@@ -64,10 +64,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Area_DA.cs" />
     <Compile Include="Conexion.cs" />
+    <Compile Include="Encuesta_DA.cs" />
     <Compile Include="Gerencia_DA.cs" />
+    <Compile Include="Permiso_DA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Proyecto_DA.cs" />
+    <Compile Include="Rol_DA.cs" />
+    <Compile Include="Tarea_DA.cs" />
     <Compile Include="Usuario_DA.cs" />
   </ItemGroup>
   <ItemGroup>
