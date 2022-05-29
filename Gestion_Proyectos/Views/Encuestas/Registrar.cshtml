@@ -1,0 +1,144 @@
+﻿@using Gestion_Proyectos_BE
+@{
+    ViewBag.Title = "Registrar";
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>Encuesta de Proyecto ADEX</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <form action="" method="post" class="needs-validation" novalidate>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="form-group col-12 col-md-8">
+                                        <label class="col-form-label">
+                                            Se ha concluido el proyecto:
+                                        </label>
+                                        <input type="text" name="nombreProyecto" readonly class="form-control col-12"
+                                               value="@((ViewBag.proyecto as Proyecto).Nombre)">
+                                        <input type="hidden" name="IdProyecto" value="@((ViewBag.proyecto as Proyecto).IdProyecto)" />
+                                    </div>
+                                    <div class="form-group col-12 col-md-4">
+                                        <label class="col-form-label">
+                                            Fecha de conclusión:
+                                        </label>
+                                        <input type="date" readonly class="form-control col-12"
+                                               value="@((ViewBag.proyecto as Proyecto).FechaConcluido.ToString("yyyy-MM-dd"))">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <label class="col-form-label">
+                                            Por favor califique que tan satisfecho
+                                            esta con el proyecto desarrollado: <br />
+                                        </label>
+                                        <div class="col clasificacion">
+                                            <style>
+                                                input[type="radio"] {
+                                                    display: none;
+                                                }
+
+                                                label {
+                                                    color: grey;
+                                                    font-size: 1.5rem;
+                                                }
+
+                                                .clasificacion {
+                                                    direction: rtl;
+                                                    unicode-bidi: bidi-override;
+                                                }
+
+                                                .fa-star:hover,
+                                                label:hover ~ label {
+                                                    cursor: pointer;
+                                                    color: #0275d8;
+                                                }
+
+                                                input[type="radio"]:checked ~ label {
+                                                    color: #0275d8;
+                                                }
+                                            </style>
+                                            <input required id="radio1" type="radio" name="Satisfaccion" value="5">
+                                            <label for="radio1"><i class="fas fa-star"></i></label>
+                                            <input id="radio2" type="radio" name="Satisfaccion" value="4">
+                                            <label for="radio2"><i class="fas fa-star"></i></label>
+                                            <input id="radio3" type="radio" name="Satisfaccion" value="3">
+                                            <label for="radio3"><i class="fas fa-star"></i></label>
+                                            <input id="radio4" type="radio" name="Satisfaccion" value="2">
+                                            <label for="radio4"><i class="fas fa-star"></i></label>
+                                            <input id="radio5" type="radio" name="Satisfaccion" value="1">
+                                            <label for="radio5"><i class="fas fa-star"></i></label>
+                                            <div class="invalid-feedback">
+                                                ¡Por favor seleccione una valoración!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <label class="col-form-label">
+                                            Comentarios:
+                                        </label>
+                                        <textarea class="form-control" name="Comentario" id="comentarios" rows="3"></textarea>
+                                        <div class="invalid-feedback">
+                                            Este campo es obligatorio.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row text-center">
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">
+                                            Enviar
+                                            encuesta
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<script>
+         // Example starter JavaScript for disabling form submissions if there are invalid fields
+         (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+            });
+        }, false);
+        })();
+</script>

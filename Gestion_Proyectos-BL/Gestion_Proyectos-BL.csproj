@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Area_BL.cs" />
+    <Compile Include="Encuesta_BL.cs" />
     <Compile Include="Gerencia_BL.cs" />
     <Compile Include="Permiso_BL.cs" />
     <Compile Include="Proyecto_BL.cs" />

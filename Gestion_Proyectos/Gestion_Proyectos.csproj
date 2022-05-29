@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EncuestasController.cs" />
     <Compile Include="Controllers\ProyectosController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
@@ -2142,10 +2143,15 @@
     <Content Include="Views\Proyectos\Registrar.cshtml" />
     <Content Include="Views\Proyectos\Editar.cshtml" />
     <Content Include="Views\Proyectos\Asignar.cshtml" />
+    <Content Include="Views\Encuestas\Index.cshtml" />
+    <Content Include="Views\Encuestas\Registrar.cshtml" />
+    <Content Include="Views\Encuestas\Gracias.cshtml" />
+    <Content Include="Views\Encuestas\EncuestaExiste.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Encuesta\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

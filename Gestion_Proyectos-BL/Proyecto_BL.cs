@@ -49,14 +49,14 @@ namespace Gestion_Proyectos_BL
         {
             try
             {
-                var rol = _proyectoDA.BuscarProyecto(id);
+                var proyecto = _proyectoDA.BuscarProyecto(id);
 
-                if (rol == null)
+                if (proyecto == null)
                 {
                     throw new Exception("Error ==> No se encontro proyecto");
                 }
 
-                return rol;
+                return proyecto;
             }
             catch (Exception ex)
             {

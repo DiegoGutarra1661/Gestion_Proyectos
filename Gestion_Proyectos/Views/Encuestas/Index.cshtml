@@ -1,0 +1,169 @@
+﻿@model IEnumerable<Gestion_Proyectos_BE.Encuesta_BE>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <h3>Listado de Encuestas</h3>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <table id="tablaEncuestas" class="table table-sm table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 3%">ID</th>
+                                    <th style="width: 20%">Proyecto</th>
+                                    <th style="width: 20%">Sponsor</th>
+                                    <th style="width: 20%">Satisfacción</th>
+                                    <th style="width: 20%">Fecha Creacion</th>
+                                    <th style="width: 3%">Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.IdEncuesta</td>
+                                        <td>@item.NombreProyecto</td>
+                                        <td>@item.NombreSponsor</td>
+                                        <td>@item.GetSatisfaccion</td>
+                                        <td>@item.FechaCreacion</td>
+                                        <td class="text-center" style="cursor:pointer">
+                                            <i class="fas fa-info-circle" onclick="verDetalle('@item.IdEncuesta')"></i>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<div id="modalDetalle" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles de la Encuesta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label class="col-form-label">Proyecto</label>
+                        <input id="nombreProyecto" class="form-control" readonly value="" />
+                    </div>
+                    <div class="col-6">
+                        <label class="col-form-label">Sponsor</label>
+                        <input id="nombreSponsor" class="form-control" readonly value="" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <label class="col-form-label">Satisfacción</label>
+                        <input id="satisfaccion" class="form-control" readonly value="" />
+                    </div>
+                    <div class="col-6">
+                        <label class="col-form-label">Fecha Creación</label>
+                        <input id="fechaCreacion" class="form-control" readonly value="" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12">
+                        <label class="col-form-label">Comentarios</label>
+                        <textarea id="comentarios" class="form-control" readonly rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+        });
+
+        function verDetalle(idEncuesta) {
+            $.ajax({
+                url: '@Url.Action("DetalleEncuesta","Encuestas")?idEncuesta=' + idEncuesta,
+                success: function (respuesta) {
+                    setNombreProyecto(respuesta.NombreProyecto);
+                    setNombreSponsor(respuesta.NombreSponsor);
+                    setSatisfaccion(respuesta.GetSatisfaccion);
+                    setFechaCreacion(respuesta.FechaCreacion);
+                    setComentarios(respuesta.Comentario);
+                    console.log();
+                },
+                error: function (e) {
+                    console.log("No se ha podido obtener la información" + e);
+                }
+            });
+            $("#modalDetalle").modal('show');
+
+        }
+
+        function setNombreProyecto(nombreProyecto) {
+            $("#nombreProyecto").val(nombreProyecto);
+        }
+
+        function setNombreSponsor(nombreSponsor) {
+            $("#nombreSponsor").val(nombreSponsor);
+        }
+
+        function setSatisfaccion(satisfaccion) {
+            $("#satisfaccion").val(satisfaccion);
+        }
+
+        function setFechaCreacion(fechaCreacion) {
+            var fechaFormateada = parseJsonDate(fechaCreacion);
+            $("#fechaCreacion").val(fechaFormateada);
+        }
+
+        function setComentarios(comentarios) {
+            $("#comentarios").val(comentarios);
+        }
+
+        function parseJsonDate(fechaJson) {
+            var dateString = fechaJson.substr(6);
+            var currentTime = new Date(parseInt(dateString));
+            var month = currentTime.getMonth() + 1;
+            var day = currentTime.getDate();
+            var year = currentTime.getFullYear();
+            var date = day + "/" + month + "/" + year;
+            return date;
+        }
+    </script>
+}
