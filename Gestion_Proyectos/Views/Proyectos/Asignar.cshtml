@@ -1,0 +1,126 @@
+﻿@model Gestion_Proyectos_BE.Proyecto_BE
+@using Gestion_Proyectos_BE
+@{
+    ViewBag.Title = "Asignar Proyecto";
+    IEnumerable<Usuario_BE> teamMembers = (IEnumerable<Usuario_BE>)ViewBag.teamMembers;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>Asignar Proyecto</h2>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form action="@Url.Action("Asignar", "Proyectos")" method="post" class="needs-validation" novalidate>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <input type="hidden" name="idProyecto" value="@Model.IdProyecto" />
+
+                            <div class="row m-auto  col-md-10">
+                                <div class="form-group col-md-4">
+                                    <label for="">Team Member</label>
+
+                                    <select class="custom-select" name="" id="teamMember">
+                                        <option disabled value="">Seleccione</option>
+                                        @foreach (var item in teamMembers)
+                                        {
+                                            if (Model.AliasCoordinadores.Where(c => c == item.Alias).FirstOrDefault() == null &&
+                                                (Model.AliasDesarrolladores.Where(c => c == item.Alias).FirstOrDefault() == null))
+                                            {
+                                                <option value="@item.IdUsuario">@item.Alias</option>
+                                            }
+
+                                        }
+                                    </select>
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="">Cargo</label>
+                                    <select class="custom-select" name="" id="funcion">
+                                        <option disabled value="">Seleccione</option>
+                                        <option value="1">Coordinador</option>
+                                        <option value="2">Desarrollador</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-4 m-auto">
+                                    <label></label>
+                                    <button class="btn btn-primary col-md-12" id="agregarMiembro" type="button">Agregar Miembro</button>
+                                </div>
+
+                            </div>
+
+                            <div class="miembros row m-auto  col-md-10">
+                                <div class="form-group col-md-4">
+                                    <label>Coordinador(es)</label>
+                                    <ul id="coordinadores">
+                                        @foreach (var item in Model.AliasCoordinadores)
+                                        {
+                                            <li style="font-size:15px" class="d-flex justify-content-between">
+                                                <span>@item </span><button type="button" class="close" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </li>
+
+                                        }
+                                    </ul>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label>Desarrollador(es)</label>
+                                    <ul id="desarrolladores">
+                                        @foreach (var item in Model.AliasDesarrolladores)
+                                        {
+                                            <li style="font-size:15px" class="d-flex justify-content-between">
+                                                <span>@item </span><button type="button" class="close" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div id="lstQuitar">
+
+                            </div>
+
+                            <div class="row m-auto col-md-10 ">
+
+                                <div class="form-group col-md-6 m-auto">
+
+                                    <button class="btn btn-primary col-md-12" type="submit">Guardar Cambios</button>
+
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+@section Scripts {
+    
+}

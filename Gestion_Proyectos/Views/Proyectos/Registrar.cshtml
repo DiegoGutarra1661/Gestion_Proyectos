@@ -1,0 +1,276 @@
+﻿@model Gestion_Proyectos_BE.Proyecto_BE
+
+@{
+    ViewBag.Title = "Registrar";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>Registrar Proyecto</h2>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form action="@Url.Action("Registrar")" method="post" class="needs-validation" novalidate>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-12">
+
+                                    <label for="Nombre">Nombre</label>
+                                    <input required type="text" class="form-control" id="Nombre" name="Nombre" value="">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-12">
+
+                                    <label for="Descripcion">Descripción</label>
+
+                                    @Html.TextArea("Descripcion", "", new { @class = "form-control" })
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="EstadoProyecto">Estado Proyecto</label>
+                                    <select required class="custom-select" name="EstadoProyecto" id="EstadoProyecto">
+                                        <option selected disabled value="">Seleccione</option>
+                                        <option value="No iniciado">No iniciado</option>
+                                        <option value="En proceso">En proceso</option>
+                                        <option value="Concluido">Concluido</option>
+                                        <option value="Detenido">Detenido</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Seleccione un estado del proyecto
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="IdUsuarioSponsor">Sponsor</label>
+                                    @Html.DropDownList("IdUsuarioSponsor", (SelectList)ViewBag.sponsors, "Seleccione", new { @class = "custom-select" })
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="Prioridad">Prioridad</label>
+                                    <input required type="number" step="1" min="1" max="5" class="form-control" id="Prioridad" name="Prioridad" value="">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+
+                                    <label for="FecharRequerimiento">Fecha Requerimiento</label>
+                                    <input type="date" class="form-control" id="FecharRequerimiento" name="FecharRequerimiento" value="">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaInicioEstimada">Fecha Inicio Estimada</label>
+                                    <input type="date" class="form-control" id="FechaInicioEstimada" name="FechaInicioEstimada" value="">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaInicio">Fecha Inicio</label>
+                                    <input type="date" class="form-control" id="FechaInicio" name="FechaInicio" value="">
+
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaConcluidoEstimada">Fecha Conclusión Estimada</label>
+                                    <input type="date" class="form-control" id="FechaConcluidoEstimada" name="FechaConcluidoEstimada" value="">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaConcluido">Fecha Conclusión</label>
+                                    <input type="date" class="form-control" id="FechaConcluido" name="FechaConcluido" value="">
+                                </div>
+                            </div>
+
+
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="col-md-6 col-sm-6 col-6 p-2 ">
+                                    <input type="text" class="form-control" placeholder="Ingrese tarea" id="txtTarea" />
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-6 p-2 ">
+                                    <input type="number" class="form-control " placeholder="Ingrese Porcentaje" id="txtPorcentaje" />
+                                </div>
+
+                                <div class="col-md-2 col-sm-6 col-12 p-2">
+                                    <input type="button" id="btnAdd" class="btn btn-primary para" value="Agregar" />
+                                </div>
+                            </div>
+                            <div class="row m-auto  col-md-10 col-sm-10 col-10 p-2 ">
+
+                                <table id="tblData" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+
+                                            <th width="60%">Tarea</th>
+                                            <th>Porcentaje</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="row m-auto col-md-10 ">
+
+                                <div class="form-group col-md-6 m-auto">
+
+                                    <button class="btn btn-primary col-md-12" type="submit">Registrar Proyecto</button>
+
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+@section Scripts {
+   
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        var emptyRow = "<tr><td colspan='5' class='text-center'> No hay tareas agregadas</td></tr>";
+
+        $(document).ready(function () {
+            var contador = 0;
+
+            $("#tblData tbody").append(emptyRow); // adding empty row on page load
+
+            $("#btnAdd").click(function () {
+                var tarea = $("#txtTarea").val().trim();
+                var porcentaje = $("#txtPorcentaje").val().trim();
+
+
+                if (tarea != "" && porcentaje != "") { // validation
+
+                    if ($("#tblData tbody").children().children().length == 1) {
+                        $("#tblData tbody").html("");
+                    }
+                    var srNo = $("#tblData tbody").children().length + 1;
+                    // creating dynamic html string
+                    var nFilas = $("#tblData tr").length;
+                    var contador = nFilas - 1;
+
+                    var inputID = "<input hidden type='text' name='" + [contador] + ".idTarea' value=" + contador + "' />";
+                    var inputName = "<input hidden type='text' class='form - control' id='txtTarea_" + contador + "'" + "name='[" + contador + "].NombreTarea' placeholder='Nombre Tarea " + contador + "' value='" + tarea + "'>";
+                    var inputPorcentaje = "<input hidden type='number' class='form - control' id='txtPorcentaje_" + contador + "'" + "name='[" + contador + "].PorcentajeTarea' placeholder='Nombre Porcentaje " + contador + "' value='" + porcentaje + "'>";
+
+                    var dynamicTr = "<tr><td>" + inputName + " " + tarea + "</td><td>" + inputPorcentaje + "" + porcentaje + "</td><td> <button class='btnDelete btn btn-danger btn-sm' > <i class='fa-solid fa-trash-can'></i> </button> </td></tr>";
+
+                    $("#tblData tbody").append(dynamicTr); // appending dynamic string to table tbody
+                    $("#txtTarea").val("");
+                    $("#txtPorcentaje").val("");
+
+
+                    console.log('Agregando:' + contador);
+
+                    $(".btnDelete").click(function () { // registering function for delete button
+
+                        $(this).parent().parent().remove();
+
+                        console.log('Eliminando:' + contador);
+                        if ($("#tblData tbody").children().children().length == 0) {
+                            $("#tblData tbody").append(emptyRow);
+
+                        }
+
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ingrese una tarea'
+                    })
+                }
+            });
+
+        });
+    </script>
+}

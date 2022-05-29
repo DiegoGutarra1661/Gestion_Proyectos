@@ -2139,6 +2139,9 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Registrar.cshtml" />
     <Content Include="Views\Roles\Editar.cshtml" />
+    <Content Include="Views\Proyectos\Registrar.cshtml" />
+    <Content Include="Views\Proyectos\Editar.cshtml" />
+    <Content Include="Views\Proyectos\Asignar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

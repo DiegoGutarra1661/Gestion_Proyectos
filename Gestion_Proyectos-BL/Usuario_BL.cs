@@ -82,7 +82,7 @@ namespace Gestion_Proyectos_BL
             }
         }
 
-        public IEnumerable<Usuario_BE> GetMembers()
+        public IEnumerable<Usuario_BE> GetTeamMembers()
         {
             try
             {
@@ -92,6 +92,19 @@ namespace Gestion_Proyectos_BL
             catch (Exception ex)
             {
                 throw new Exception($"Error al obtener team members ==> {ex.Message}");
+            }
+        }
+
+        public IEnumerable<Usuario_BE> GetSponsors()
+        {
+            try
+            {
+                var sponsors = _usuarioDA.ListarSponsors();
+                return sponsors;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener sponsors ==> {ex.Message}");
             }
         }
 

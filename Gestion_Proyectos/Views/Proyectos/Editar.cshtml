@@ -1,0 +1,330 @@
+﻿@model Gestion_Proyectos_BE.Proyecto_BE
+@{
+    ViewBag.Title = "Actualizar Proyecto";
+    var tareas = (List<Gestion_Proyectos_BE.Tarea_BE>)ViewBag.tareas ?? new List<Gestion_Proyectos_BE.Tarea_BE>();
+    int contadorTareas = 0;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>Actualizar Proyecto</h2>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form action="@Url.Action("Editar")" method="post" class="needs-validation" novalidate>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="IdProyecto">ID Proyecto</label>
+                                    <input required readonly type="text" class="form-control" id="IdProyecto" name="IdProyecto" value="@Model.IdProyecto">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="Nombre">Nombre</label>
+                                    <input required type="text" class="form-control" id="Nombre" name="Nombre" value="@Model.Nombre">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-12">
+
+                                    <label for="Descripcion">Descripción</label>
+
+                                    @Html.TextArea("Descripcion", Model.Descripcion, new { @class = "form-control" })
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="EstadoProyecto">Estado Proyecto</label>
+                                    <select required class="custom-select" name="EstadoProyecto" id="EstadoProyecto">
+                                        <option disabled value="">Seleccione</option>
+                                        <option @(Model.EstadoProyecto == "No iniciado" ? "selected" : "") value="No iniciado">No iniciado</option>
+                                        <option @(Model.EstadoProyecto == "En proceso" ? "selected" : "") value="En proceso">En proceso</option>
+                                        <option @(Model.EstadoProyecto == "Concluido" ? "selected" : "") value="Concluido">Concluido</option>
+                                        <option @(Model.EstadoProyecto == "Detenido" ? "selected" : "") value="Detenido">Detenido</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Seleccione un estado del proyecto
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="Avance">Avance</label>
+                                    <input required type="number" step="0.5" min="0" max="100" class="form-control" id="Avance" name="Avance" value="@Model.Avance">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="IdUsuarioSponsor">Sponsor</label>
+                                    @Html.DropDownList("IdUsuarioSponsor", (SelectList)ViewBag.sponsors, new { @class = "custom-select" })
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="Prioridad">Prioridad</label>
+                                    <input required type="number" step="1" min="1" max="5" class="form-control" id="Prioridad" name="Prioridad" value="@Model.Prioridad">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="FecharRequerimiento">Fecha Requerimiento</label>
+                                    <input type="date" class="form-control" id="FecharRequerimiento" name="FecharRequerimiento" value="@Model.FecharRequerimiento.ToString("yyyy-MM-dd")">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaInicioEstimada">Fecha Inicio Estimada</label>
+                                    <input type="date" class="form-control" id="FechaInicioEstimada" name="FechaInicioEstimada" value="@Model.FechaInicioEstimada.ToString("yyyy-MM-dd")">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaInicio">Fecha Inicio</label>
+                                    <input type="date" class="form-control" id="FechaInicio" name="FechaInicio" value="@Model.FechaInicio.ToString("yyyy-MM-dd")">
+
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaConcluidoEstimada">Fecha Conclusión Estimada</label>
+                                    <input type="date" class="form-control" id="FechaConcluidoEstimada" name="FechaConcluidoEstimada" value="@Model.FechaConcluidoEstimada.ToString("yyyy-MM-dd")">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="FechaConcluido">Fecha Conclusión</label>
+                                    <input type="date" class="form-control" id="FechaConcluido" name="FechaConcluido" value="@Model.FechaConcluido.ToString("yyyy-MM-dd")">
+                                </div>
+                            </div>
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="Tareas">Tareas</label>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="col-md-4 col-sm-6 col-6 p-2 ">
+
+                                    <input type="text" class="form-control" placeholder="Ingrese tarea" id="txtTarea" name="name" />
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-6 p-2 ">
+                                    <input type="number"
+                                           class="form-control" placeholder="Ingrese Porcentaje" id="txtPorcentaje" name="porcentaje" />
+                                </div>
+                                <div class="col-md-3 col-sm-6 col-6 p-2 ">
+                                    <select class='custom-select' name='edit_estado' id="txtEstado">
+                                        <option value='-1' selected>Seleccione estado...</option>
+                                        <option value='1'>No Iniciado</option>
+                                        <option value='2'>En proceso</option>
+                                        <option value='3'>Concluido</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-md-2 col-sm-6 col-12 p-2">
+                                    <button type="button" class="btn btn-primary" id="agregarTareas">Agregar</button>
+                                </div>
+                            </div>
+                            <div id="tareas" class="py-2">
+
+                                @foreach (var tarea in tareas)
+                                {
+
+
+                                    <div class="inputsDelete row m-auto  col-md-10">
+
+                                        <div class="col-md-4 col-sm-6 col-6 p-2 ">
+                                            <input hidden type="text" class="idTarea form-control" id="txtIdTarea" name=@("["+contadorTareas+"].IdTarea") value="@tarea.IdTarea" />
+                                            <input type="text" class="form-control" id="txtTarea" name=@("["+contadorTareas+"].NombreTarea") value="@tarea.NombreTarea" />
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-6 p-2 ">
+                                            <input type="number"
+                                                   class="form-control" id="txtPorcentaje" step="1" name=@("["+contadorTareas+"].PorcentajeTarea") value="@string.Format("{0:0}",tarea.PorcentajeTarea)" />
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-6 p-2 ">
+                                            <select class='custom-select' name=@("["+contadorTareas+"].EstadoTarea") id="txtEstado">
+                                                <option value='-1'>Seleccione estado...</option>
+                                                <option value='1' @(tarea.EstadoTarea == 1 ? "selected" : "")>No Iniciado</option>
+                                                <option value='2' @(tarea.EstadoTarea == 2 ? "selected" : "")>En proceso</option>
+                                                <option value='3' @(tarea.EstadoTarea == 3 ? "selected" : "")>Concluido</option>
+                                                <option value='4' @(tarea.EstadoTarea == 4 ? "selected" : "")>Eliminado</option>
+                                            </select>
+                                        </div>
+                                        @*<div class="col-md-2 col-sm-6 col-12 p-2">
+                                                <a href="javascript:void(0)" type="button" class="btn btn-sm btn-danger eliminar" id="btn-eliminar" data-value="@tarea.IdTarea"><i class='fa-solid fa-trash'></i></a>
+                                            </div>*@
+                                    </div>
+                                    contadorTareas++;
+                                }
+
+                            </div>
+
+                            <div id="lstQuitar">
+
+                            </div>
+
+                            <div class="row m-auto col-md-10 ">
+
+                                <div class="form-group col-md-6 m-auto">
+
+                                    <button class="btn btn-primary col-md-12" type="submit">Guardar Cambios</button>
+
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+@section Scripts {
+
+    <script>
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+        $(document).ready(function () {
+            var contadorTareas = @contadorTareas;
+
+            $('#agregarTareas').click(function (e) {
+
+
+                var nombreTarea = $("#txtTarea").val();
+                var porcentajeTarea = $("#txtPorcentaje").val();
+                var estado = $("#txtEstado option:selected").val();
+                var seleccionado1;
+                var seleccionado2;
+                var seleccionado3;
+                var seleccionado4;
+                if (estado == 1) {
+                    seleccionado1 = "selected"
+                } else if (estado == 2) {
+                    seleccionado2 = "selected"
+                } else if (estado == 3) {
+                    seleccionado3 = "selected"
+                } else if (estado == 4) {
+                    seleccionado4 = "selected"
+                }
+                $("#tareas").append("<div class='inputsDelete row m-auto  col-md-10'>" +
+                    "<div class='col-md-4 col-sm-6 col-6 p-2'>" +
+                    "<input type='text' class='form-control' id='txtTarea' name='["+contadorTareas+"].NombreTarea' value='" + nombreTarea + "' /></div>" +
+                    "<div class='col-md-3 col-sm-6 col-6 p-2'>" + "<input type='number' step='1' class='form-control' id='txtPorcentaje' name='["+ contadorTareas + "].PorcentajeTarea' value='" + porcentajeTarea +"'/></div>"+
+                    "<div class='col-md-3 col-sm-6 col-6 p-2'><select class='custom-select' name='["+contadorTareas+"].EstadoTarea' id='txtEstado'>"+
+                            "<option value='-1'>Seleccione estado...</option>"+
+                    "<option value='1' " + seleccionado1+">No Iniciado</option>"+
+                    "<option value='2' " + seleccionado2 +">En proceso</option>"+
+                    "<option value='3' " + seleccionado3 + ">Concluido</option>" +
+                    "<option value='4' " + seleccionado4 + ">Eliminado</option>" +
+                      "</select ></div > <div class='col-md-2 col-sm-6 col-12 p-2'>"+
+                    " </div>");
+                $("#txtTarea").val('');
+                $("#txtPorcentaje").val('');
+                $("#txtEstado").val('-1').change();
+
+                contadorTareas++;
+            });
+
+
+            ////$("body").on("click", ".eliminar", function () {
+
+            ////    var inputIdTarea = $(this).data('value');
+
+            ////    $(this).parents('.inputsDelete').remove();
+            ////    $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitarTarea' value= " + "'" + inputIdTarea + "'>");
+
+
+            ////});
+
+
+        });
+    </script>
+}
