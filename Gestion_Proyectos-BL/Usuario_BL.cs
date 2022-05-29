@@ -108,6 +108,85 @@ namespace Gestion_Proyectos_BL
             }
         }
 
+        public IEnumerable<Usuario_BE> GetUsuarios()
+        {
+            try
+            {
+                var usuarios = _usuarioDA.ListarUsuarios();
+                return usuarios;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener usuarios ==> {ex.Message}");
+            }
+        }
+
+        public Usuario_BE BuscarUsuario(int id)
+        {
+            try
+            {
+                var usuario = _usuarioDA.BuscarUsuario(id);
+               
+                if (usuario == null)
+                {
+                    throw new Exception("Error ==> No se encontro sus datos");
+                }
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error en el método Buscar usuario por codigo ==> {ex.Message}");
+            }
+        }
+
+        public List<int> GetRolesUsuario(int idUsuario)
+        {
+            try
+            {
+                var rolesUsuario = _usuarioDA.ListarRolesUsuario(idUsuario);
+                return rolesUsuario;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener roles por usuario ==> {ex.Message}");
+            }
+        }
+
+        public string EditarUsuario(Usuario_BE reg)
+        {
+            string mensaje = "";
+            try
+            {
+                _usuarioDA.EditarUsuario(reg);
+                
+                mensaje = "Usuario '" + reg.Alias + "' actualizado correctamente";
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Error en editar usuario: " + ex.Message;
+
+            }
+            return mensaje;
+        }
+
+        public string RegistrarUsuario(Usuario_BE reg)
+        {
+            string mensaje = "";
+            try
+            {
+                _usuarioDA.RegistrarUsuario(reg);
+
+                mensaje = "Usuario '" + reg.Alias + "' registrado correctamente";
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Error en registrar usuario: " + ex.Message;
+
+            }
+            return mensaje;
+        }
+
 
     }
 }

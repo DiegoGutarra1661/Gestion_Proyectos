@@ -11,7 +11,7 @@ namespace Gestion_Proyectos_DA
 {
     public class Area_DA: Conexion
     {
-        public IEnumerable<Area_BE> listarAreas()
+        public IEnumerable<Area_BE> ListarAreas()
         {
             List<Area_BE> lista = new List<Area_BE>();
 

@@ -14,7 +14,7 @@ namespace Gestion_Proyectos_DA
     {
         public Rol_BE BuscarRol(int idRol)
         {
-            return listarRoles().Where(rol => rol.IdRol == idRol).FirstOrDefault();
+            return ListarRoles().Where(rol => rol.IdRol == idRol).FirstOrDefault();
         }
 
         public List<int> ListarPermisosRol(int idUsuario)
@@ -43,7 +43,7 @@ namespace Gestion_Proyectos_DA
             return lista;
         }
 
-        public IEnumerable<Rol_BE> listarRoles()
+        public IEnumerable<Rol_BE> ListarRoles()
         {
             List<Rol_BE> lista = new List<Rol_BE>();
 
