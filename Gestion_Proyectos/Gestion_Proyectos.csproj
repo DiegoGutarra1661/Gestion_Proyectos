@@ -2122,6 +2122,28 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="StylesRequerimiento\css\bootstrap.min.css" />
+    <Content Include="StylesRequerimiento\css\bootstrap\bootstrap.css" />
+    <Content Include="StylesRequerimiento\css\bootstrap\mixins\_table-row.css" />
+    <Content Include="StylesRequerimiento\css\owl.carousel.min.css" />
+    <Content Include="StylesRequerimiento\css\style.css" />
+    <Content Include="StylesRequerimiento\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\demo-files\demo.css" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\demo-files\demo.js" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\demo.html" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\fonts\icomoon.svg" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\Read Me.txt" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\style.css" />
+    <Content Include="StylesRequerimiento\js\bootstrap.min.js" />
+    <Content Include="StylesRequerimiento\js\jquery-3.3.1.min.js" />
+    <Content Include="StylesRequerimiento\js\jquery.validate.min.js" />
+    <Content Include="StylesRequerimiento\js\main.js" />
+    <Content Include="StylesRequerimiento\js\owl.carousel.min.js" />
+    <Content Include="StylesRequerimiento\js\popper.min.js" />
+    <Content Include="StylesRequerimiento\Scripts\jquery.validate.js" />
+    <Content Include="StylesRequerimiento\Scripts\jquery.validate.min.js" />
+    <Content Include="StylesRequerimiento\Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="StylesRequerimiento\Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2149,6 +2171,17 @@
     <Content Include="Views\Encuestas\Gracias.cshtml" />
     <Content Include="Views\Encuestas\EncuestaExiste.cshtml" />
     <Content Include="Views\Requerimiento\Solicitud.cshtml" />
+    <Content Include="StylesRequerimiento\css\.DS_Store" />
+    <Content Include="StylesRequerimiento\css\bootstrap.min.css.map" />
+    <Content Include="StylesRequerimiento\fonts\.DS_Store" />
+    <Content Include="StylesRequerimiento\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="StylesRequerimiento\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="StylesRequerimiento\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="StylesRequerimiento\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\fonts\icomoon.eot" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\fonts\icomoon.ttf" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\fonts\icomoon.woff" />
+    <Content Include="StylesRequerimiento\fonts\icomoon\selection.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

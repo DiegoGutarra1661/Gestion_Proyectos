@@ -58,10 +58,10 @@ namespace Gestion_Proyectos_DA
                     cmd.Parameters.AddWithValue("@fechaReunion", reg.FechaReunion);
 
                     cmd.ExecuteNonQuery();
-
+                    string path = HttpContext.Current.Server.MapPath("~/Archivos/" + idRequerimiento + "/");
                     if (archivos != null)
                     {
-                        string path = HttpContext.Current.Server.MapPath("~/Archivos/" + idRequerimiento + "/");
+                        
                         var contador = 0;
                         foreach (var archivo in archivos)
                         {
@@ -78,15 +78,12 @@ namespace Gestion_Proyectos_DA
                             cmd.Parameters.AddWithValue("@rutaAdjunto", "~/Archivos/" + idRequerimiento + "/" + newFileName);
                             cmd.Parameters.AddWithValue("@nombreAdjunto", newFileName);
                             cmd.ExecuteNonQuery();
-
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
                             archivo.SaveAs(path + Path.GetFileName(newFileName));
                         }
-
-                        if (!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-
 
                        
                     }
