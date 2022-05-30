@@ -54,7 +54,7 @@
 
                             <div class="row m-auto  col-md-10">
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
 
                                     <label for="EstadoProyecto">Estado Proyecto</label>
                                     <select required class="custom-select" name="EstadoProyecto" id="EstadoProyecto">
@@ -68,11 +68,18 @@
                                         Seleccione un estado del proyecto
                                     </div>
                                 </div>
+                                <div class="form-group col-md-4">
 
-                                <div class="form-group col-md-6">
+                                    <label for="Prioridad">Prioridad</label>
+                                    <input required type="number" step="1" min="1" max="5" class="form-control" id="Prioridad" name="Prioridad" value="">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
 
-                                    <label for="IdUsuarioSponsor">Sponsor</label>
-                                    @Html.DropDownList("IdUsuarioSponsor", (SelectList)ViewBag.sponsors, "Seleccione", new { @class = "custom-select" })
+                                    <label for="FecharRequerimiento">Fecha Requerimiento</label>
+                                    <input type="date" class="form-control" id="FecharRequerimiento" name="FecharRequerimiento" value="">
                                     <div class="invalid-feedback">
                                         Este campo es obligatorio.
                                     </div>
@@ -82,23 +89,21 @@
                             <div class="row m-auto  col-md-10">
 
 
-
                                 <div class="form-group col-md-6">
 
-                                    <label for="Prioridad">Prioridad</label>
-                                    <input required type="number" step="1" min="1" max="5" class="form-control" id="Prioridad" name="Prioridad" value="">
+                                    <label for="IdUsuarioSponsor">Sponsor</label>
+                                    @Html.DropDownList("IdUsuarioSponsor", (SelectList)ViewBag.sponsors, "Seleccione", new { @class = "custom-select" })
                                     <div class="invalid-feedback">
                                         Este campo es obligatorio.
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
 
-                                    <label for="FecharRequerimiento">Fecha Requerimiento</label>
-                                    <input type="date" class="form-control" id="FecharRequerimiento" name="FecharRequerimiento" value="">
-                                    <div class="invalid-feedback">
-                                        Este campo es obligatorio.
-                                    </div>
+                                    <label for="Proveedor">Proveedor</label>
+                                    <input type="text" class="form-control" id="Proveedor" name="Proveedor" value="">
+                                   
                                 </div>
+
                             </div>
 
                             <div class="row m-auto  col-md-10">
@@ -139,7 +144,16 @@
                                     <input type="date" class="form-control" id="FechaConcluido" name="FechaConcluido" value="">
                                 </div>
                             </div>
+                            <div class="row m-auto  col-md-10">
 
+                                <div class="form-group col-md-12">
+
+                                    <label for="Comentario">Comentarios</label>
+
+                                    @Html.TextArea("Comentario", "", new { @class = "form-control" })
+                                </div>
+
+                            </div>
 
 
                             <div class="row m-auto  col-md-10">

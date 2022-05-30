@@ -16,7 +16,63 @@ namespace Gestion_Proyectos_DA
     {
         public Proyecto_BE BuscarProyecto(int idProyecto)
         {
-            return ListarProyectos().Where(proy => proy.IdProyecto == idProyecto).FirstOrDefault();
+            Proyecto_BE reg = null;
+
+            using (var con = GetSqlConnGestionProyectos())
+            {
+                SqlCommand cmd = new SqlCommand("usp_buscarProyecto", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idProyecto", idProyecto);
+
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    reg = new Proyecto_BE();
+                    reg.IdProyecto = dr.GetInt32(0);
+                    reg.Nombre = dr.GetString(1);
+                    if (!dr.IsDBNull(2))
+                        reg.Descripcion = dr.GetString(2);
+                    reg.EstadoProyecto = dr.GetString(3);
+                    reg.Avance = dr.GetDecimal(4);
+                    if (!dr.IsDBNull(5))
+                        reg.IdUsuarioSponsor = dr.GetInt32(5);
+                    reg.Prioridad = dr.GetInt32(6);
+                    if (!dr.IsDBNull(7))
+                        reg.FecharRequerimiento = dr.GetDateTime(7);
+                    if (!dr.IsDBNull(8))
+                        reg.FechaInicioEstimada = dr.GetDateTime(8);
+                    if (!dr.IsDBNull(9))
+                        reg.FechaInicio = dr.GetDateTime(9);
+                    if (!dr.IsDBNull(10))
+                        reg.FechaConcluidoEstimada = dr.GetDateTime(10);
+                    if (!dr.IsDBNull(11))
+                        reg.FechaConcluido = dr.GetDateTime(11);
+                    reg.AreaProyecto = dr.GetString(12);
+                    if (!dr.IsDBNull(13))
+                        reg.Proveedor = dr.GetString(13);
+                    if (!dr.IsDBNull(14))
+                        reg.ResponsableLiberacion = dr.GetString(14);
+                    if (!dr.IsDBNull(15))
+                        reg.ETALiberacion = dr.GetDateTime(15);
+                    if (!dr.IsDBNull(16))
+                        reg.Comentario = dr.GetString(16);
+                    /*if (!dr.IsDBNull(12))
+                        reg.Estado = dr.GetInt32(12);
+                    reg.IdUsuarioCreacion = dr.GetInt32(13);
+                    if (!dr.IsDBNull(14))
+                        reg.FechaCreacion = dr.GetDateTime(14);
+                    if (!dr.IsDBNull(15))
+                        reg.IdUsuarioModificacion = dr.GetInt32(15);
+                    if (!dr.IsDBNull(15))
+                        reg.FechaModificacion = dr.GetDateTime(16);*/
+
+
+                }
+                dr.Close(); con.Close();
+            }
+
+            return reg;
         }
 
         public void EditarProyecto(Proyecto_BE reg, IEnumerable<Tarea_BE> tareas)
@@ -42,7 +98,6 @@ namespace Gestion_Proyectos_DA
                     else
                         cmd.Parameters.AddWithValue("@descripcion", reg.Descripcion);
                     cmd.Parameters.AddWithValue("@estadoProyecto", reg.EstadoProyecto);
-                    cmd.Parameters.AddWithValue("@avance", reg.Avance);
                     cmd.Parameters.AddWithValue("@idUsuarioSponsor", reg.IdUsuarioSponsor);
                     cmd.Parameters.AddWithValue("@prioridad", reg.Prioridad);
                     if (reg.FecharRequerimiento.ToString("dd/MM/yyyy") == "01/01/0001")
@@ -67,6 +122,23 @@ namespace Gestion_Proyectos_DA
                         cmd.Parameters.AddWithValue("@fechaConcluido", reg.FechaConcluido.ToString("dd/MM/yyyy"));
                     cmd.Parameters.AddWithValue("@idUsuarioModificacion", usu.IdUsuario);
                     cmd.Parameters.AddWithValue("@fechaModificacion", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+
+                    if (string.IsNullOrEmpty(reg.Proveedor))
+                        cmd.Parameters.AddWithValue("@proveedor", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@proveedor", reg.Proveedor);
+                    if (string.IsNullOrEmpty(reg.ResponsableLiberacion))
+                        cmd.Parameters.AddWithValue("@responsableliberacion", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@responsableliberacion", reg.ResponsableLiberacion);
+                    if (reg.ETALiberacion.ToString("dd/MM/yyyy") == "01/01/0001")
+                        cmd.Parameters.AddWithValue("@etaliberacion", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@etaliberacion", reg.ETALiberacion.ToString("dd/MM/yyyy"));
+                    if (string.IsNullOrEmpty(reg.Comentario))
+                        cmd.Parameters.AddWithValue("@comentario", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@comentario", reg.Comentario);
 
                     rs = cmd.ExecuteNonQuery();
 
@@ -157,6 +229,8 @@ namespace Gestion_Proyectos_DA
 
             return lista;
         }
+
+
 
         public IEnumerable<Proyecto_BE> ListarProyectos(List<int> lstGerencia, List<string> lstEstados, List<int> lstMembers)
         {
@@ -359,6 +433,9 @@ namespace Gestion_Proyectos_DA
                     cmd.Parameters.AddWithValue("@idUsuarioCreacion", usu.IdUsuario);
                     cmd.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
 
+                    cmd.Parameters.AddWithValue("@proveedor", reg.Proveedor);
+                    cmd.Parameters.AddWithValue("@comentario", reg.Comentario);
+
                     rs = cmd.ExecuteNonQuery();
 
 
@@ -555,5 +632,15 @@ namespace Gestion_Proyectos_DA
 
             return correo;
         }
+
+        public decimal GetAvanceAutomatico(DateTime fInicio, DateTime fFinal)
+        {
+            decimal porcentaje = 0;
+
+
+
+            return porcentaje;
+        }
+        
     }
 }

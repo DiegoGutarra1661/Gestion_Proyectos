@@ -37,6 +37,12 @@ namespace Gestion_Proyectos_BE
 
         public IEnumerable<Tarea_BE> Tareas { get; set; }
 
+        //
+        public string Proveedor { get; set; }
+        public string Comentario { get; set; }
+        public string ResponsableLiberacion { get; set; }
+        public DateTime ETALiberacion { get; set; }
+
         public string getColorAvance()
         {
             if (EstadoProyecto == "En proceso" && FechaConcluidoEstimada > DateTime.Now)
