@@ -124,6 +124,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EncuestasController.cs" />
     <Compile Include="Controllers\ProyectosController.cs" />
+    <Compile Include="Controllers\RequerimientoController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Filters\VerifySession.cs" />
@@ -2147,11 +2148,11 @@
     <Content Include="Views\Encuestas\Registrar.cshtml" />
     <Content Include="Views\Encuestas\Gracias.cshtml" />
     <Content Include="Views\Encuestas\EncuestaExiste.cshtml" />
+    <Content Include="Views\Requerimiento\Solicitud.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Encuesta\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

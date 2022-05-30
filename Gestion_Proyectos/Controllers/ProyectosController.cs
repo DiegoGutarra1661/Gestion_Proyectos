@@ -84,7 +84,7 @@ namespace Gestion_Proyectos.Controllers
         public ActionResult Registrar(Proyecto_BE reg, IEnumerable<Tarea_BE> tareas)
         {
             
-                TempData["mensaje"] = _proyectoBL.RegistrarProyecto(reg, tareas);
+            TempData["mensaje"] = _proyectoBL.RegistrarProyecto(reg, tareas);
  
             return RedirectToAction("Index", "Proyectos");
         }
