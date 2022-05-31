@@ -61,31 +61,31 @@ namespace Gestion_Proyectos_DA
                     string path = HttpContext.Current.Server.MapPath("~/Archivos/" + idRequerimiento + "/");
                     if (archivos != null)
                     {
-                        
-                        var contador = 0;
-                        foreach (var archivo in archivos)
+                        if(archivos[0] != null)
                         {
-                            contador++;
-                             var newFileName = string.Format("{0}-{1}-{2}{3}"
-                            , "Requerimiento"
-                            , idRequerimiento
-                            , contador
-                            , Path.GetExtension(archivo.FileName));
-
-                            cmd = new SqlCommand("usp_registrarAdjuntoRequerimiento", con, tr);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.AddWithValue("@idRequerimiento", idRequerimiento);
-                            cmd.Parameters.AddWithValue("@rutaAdjunto", "~/Archivos/" + idRequerimiento + "/" + newFileName);
-                            cmd.Parameters.AddWithValue("@nombreAdjunto", newFileName);
-                            cmd.ExecuteNonQuery();
-                            if (!Directory.Exists(path))
+                            var contador = 0;
+                            foreach (var archivo in archivos)
                             {
-                                Directory.CreateDirectory(path);
-                            }
-                            archivo.SaveAs(path + Path.GetFileName(newFileName));
-                        }
+                                contador++;
+                                var newFileName = string.Format("{0}-{1}-{2}{3}"
+                               , "Requerimiento"
+                               , idRequerimiento
+                               , contador
+                               , Path.GetExtension(archivo.FileName));
 
-                       
+                                cmd = new SqlCommand("usp_registrarAdjuntoRequerimiento", con, tr);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@idRequerimiento", idRequerimiento);
+                                cmd.Parameters.AddWithValue("@rutaAdjunto", "~/Archivos/" + idRequerimiento + "/" + newFileName);
+                                cmd.Parameters.AddWithValue("@nombreAdjunto", newFileName);
+                                cmd.ExecuteNonQuery();
+                                if (!Directory.Exists(path))
+                                {
+                                    Directory.CreateDirectory(path);
+                                }
+                                archivo.SaveAs(path + Path.GetFileName(newFileName));
+                            }
+                        }
                     }
 
 
