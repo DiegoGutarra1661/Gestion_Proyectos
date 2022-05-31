@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Gestion_Proyectos_BE.Requerimiento_BE>
+@{
+    ViewBag.Title = "Requerimientos";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <h3>Listado de Requerimientos</h3>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <table id="tablaEncuestas" class="table table-sm table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 3%">ID</th>
+                                    <th style="width: 5%">Presupuesto</th>
+                                    <th style="width: 20%">Gerencia Responsable</th>
+                                    <th style="width: 20%">Solicitante</th>
+                                    <th style="width: 22%">Título</th>
+                                    <th style="width: 22%">Alcance</th>
+                                    <th style="width: 2%">Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>@item.IdRequerimiento</td>
+                                    <td>@item.DescripcionPresupuesto</td>
+                                    <td>@item.DescripcionGerencia</td>
+                                    <td>@item.DescripcionUsuario</td>
+                                    <td>@item.Titulo</td>
+                                    <td>@item.Alcance</td>
+                                    <td>
+                                       
+                                    </td>
+                                 
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+

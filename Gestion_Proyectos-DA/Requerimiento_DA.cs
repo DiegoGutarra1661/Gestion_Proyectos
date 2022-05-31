@@ -18,7 +18,7 @@ namespace Gestion_Proyectos_DA
             string id = "";
             using (var con = GetSqlConnGestionProyectos())
             {
-                SqlCommand cmd = new SqlCommand("select max(idRequerimiento) from Requerimiento", con);
+                SqlCommand cmd = new SqlCommand("SELECT [dbo].[AutogeneraCodigoRequerimiento]()", con);
                 con.Open();
 
                 SqlDataReader dr = cmd.ExecuteReader();
@@ -102,6 +102,36 @@ namespace Gestion_Proyectos_DA
 
             }
 
+        }
+
+        public IEnumerable<Requerimiento_BE> ListarRequerimientos()
+        {
+            List<Requerimiento_BE> lista = new List<Requerimiento_BE>();
+
+            using (var con = GetSqlConnGestionProyectos())
+            {
+                SqlCommand cmd = new SqlCommand("usp_listarRequerimiento", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    Requerimiento_BE reg = new Requerimiento_BE();
+                    reg.IdRequerimiento = dr.GetString(0);
+                    reg.DescripcionUsuario = dr.GetString(1);
+                    reg.DescripcionGerencia = dr.GetString(2);
+                    reg.DescripcionPresupuesto = dr.GetString(3);
+                    reg.Titulo = dr.GetString(4);
+                    reg.Alcance = dr.GetString(5);
+
+                    lista.Add(reg);
+
+                }
+                dr.Close(); con.Close();
+            }
+
+            return lista;
         }
     }
 }

@@ -14,12 +14,14 @@ namespace Gestion_Proyectos.Controllers
         private readonly Usuario_BL _usuarioBL;
         private readonly Gerencia_BL _gerenciaBL;
         private readonly Tarea_BL _tareBL;
+        private readonly Requerimiento_BL _requerimientoBL;
         public ProyectosController()
         {
             _proyectoBL = new Proyecto_BL();
             _usuarioBL = new Usuario_BL();
             _gerenciaBL = new Gerencia_BL();
             _tareBL = new Tarea_BL();
+            _requerimientoBL = new Requerimiento_BL();
         }
 
         // GET: Proyecto
@@ -91,7 +93,6 @@ namespace Gestion_Proyectos.Controllers
 
         public ActionResult Asignar(int idProyecto)
         {
-
             Proyecto_BE reg = _proyectoBL.BuscarProyecto(idProyecto);
             reg.AliasCoordinadores = _proyectoBL.GetMembers(idProyecto, 1);
             reg.AliasDesarrolladores = _proyectoBL.GetMembers(idProyecto, 2);
@@ -106,6 +107,14 @@ namespace Gestion_Proyectos.Controllers
             if (ListaQuitar != null)
                 _proyectoBL.QuitarAsignacion(reg.IdProyecto, ListaQuitar);
             return RedirectToAction("Index", "Proyectos");
+        }
+
+        public ActionResult Requerimientos()
+        {
+
+            var listaRequerimientos = _requerimientoBL.GetRequerimientos();
+
+            return View(listaRequerimientos);
         }
     }
 }

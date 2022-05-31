@@ -100,38 +100,57 @@
                         {
                             foreach (var item in permisosLecura)
                             {
-                                <li class="nav-item menu">
-                                    <a href="#" class="nav-link">
-                                        @if (item.Trim() == "Proyectos")
-                                        {
-                                            <i class="fas fa-project-diagram nav-icon"></i>
-                                        }
-                                        else if (item.Trim() == "Usuarios")
-                                        {
-                                            <i class="fas fa-users nav-icon"></i>
-                                        }
-                                        else if (item.Trim() == "Roles")
-                                        {
-                                            <i class="fas fa-user-tag nav-icon"></i>
-                                        }
-                                        else if (item.Trim() == "Encuestas")
-                                        {
-                                            <i class="fas fa-poll nav-icon"></i>
-                                        }
-                                        <p>
-                                            @item
-                                            <i class="fas fa-angle-left right"></i>
-                                        </p>
+                    <li class="nav-item menu">
+                        <a href="#" class="nav-link">
+                            @if (item.Trim() == "Proyectos")
+                            {
+                                <i class="fas fa-project-diagram nav-icon"></i>
+                            }
+                            else if (item.Trim() == "Usuarios")
+                            {
+                                <i class="fas fa-users nav-icon"></i>
+                            }
+                            else if (item.Trim() == "Roles")
+                            {
+                                <i class="fas fa-user-tag nav-icon"></i>
+                            }
+                            else if (item.Trim() == "Encuestas")
+                            {
+                                <i class="fas fa-poll nav-icon"></i>
+                            }
+                            else if (item.Trim() == "Requerimientos")
+                            {
+                                <i class="fas fa-solid fa-file-circle-question nav-icon"></i>
+                            }
+                            <p>
+                                @item
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        @if (item.Trim() == "Requerimientos")
+                        {
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Requerimientos", "Proyectos")" class="nav-link">
+                                        <i class="far fa-list-alt nav-icon"></i>
+                                        <p>Listado</p>
                                     </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Index", item.Trim())" class="nav-link">
-                                                <i class="far fa-list-alt nav-icon"></i>
-                                                <p>Listado</p>
-                                            </a>
-                                        </li>
-                                    </ul>
                                 </li>
+                            </ul>
+                    }
+                    else
+                    {
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                <i class="far fa-list-alt nav-icon"></i>
+                                <p>Listado</p>
+                            </a>
+                        </li>
+                    </ul>
+                    }
+                        
+                    </li>
                             }
                         }
 

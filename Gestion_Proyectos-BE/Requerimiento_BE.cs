@@ -17,6 +17,10 @@ namespace Gestion_Proyectos_BE
         public string Prioridad { get; set; }
         public string Resumen { get; set; }
         public DateTime FechaReunion { get; set; }
+        //
+        public string DescripcionUsuario { get; set; }
+        public string DescripcionGerencia { get; set; }
+        public string DescripcionPresupuesto { get; set; }
 
 
     }

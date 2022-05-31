@@ -2182,6 +2182,7 @@
     <Content Include="StylesRequerimiento\fonts\icomoon\fonts\icomoon.ttf" />
     <Content Include="StylesRequerimiento\fonts\icomoon\fonts\icomoon.woff" />
     <Content Include="StylesRequerimiento\fonts\icomoon\selection.json" />
+    <Content Include="Views\Proyectos\Requerimientos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

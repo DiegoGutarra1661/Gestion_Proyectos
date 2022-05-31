@@ -23,32 +23,32 @@
     <link rel="stylesheet" href="~/StylesRequerimiento/css/bootstrap.min.css?1.0">
     <!-- Style -->
     <link rel="stylesheet" href="~/StylesRequerimiento/css/style.css?1.0">
-
+    <link rel="stylesheet" href="~/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
     <title>Solicitud de Requerimiento</title>
 </head>
 <body>
 
-    
-        <div class="content">
 
-            <div class="container">
-                <div class="row align-items-stretch no-gutters contact-wrap">
-                    <div class="col-md-12">
-                        <div class="form h-100">
-                            <center>
-                                <img src="~/Images/logo_3.jpg" />
-                            </center>
-                            <center>
-                                <h3>Solicitud de Requerimiento TI</h3>
-                            </center>
-                            @if (ViewBag.AlertaConfirmacion == true)
-                            {
-                                <div class="alert alert-success" role="alert">
-                                    <center>
-                                        Se envió su Solicitud de Requerimiento satisfactoriamente
-                                    </center>
-                                </div>
-                            }
+    <div class="content">
+
+        <div class="container">
+            <div class="row align-items-stretch no-gutters contact-wrap">
+                <div class="col-md-12">
+                    <div class="form h-100">
+                        <center>
+                            <img src="~/Images/logo_3.jpg" class="img-fluid" />
+                        </center>
+                        <center>
+                            <h3>Solicitud de Requerimiento TI</h3>
+                        </center>
+
+                        @if (TempData["mensaje"] != null)
+                        {
+                            <div class="alert alert-success" id="success-alert" role="alert">
+                                <b><span>@TempData["mensaje"]</span></b>
+                            </div>
+                        }
 
                         <form class="needs-validation" action="@Url.Action("Solicitud","Requerimiento")" method="post" enctype="multipart/form-data" novalidate>
                             <div class="row">
@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="" class="col-form-label">Solicitante *</label>
-                                    <select name="Solicitante" required id="#Solicitante" class="custom-select">
+                                    <select name="Solicitante" required id="#Solicitante" [lang="es" ] class="form-control js-example-responsive" style="width: 100%;">
                                         @foreach (var usuario in usuarios)
                                         {
                                             <option value="@usuario.IdUsuario">
@@ -101,7 +101,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 form-group mb-3">
-                                    <label for="message" class="col-form-label">Documentos del Propósito y Alcance *</label>                                  
+                                    <label for="message" class="col-form-label">Documentos del Propósito y Alcance *</label>
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" required multiple name="archivos"
                                                id="archivos">
@@ -130,7 +130,7 @@
                             <div class="row">
                                 <div class="col-md-12 form-group mb-3">
                                     <label for="message" class="col-form-label">Fecha de Posible Reunion *</label>
-                                    <input required type="date" class="form-control" id="FechaReunion" name="FechaReunion" value="">
+                                    <input required type="date" class="form-control" id="FechaReunion" name="FechaReunion" data-date-inline-picker="true" value="">
                                     <div class="invalid-feedback">
                                         Este campo es obligatorio.
                                     </div>
@@ -161,16 +161,16 @@
                             </div>
                         </form>
 
-                         
 
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-   
+
 
     <script src="~/StylesRequerimiento/js/jquery-3.3.1.min.js"></script>
     <script src="~/StylesRequerimiento/js/popper.min.js"></script>
@@ -179,33 +179,49 @@
     <script src="~/StylesRequerimiento/js/main.js"></script>
     <script src="~/StylesRequerimiento/Scripts/jquery.validate.min.js"></script>
     <script src="~/StylesRequerimiento/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script>
-        (function () {
-            'use strict';
-            window.addEventListener('load', function () {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('needs-validation');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function (form) {
-                    form.addEventListener('submit', function (event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
+    <script src="~/plugins/select2/js/select2.full.min.js"></script>
+    <script src="~/plugins/select2/js/i18n/es.js"></script>
 
-        $('.custom-file-input').on('change', function (event) {
-            var inputFile = event.currentTarget;
-            $(inputFile).parent()
-                .find('.custom-file-label')
-                .html(inputFile.files[0].name);
-            var files = $(this)[0].files;
-            $('#labelArchivo').text("Tienes " + files.length + " archivos seleccionado(s)");
+    <script>
+        $(document).ready(function () {
+            (function () {
+                'use strict';
+                window.addEventListener('load', function () {
+                    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                    var forms = document.getElementsByClassName('needs-validation');
+                    // Loop over them and prevent submission
+                    var validation = Array.prototype.filter.call(forms, function (form) {
+                        form.addEventListener('submit', function (event) {
+                            if (form.checkValidity() === false) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                        }, false);
+                    });
+                }, false);
+            })();
+
+            $('.js-example-responsive').select2({
+                theme: 'bootstrap4',
+                language: "es"
+            });
+
+            $("#success-alert").fadeTo(4000, 500).slideUp(500, function () {
+                $("#success-alert").slideUp(500);
+            });
+
+            $('.custom-file-input').on('change', function (event) {
+                var inputFile = event.currentTarget;
+                $(inputFile).parent()
+                    .find('.custom-file-label')
+                    .html(inputFile.files[0].name);
+                var files = $(this)[0].files;
+                $('#labelArchivo').text("Tienes " + files.length + " archivos seleccionado(s)");
+            });
         });
+
+
     </script>
 </body>
 </html>

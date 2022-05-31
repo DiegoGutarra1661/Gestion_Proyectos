@@ -25,7 +25,7 @@ namespace Gestion_Proyectos_BL
             try
             {
                 _requerimientoDA.RegistrarRequerimiento(reg, archivos);
-                mensaje = "Requerimiento '" + reg.Titulo + "' registrado correctamente";
+                mensaje = "Se envió su Solicitud de Requerimiento satisfactoriamente";
             }
             catch (Exception ex)
             {
@@ -33,6 +33,19 @@ namespace Gestion_Proyectos_BL
 
             }
             return mensaje;
+        }
+
+        public IEnumerable<Requerimiento_BE> GetRequerimientos()
+        {
+            try
+            {
+                var requerimientos = _requerimientoDA.ListarRequerimientos();
+                return requerimientos;         
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al listar requerimientos ==> {ex.Message}");
+            }
         }
     }
 }
