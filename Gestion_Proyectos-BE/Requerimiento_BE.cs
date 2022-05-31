@@ -17,11 +17,24 @@ namespace Gestion_Proyectos_BE
         public string Prioridad { get; set; }
         public string Resumen { get; set; }
         public DateTime FechaReunion { get; set; }
+        public string FechaFormateada { get; set; }
         //
         public string DescripcionUsuario { get; set; }
         public string DescripcionGerencia { get; set; }
         public string DescripcionPresupuesto { get; set; }
 
+        public string DescripcionEstado { get; set; }
 
+        public string getColorEstado()
+        {
+            if (DescripcionEstado == "Pendiente")
+                return "bg-warning";
+            else if (DescripcionEstado == "Aprobado")
+                return "bg-success";
+            else if (DescripcionEstado == "Rechazado")
+                return "bg-danger";
+            else
+                return "bg-danger";
+        }
     }
 }

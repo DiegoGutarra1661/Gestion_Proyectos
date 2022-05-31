@@ -116,5 +116,58 @@ namespace Gestion_Proyectos.Controllers
 
             return View(listaRequerimientos);
         }
+
+        [HttpPost]
+        public JsonResult ActualizarRequerimiento(string codigo = "", int estado = 0)
+        {
+            string mensaje;
+
+            try
+            {
+
+                mensaje = _requerimientoBL.RegistrarRequerimientoProyecto(codigo,estado);
+
+                if (mensaje.StartsWith("Error") || mensaje.StartsWith("No"))
+                {
+                    return Json(new { success = false, mensaje = mensaje });
+                }
+                else
+                {
+                    return Json(new { success = true, mensaje = mensaje });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return Json(new { success = false, mensaje = mensaje });
+            }
+        }
+
+        public JsonResult GetAdjuntosRequerimiento(string Id)
+        {
+            try
+            {
+                var adjuntos = _requerimientoBL.GetAdjuntos(Id);
+                return Json(new { data = adjuntos, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult BuscarRequerimiento(string Id)
+        {
+            try
+            {
+                var requerimiento = _requerimientoBL.BuscarRequerimiento(Id);
+                return Json(new { data = requerimiento, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Requerimiento_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

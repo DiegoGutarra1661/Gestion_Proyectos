@@ -36,5 +36,7 @@ namespace Gestion_Proyectos.Controllers
 
             return RedirectToAction("Solicitud", "Requerimiento");
         }
+
+
     }
 }
