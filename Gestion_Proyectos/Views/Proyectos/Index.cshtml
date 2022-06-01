@@ -44,6 +44,7 @@
                                     <tr>
 
                                         <th width="12%">ID</th>
+                                        <th>Tareas</th>
                                         <th>Nombre</th>
 
                                         <th>Prioridad</th>
@@ -65,46 +66,53 @@
                                     {
 
 
-                                        <tr>
+                                    <tr>
 
-                                            <td style="vertical-align:middle;">
-                                                @item.IdProyecto.
+                                        <td style="vertical-align:middle;">
+                                            @item.IdProyecto.
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck_@item.IdProyecto" value="TRUE" name="terminos" checked>
+                                                <label class="custom-control-label" for="customCheck_@item.IdProyecto"></label>
+
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align:middle;">@item.Nombre</td>
+
+                                        <td style="vertical-align:middle;">@item.Prioridad</td>
+                                        <td style="vertical-align:middle;">@item.AreaProyecto</td>
+                                        <td style="vertical-align:middle;">@(item.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicio.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">@(item.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluidoEstimada.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">
+                                            @item.DiasRestantes
+
+                                        </td>
+                                        <td class="text-center" style="vertical-align:middle;"><span class="badge @item.getColorAvance()">@(item.AvancePorcentaje.ToString() + '%')</span></td>
+                                        <td style="vertical-align:middle;">
+                                            <span class="badge @item.getColorEstado()">@(item.EstadoProyecto)</span>
+                                        </td>
+                                        @if (escritura != null)
+                                        {
+                                            <td class="text-center" style="vertical-align:middle;">
+                                                <a href="@Url.Action("Editar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="far fa-edit"></i></a>
+                                                <a href="@Url.Action("Asignar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="fas fa-user-plus"></i></a>
+
                                             </td>
-                                            <td style="vertical-align:middle;">@item.Nombre</td>
+                                        }
+                                        <td style="vertical-align:middle;">
 
-                                            <td style="vertical-align:middle;">@item.Prioridad</td>
-                                            <td style="vertical-align:middle;">@item.AreaProyecto</td>
-                                            <td style="vertical-align:middle;">@(item.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicio.ToString("dd/MM/yyyy"))</td>
-                                            <td style="vertical-align:middle;">@(item.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluidoEstimada.ToString("dd/MM/yyyy"))</td>
-                                            <td style="vertical-align:middle;">
-                                                @item.DiasRestantes
+                                            <div class="cont" style="width: 100px;">
+                                                @foreach (var ini in item.ListaMemberes)
+                                                {
+                                                    <div class="bg-primary circulo" title="@ini.Alias">
+                                                        <p>@ini.Iniciales</p>
+                                                    </div>
+                                                }
 
-                                            </td>
-                                            <td class="text-center" style="vertical-align:middle;"><span class="badge @item.getColorAvance()">@(item.AvancePorcentaje.ToString() + '%')</span></td>
-                                            <td style="vertical-align:middle;">
-                                                <span class="badge @item.getColorEstado()">@(item.EstadoProyecto)</span>
-                                            </td>
-                                            @if (escritura != null)
-                                            {
-                                                <td class="text-center" style="vertical-align:middle;">
-                                                    <a href="@Url.Action("Editar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="far fa-edit"></i></a>
-                                                    <a href="@Url.Action("Asignar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="fas fa-user-plus"></i></a>
-
-                                                </td>
-                                            }
-                                            <td style="vertical-align:middle;">
-
-                                                <div class="cont" style="width: 100px;">
-                                                    @foreach (var ini in item.ListaMemberes)
-                                                    {
-                                                        <div class="bg-primary circulo" title="@ini.Alias">
-                                                            <p>@ini.Iniciales</p>
-                                                        </div>
-                                                    }
-
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
 
                                     }
                                 </tbody>
@@ -142,5 +150,11 @@
                 },
             });
         });
+
+        $("input[type='checkbox']").on('change', function () {
+            $(this).val(this.checked ? "TRUE" : "FALSE");
+
+        })
+
     </script>
 }
