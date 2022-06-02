@@ -31,8 +31,13 @@ namespace Gestion_Proyectos.Controllers
             ViewBag.members = _usuarioBL.GetTeamMembers();
 
             var listaProyectos = _proyectoBL.GetProyectos(Session["filtrosGerencia"] as List<int>, Session["filtrosEstado"] as List<string>, Session["filtrosMember"] as List<int>);
+         
+            foreach (var proyecto in listaProyectos)
+            {
+                ViewBag.tareas = _tareBL.GetTareas(proyecto.IdProyecto);
+            }
 
-           
+
             return View(listaProyectos);
         }
         public ActionResult AñadirFiltros(List<int> lstGerencia = null, List<string> lstEstado = null, List<int> lstMember = null)
