@@ -32,11 +32,7 @@ namespace Gestion_Proyectos.Controllers
 
             var listaProyectos = _proyectoBL.GetProyectos(Session["filtrosGerencia"] as List<int>, Session["filtrosEstado"] as List<string>, Session["filtrosMember"] as List<int>);
          
-            foreach (var proyecto in listaProyectos)
-            {
-                ViewBag.tareas = _tareBL.GetTareas(proyecto.IdProyecto);
-            }
-
+          
 
             return View(listaProyectos);
         }
@@ -159,6 +155,19 @@ namespace Gestion_Proyectos.Controllers
             catch (Exception ex)
             {
                 return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetTareasPorProyecto(int Id)
+        {
+            try
+            {
+                var tareas = _tareBL.GetTareas(Id);
+                return Json(new { data = tareas, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Tarea_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
 

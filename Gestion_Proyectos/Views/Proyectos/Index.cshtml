@@ -7,7 +7,7 @@
     IEnumerable<string> permisosEscritura = Session["permisosEscritura"] != null ? Session["permisosEscritura"] as IEnumerable<string> : new List<string>();
     // Corregir posible causa del problema
     string escritura = permisosEscritura.Where(pe => pe.Trim() == "Proyectos").FirstOrDefault();
-    var tareas = ViewBag.tareas;
+   
 }
 
 <!-- Content Header (Page header) -->
@@ -69,7 +69,7 @@
 
                                         <tr>
                                             <td style="vertical-align:middle;">
-                                                <a href="#" class="btn btn-sm btn-primary" id="" data-toggle="modal" data-target="#exampleModalRequerimiento" style="display: flex;align-items: center;">
+                                                <a href="#" onclick="BuscarTareas('@item.IdProyecto')" class="btn btn-sm btn-primary" id="" data-toggle="modal" data-target="#exampleModalRequerimiento" style="display: flex;align-items: center;">
                                                     <i class="fa-solid fa-list-check" style="margin-right: 10px;"></i> @item.IdProyecto.
                                                 </a>
                                             </td>
@@ -127,36 +127,25 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0">
-                        
+                        <h5 class="modal-title" id="exampleModalLongTitle">Tareas</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="table-responsive">
-                            <table id="example2" class="table table-hover">
+                       
+                             <table id='example3' class='table table-hover'>
                                 <thead>
                                     <tr>
                                         <th>Tarea</th>
-                                        <th>Estado</th>
                                         <th>Porcentaje</th>
-                                       
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var tarea in tareas)
-                                    {
-
-                                        <tr>                                        
-                                            <td style="vertical-align:middle;">@tarea.NombreTarea</td>
-                                            <td style="vertical-align:middle;">@tarea.EstadoTarea</td>
-                                            <td style="vertical-align:middle;">@tarea.PorcentajeTarea</td>
-                                        </tr>
-
-                                    }
+                                <tbody class="agregarTablaTareas">
+                                   
                                 </tbody>
                             </table>
-                        </div>
                     </div>
 
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -185,10 +174,43 @@
                     url: "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
             });
-
-
         });
 
+
+        function BuscarTareas(IdProyecto) {
+
+            if (IdProyecto != "" ) {
+                    $.ajax({
+                        type: "get",
+                        url: '@Url.Action("GetTareasPorProyecto", "Proyectos")' + '?Id=' + IdProyecto,
+                        success: function (listaInformacion) {
+                            if (listaInformacion.data != 0) {
+                                $(listaInformacion.data).each(function (i, value) {
+                                    $(".agregarTablaTareas").append("<tr class='removerTablaTareas'>" +
+                                        "<td style='vertical-align:middle;'>" + value.NombreTarea + "</td>" +
+                                        "<td style='vertical-align:middle;'>" + value.PorcentajeTarea + "%</td>" +
+                                        "<td style='vertical-align:middle;'>" + value.EstadoTarea+"</td>"+
+                                        "</tr>" + "");
+                                });
+                            } else {
+                                $(".agregarTablaTareas").append("<tr class='removerTablaTareas'>" +
+                                    "<td style='vertical-align:middle;'> No hay tareas</td>" +
+                                    "</tr>" + "");
+                                console.log("No hay informacion");
+                            }
+
+
+                        },
+                        error: function (request, error) {
+                            console.log("Request: " + JSON.stringify(request));
+                        }
+                    });
+
+
+            }
+            $('.removerTablaTareas').remove();
+
+        }
 
 
 
