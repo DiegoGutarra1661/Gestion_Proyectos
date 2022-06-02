@@ -22,7 +22,6 @@ namespace Gestion_Proyectos_BL
             try
             {
                 var proyectos = _proyectoDA.ListarProyectos(lstGerencia,lstEstados,lstMembers);
-
                 return proyectos;
             }
             catch (Exception ex)

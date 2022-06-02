@@ -28,32 +28,49 @@
                                 <tr>
                                     <th style="width: 3%">ID</th>
                                     <th style="width: 5%">Presupuesto</th>
-                                    <th style="width: 20%">Gerencia Responsable</th>
-                                    <th style="width: 20%">Solicitante</th>
-                                    <th style="width: 22%">Título</th>
-                                    <th style="width: 22%">Alcance</th>
-                                    <th style="width: 2%">Detalle</th>
+                                    <th style="width: 16%">Gerencia Responsable</th>
+                                    <th style="width: 16%">Solicitante</th>
+                                    <th style="width: 16%">Título</th>
+                                    <th style="width: 16%">Alcance</th>
+                                    <th style="width: 8%">Estado</th>
+                                    <th style="width: 22%">Detalle</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>@item.IdRequerimiento</td>
-                                    <td>@item.DescripcionPresupuesto</td>
-                                    <td>@item.DescripcionGerencia</td>
-                                    <td>@item.DescripcionUsuario</td>
-                                    <td>@item.Titulo</td>
-                                    <td>@item.Alcance</td>
-                                    <td>
-                                       
-                                    </td>
-                                 
-                                </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                                   
+                                    <tr>
+                                        <td>@item.IdRequerimiento </td>
+                                        <td>@item.DescripcionPresupuesto</td>
+                                        <td>@item.DescripcionGerencia</td>
+                                        <td>@item.DescripcionUsuario</td>
+                                        <td>@item.Titulo</td>
+                                        <td>@item.Alcance</td>
+                                        <td style="vertical-align:middle;">
+                                            <span class="badge @item.getColorEstado()">@(item.DescripcionEstado)</span>
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <div style="text-align:center;">
+                                                <a href="#" onclick="BuscarRequerimiento('@item.IdRequerimiento')" class="btn btn-sm btn-primary" id="" data-toggle="modal" data-target="#exampleModalRequerimiento">
+                                                    <i class="fa-solid fa-circle-info"></i>
+                                                </a>
+                                                <a href="#" onclick="BuscarDocumentos('@item.IdRequerimiento')" class="btn btn-sm btn-secondary" id="buscarDocumentos" data-toggle="modal" data-target="#exampleModalCenter">
+                                                    <i class="fa-solid fa-file-lines"></i>
+                                                </a>
+                                                <a href="#" onclick="ConfirmarRegistro('@item.IdRequerimiento','1')" class="btn btn-sm btn-success"><i class="far fa-check-circle"></i></a>
+                                                <a href="#" onclick="ConfirmarRegistro('@item.IdRequerimiento','2')" class="btn btn-sm btn-danger"><i class="far fa-times-circle"></i></a>
+
+
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                      
+                    }
+                                </tbody>
+                                </table>
+                            </div>
                     <!-- /.card-body -->
 
                 </div>
@@ -62,8 +79,234 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+        <!-- Modal Requerimiento -->
+        <div class="modal fade" id="exampleModalRequerimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Titulo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="Alcance">Propósito y Alcance</label>
+                            <input type="text" class="form-control" id="Alcance" value="" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="Solicitante">Solicitante</label>
+                            <input type="text" class="form-control" id="Solicitante" value="" readonly>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="Gerencia">Gerencia</label>
+                            <input type="text" class="form-control" id="Gerencia" value="" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="Presupuesto">Presupuesto</label>
+                            <input type="text" class="form-control" id="Presupuesto" value="" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="Prioridad">Razón y Prioridad del Negocio</label>
+                            <input type="text" class="form-control" id="Prioridad" value="" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="Resumen">Resumen del Beneficio</label>
+                            <input type="text" class="form-control" id="Resumen" value="" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="Fecha">Fecha de Posible Reunion</label>
+                            <input type="text" class="form-control" id="Fecha" value="" readonly>
+                        </div>
+                    </div>
+ 
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Adjuntos -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Adjuntos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modalDocumentos">
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 
+@section Scripts {
+    <script>
+        function ConfirmarRegistro(codigoRequerimiento,estado) {
+            if (estado == 1) {
+                Swal.fire({
+                    title: '¿Seguro que deseas aprobar el requerimiento?',
+                    text: "Puede editar el estado del requerimiento posteriormente",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Sí, aprobar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('@Url.Action("ActualizarRequerimiento", "Proyectos")', { codigo: codigoRequerimiento, estado: estado },
+                            function (respuesta) {
+                                if (respuesta.success) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: respuesta.mensaje,
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    setTimeout(function () { location.reload(); }, 1500);
+                                } else {
+                                    Swal.fire(
+                                        '¡Error!',
+                                        respuesta.mensaje,
+                                        'error'
+                                    )
+                                }
+                                console.log(respuesta);
+
+                            }).fail(function (error) {
+                                console.log(error);
+                            });
+                    }
+                })
+            } else {
+                Swal.fire({
+                title: '¿Seguro que deseas rechazar el requerimiento?',
+                text: "Puede editar el estado del requerimiento posteriormente",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, rechazar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('@Url.Action("ActualizarRequerimiento", "Proyectos")', { codigo: codigoRequerimiento, estado: estado },
+                        function (respuesta) {
+                            if (respuesta.success) {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Se actualizó el estado del requerimiento a "Rechazado"',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                })
+                                setTimeout(function () { location.reload(); }, 1500);
+                            } else {
+                                Swal.fire(
+                                    '¡Error!',
+                                    respuesta.mensaje,
+                                    'error'
+                                )
+                            }
+                        console.log(respuesta);
+
+                    }).fail(function (error) {
+                        console.log(error);
+                    });
+                }
+            })
+            }
+
+        }
+
+        function BuscarDocumentos(IdRequerimiento) {
+
+            if (IdRequerimiento != "" ) {
+                    $.ajax({
+                        type: "get",
+                        url: '@Url.Action("GetAdjuntosRequerimiento", "Proyectos")' + '?Id=' + IdRequerimiento,
+                        success: function (listaInformacion) {
+                            if (listaInformacion.data != 0) {
+
+                                $(listaInformacion.data).each(function (i, value) {
+                                    var link = value.RutaAdjunto
+                                    var url = link.replace("~", "");
+                                    $(".modalDocumentos").append("<a id='adjunto_" + value.IdAdjunto + "' class='btn modalDocumentosDelete' target='_blank' href='" + url + "' style='font-size: 14px; display: flex;'> " +
+                                        "<i class='fa-solid fa-download' ></i> <label> " + value.NombreAdjunto + "</label>"+
+                                        "</a>" + "");
+
+                                });
+                            } else {
+                                $(".modalDocumentos").append("<h4 class='modalDocumentosDelete'>No hay documentos adjuntos</h4>");
+                                console.log("No hay informacion");
+                            }
+
+
+                        },
+                        error: function (request, error) {
+                            console.log("Request: " + JSON.stringify(request));
+                        }
+                    });
+
+
+            }
+            $('.modalDocumentosDelete').remove();
+
+        }
+
+        function BuscarRequerimiento(IdRequerimiento) {
+
+            if (IdRequerimiento != "" ) {
+                    $.ajax({
+                        type: "get",
+                        url: '@Url.Action("BuscarRequerimiento", "Proyectos")' + '?Id=' + IdRequerimiento,
+                        success: function (listaInformacion) {
+                            if (listaInformacion.data != null) {
+
+                                $(listaInformacion.data).each(function (i, value) {
+                                    $('#exampleModalLongTitle').text(value.Titulo);
+                                    $('#Alcance').val(value.Alcance);
+                                    $('#Solicitante').val(value.DescripcionUsuario);
+                                    $('#Gerencia').val(value.DescripcionGerencia);
+                                    $('#Presupuesto').val(value.DescripcionPresupuesto);
+                                    $('#Prioridad').val(value.Prioridad);
+                                    $('#Resumen').val(value.Resumen);
+                                    $('#Fecha').val(value.FechaFormateada);
+
+                                });
+                            } else {
+                                console.log("No hay informacion");
+                            }
+
+
+                        },
+                        error: function (request, error) {
+                            console.log("Request: " + JSON.stringify(request));
+                        }
+                    });
+
+
+            }
+           
+
+        }
+
+    </script>
+}

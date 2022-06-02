@@ -197,7 +197,8 @@ namespace Gestion_Proyectos_DA
                     if (!dr.IsDBNull(2))
                         reg.Descripcion = dr.GetString(2);
                     reg.EstadoProyecto = dr.GetString(3);
-                    reg.Avance = dr.GetDecimal(4);
+                    if (!dr.IsDBNull(4))
+                        reg.Avance = dr.GetDecimal(4);
                     if (!dr.IsDBNull(5))
                         reg.IdUsuarioSponsor = dr.GetInt32(5);
                     reg.Prioridad = dr.GetInt32(6);
@@ -309,7 +310,8 @@ namespace Gestion_Proyectos_DA
                     if (!dr.IsDBNull(2))
                         reg.Descripcion = dr.GetString(2);
                     reg.EstadoProyecto = dr.GetString(3);
-                    reg.Avance = dr.GetDecimal(4);
+                    if (!dr.IsDBNull(4))
+                        reg.Avance = dr.GetDecimal(4);
                     if (!dr.IsDBNull(5))
                         reg.IdUsuarioSponsor = dr.GetInt32(5);
                     reg.Prioridad = dr.GetInt32(6);

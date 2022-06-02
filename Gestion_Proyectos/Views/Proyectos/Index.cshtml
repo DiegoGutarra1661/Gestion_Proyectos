@@ -7,7 +7,9 @@
     IEnumerable<string> permisosEscritura = Session["permisosEscritura"] != null ? Session["permisosEscritura"] as IEnumerable<string> : new List<string>();
     // Corregir posible causa del problema
     string escritura = permisosEscritura.Where(pe => pe.Trim() == "Proyectos").FirstOrDefault();
+    var tareas = ViewBag.tareas;
 }
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -43,7 +45,8 @@
                                 <thead>
                                     <tr>
 
-                                        <th width="12%">ID</th>
+                                        <th>ID</th>
+
                                         <th>Nombre</th>
 
                                         <th>Prioridad</th>
@@ -64,12 +67,13 @@
                                     @foreach (var item in Model)
                                     {
 
-
                                         <tr>
-
                                             <td style="vertical-align:middle;">
-                                                @item.IdProyecto.
+                                                <a href="#" class="btn btn-sm btn-primary" id="" data-toggle="modal" data-target="#exampleModalRequerimiento" style="display: flex;align-items: center;">
+                                                    <i class="fa-solid fa-list-check" style="margin-right: 10px;"></i> @item.IdProyecto.
+                                                </a>
                                             </td>
+
                                             <td style="vertical-align:middle;">@item.Nombre</td>
 
                                             <td style="vertical-align:middle;">@item.Prioridad</td>
@@ -118,17 +122,58 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+        <!-- Modal Requerimiento -->
+        <div class="modal fade" id="exampleModalRequerimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tarea</th>
+                                        <th>Estado</th>
+                                        <th>Porcentaje</th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tarea in tareas)
+                                    {
+
+                                        <tr>                                        
+                                            <td style="vertical-align:middle;">@tarea.NombreTarea</td>
+                                            <td style="vertical-align:middle;">@tarea.EstadoTarea</td>
+                                            <td style="vertical-align:middle;">@tarea.PorcentajeTarea</td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 @section Scripts {
     <script>
-        $(function () {
-
+        $(document).ready(function () {
             $('#example2').DataTable({
                 "order": [[2, "asc"]],
-
                 "paging": true,
                 "lengthChange": true,
                 "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
@@ -136,11 +181,16 @@
                 "ordering": true,
                 "info": true,
                 "autoWidth": true,
-                "responsive": true,
                 "language": {
                     url: "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
             });
+
+
         });
+
+
+
+
     </script>
 }

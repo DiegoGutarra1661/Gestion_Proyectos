@@ -31,8 +31,13 @@ namespace Gestion_Proyectos.Controllers
             ViewBag.members = _usuarioBL.GetTeamMembers();
 
             var listaProyectos = _proyectoBL.GetProyectos(Session["filtrosGerencia"] as List<int>, Session["filtrosEstado"] as List<string>, Session["filtrosMember"] as List<int>);
+         
+            foreach (var proyecto in listaProyectos)
+            {
+                ViewBag.tareas = _tareBL.GetTareas(proyecto.IdProyecto);
+            }
 
-           
+
             return View(listaProyectos);
         }
         public ActionResult AñadirFiltros(List<int> lstGerencia = null, List<string> lstEstado = null, List<int> lstMember = null)
@@ -115,6 +120,59 @@ namespace Gestion_Proyectos.Controllers
             var listaRequerimientos = _requerimientoBL.GetRequerimientos();
 
             return View(listaRequerimientos);
+        }
+
+        [HttpPost]
+        public JsonResult ActualizarRequerimiento(string codigo = "", int estado = 0)
+        {
+            string mensaje;
+
+            try
+            {
+
+                mensaje = _requerimientoBL.RegistrarRequerimientoProyecto(codigo,estado);
+
+                if (mensaje.StartsWith("Error") || mensaje.StartsWith("No"))
+                {
+                    return Json(new { success = false, mensaje = mensaje });
+                }
+                else
+                {
+                    return Json(new { success = true, mensaje = mensaje });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return Json(new { success = false, mensaje = mensaje });
+            }
+        }
+
+        public JsonResult GetAdjuntosRequerimiento(string Id)
+        {
+            try
+            {
+                var adjuntos = _requerimientoBL.GetAdjuntos(Id);
+                return Json(new { data = adjuntos, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult BuscarRequerimiento(string Id)
+        {
+            try
+            {
+                var requerimiento = _requerimientoBL.BuscarRequerimiento(Id);
+                return Json(new { data = requerimiento, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Requerimiento_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
