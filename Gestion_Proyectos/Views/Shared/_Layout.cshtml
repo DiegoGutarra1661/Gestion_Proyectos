@@ -139,7 +139,7 @@
                             </ul>
                         }
 
-                        else
+                        else if (item.Trim() == "Proyectos")
                         {
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -149,6 +149,18 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                        <i class="far fa-list-alt nav-icon"></i>
+                                        <p>Listado</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+                        else
+                        {
+                           
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index", item.Trim())" class="nav-link">

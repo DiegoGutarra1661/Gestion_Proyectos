@@ -231,7 +231,31 @@ namespace Gestion_Proyectos_DA
             return lista;
         }
 
+        public IEnumerable<Proyecto_BE> ListarProyectosPorUsuario(int idUsuario)
+        {
+            List<Proyecto_BE> lista = new List<Proyecto_BE>();
 
+            using (var con = GetSqlConnGestionProyectos())
+            {
+                SqlCommand cmd = new SqlCommand("usp_buscarProyectosUsuario", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    Proyecto_BE reg = new Proyecto_BE();
+                    
+                    reg.Nombre = dr.GetString(0);
+                    reg.EstadoProyecto = dr.GetString(1);
+                    lista.Add(reg);
+
+                }
+                dr.Close(); con.Close();
+            }
+
+            return lista;
+        }
 
         public IEnumerable<Proyecto_BE> ListarProyectos(List<int> lstGerencia, List<string> lstEstados, List<int> lstMembers)
         {

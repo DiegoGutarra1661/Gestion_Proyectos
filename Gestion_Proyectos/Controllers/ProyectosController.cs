@@ -186,5 +186,18 @@ namespace Gestion_Proyectos.Controllers
                 return Json(new { data = new Requerimiento_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public JsonResult GetProyectosPorUsuario(int Id)
+        {
+            try
+            {
+                var proyectos = _proyectoBL.GetProyectosUsuario(Id);
+                return Json(new { data = proyectos, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
-﻿
+﻿@using Gestion_Proyectos_BE
 @{
     ViewBag.Title = "MisProyectos";
+    Usuario_BE reg = (Usuario_BE)Session["usuario"];
 }
 
 <section class="content-header">
@@ -22,21 +23,56 @@
                 </h3>
             </div>
             <div class="card-body">
-                
+
                 <div class="card card-secondary card-outline">
                     <div class="card-header">
                         <h5 class="card-title">Titulo Proyecto</h5>
                         <div class="card-tools">
-                            <a href="#" class="btn btn-tool">
+                            <a href="#" class="btn btn-secondary">
                                 <i class="fas fa-pen"></i>
                             </a>
-                            <a href="#" class="btn btn-tool">
+                            <a href="#" class="btn btn-danger">
                                 <i class="fas fa-pen"></i>
                             </a>
-                            <a href="#" class="btn btn-tool">
+                            <a href="#" class="btn btn-warning">
+                                <i class="fas fa-pen" style="color:white!important"></i>
+                            </a>
+                            <a href="#" class="btn btn-success">
                                 <i class="fas fa-pen"></i>
                             </a>
-                            <a href="#" class="btn btn-tool">
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Tareas
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card card-row card-primary">
+            <div class="card-header bg-danger">
+                <h3 class="card-title">
+                    En Espera
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="card card-danger card-outline">
+                    <div class="card-header">
+                        <h5 class="card-title">Titulo Proyecto</h5>
+                        <div class="card-tools">
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-warning">
+                                <i class="fas fa-pen" style="color:white!important"></i>
+                            </a>
+                            <a href="#" class="btn btn-success">
                                 <i class="fas fa-pen"></i>
                             </a>
                         </div>
@@ -50,57 +86,35 @@
                 </div>
             </div>
         </div>
-        <div class="card card-row card-primary">
-            <div class="card-header bg-danger">
-                <h3 class="card-title">
-                    En Espera
-                </h3>
-            </div>
-            <div class="card-body">
-                <div class="card card-danger card-outline">
-                    <div class="card-header">
-                        <h5 class="card-title">Create first milestone</h5>
-                        <div class="card-tools">
-                            <a href="#" class="btn btn-tool">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                            <a href="#" class="btn btn-tool">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                            <a href="#" class="btn btn-tool">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                            <a href="#" class="btn btn-tool">
-                                <i class="fas fa-pen"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="card card-row card-default">
             <div class="card-header bg-warning">
-                <h3 class="card-title">
+                <h3 class="card-title" style="color:white!important;">
                     En Proceso
                 </h3>
             </div>
             <div class="card-body">
-                <div class="card card-light card-outline">
+                <div class="card card-warning card-outline">
                     <div class="card-header">
-                        <h5 class="card-title">Update Readme</h5>
+                        <h5 class="card-title">Titulo Proyecto</h5>
                         <div class="card-tools">
-                            <a href="#" class="btn btn-tool btn-link">#2</a>
-                            <a href="#" class="btn btn-tool">
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-warning">
+                                <i class="fas fa-pen" style="color:white!important"></i>
+                            </a>
+                            <a href="#" class="btn btn-success">
                                 <i class="fas fa-pen"></i>
                             </a>
                         </div>
+
                     </div>
                     <div class="card-body">
                         <p>
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                            Aenean commodo ligula eget dolor. Aenean massa.
-                            Cum sociis natoque penatibus et magnis dis parturient montes,
-                            nascetur ridiculus mus.
+                            Tareas
                         </p>
                     </div>
                 </div>
@@ -113,18 +127,197 @@
                 </h3>
             </div>
             <div class="card-body">
-                <div class="card card-primary card-outline">
+                <div class="card card-success card-outline">
                     <div class="card-header">
-                        <h5 class="card-title">Create repo</h5>
+                        <h5 class="card-title">Titulo Proyecto</h5>
                         <div class="card-tools">
-                            <a href="#" class="btn btn-tool btn-link">#1</a>
-                            <a href="#" class="btn btn-tool">
+                            <a href="#" class="btn btn-secondary">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-warning">
+                                <i class="fas fa-pen" style="color:white!important"></i>
+                            </a>
+                            <a href="#" class="btn btn-success">
                                 <i class="fas fa-pen"></i>
                             </a>
                         </div>
-                    </div>  
+
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            Tareas
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var IdUsuario = @reg.IdUsuario;
+            console.log(IdUsuario);
+            if (IdUsuario != "" ) {
+                    $.ajax({
+                        type: "get",
+                        url: '@Url.Action("GetProyectosPorUsuario", "Proyectos")' + '?Id=' + IdUsuario,
+                        success: function (listaInformacion) {
+                            if (listaInformacion.data != 0) {
+
+                                $(listaInformacion.data).each(function (i, value) {
+                                    
+                                    if (value.EstadoProyecto == "No iniciado") {
+                                        console.log("No iniciado: "+value.Nombre);
+                                    }else
+                                    if (value.EstadoProyecto == "En proceso") {
+                                        console.log("En proceso: " +value.Nombre);
+                                    }else
+                                    if (value.EstadoProyecto == "Concluido") {
+                                        console.log("Concluido: " +value.Nombre);
+                                    }else
+                                    if (value.EstadoProyecto == "Detenido") {
+                                        console.log("Detenido: " +value.Nombre);
+                                    }
+                                    
+
+                                });
+                            } else {
+                                
+                                console.log("No hay informacion");
+                            }
+
+
+                        },
+                        error: function (request, error) {
+                            console.log("Request: " + JSON.stringify(request));
+                        }
+                    });
+
+
+            }
+
+        });
+
+        function ConfirmarRegistro(codigoRequerimiento,estado) {
+            if (estado == 1) {
+                Swal.fire({
+                    title: '¿Seguro que deseas aprobar el requerimiento?',
+                    text: "Puede editar el estado del requerimiento posteriormente",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Sí, aprobar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('@Url.Action("ActualizarRequerimiento", "Proyectos")', { codigo: codigoRequerimiento, estado: estado },
+                            function (respuesta) {
+                                if (respuesta.success) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: respuesta.mensaje,
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    setTimeout(function () { location.reload(); }, 1500);
+                                } else {
+                                    Swal.fire(
+                                        '¡Error!',
+                                        respuesta.mensaje,
+                                        'error'
+                                    )
+                                }
+                                console.log(respuesta);
+
+                            }).fail(function (error) {
+                                console.log(error);
+                            });
+                    }
+                })
+            } else {
+                Swal.fire({
+                title: '¿Seguro que deseas rechazar el requerimiento?',
+                text: "Puede editar el estado del requerimiento posteriormente",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, rechazar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('@Url.Action("ActualizarRequerimiento", "Proyectos")', { codigo: codigoRequerimiento, estado: estado },
+                        function (respuesta) {
+                            if (respuesta.success) {
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Se actualizó el estado del requerimiento a "Rechazado"',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                })
+                                setTimeout(function () { location.reload(); }, 1500);
+                            } else {
+                                Swal.fire(
+                                    '¡Error!',
+                                    respuesta.mensaje,
+                                    'error'
+                                )
+                            }
+                        console.log(respuesta);
+
+                    }).fail(function (error) {
+                        console.log(error);
+                    });
+                }
+            })
+            }
+
+        }
+
+        function BuscarDocumentos(IdRequerimiento) {
+
+            if (IdRequerimiento != "" ) {
+                    $.ajax({
+                        type: "get",
+                        url: '@Url.Action("GetAdjuntosRequerimiento", "Proyectos")' + '?Id=' + IdRequerimiento,
+                        success: function (listaInformacion) {
+                            if (listaInformacion.data != 0) {
+
+                                $(listaInformacion.data).each(function (i, value) {
+                                    var link = value.RutaAdjunto
+                                    var url = link.replace("~", "");
+                                    $(".modalDocumentos").append("<a id='adjunto_" + value.IdAdjunto + "' class='btn modalDocumentosDelete' target='_blank' href='" + url + "' style='font-size: 14px; display: flex;'> " +
+                                        "<i class='fa-solid fa-download' ></i> <label> " + value.NombreAdjunto + "</label>"+
+                                        "</a>" + "");
+
+                                });
+                            } else {
+                                $(".modalDocumentos").append("<h4 class='modalDocumentosDelete'>No hay documentos adjuntos</h4>");
+                                console.log("No hay informacion");
+                            }
+
+
+                        },
+                        error: function (request, error) {
+                            console.log("Request: " + JSON.stringify(request));
+                        }
+                    });
+
+
+            }
+            $('.modalDocumentosDelete').remove();
+
+        }
+
+
+
+    </script>
+}

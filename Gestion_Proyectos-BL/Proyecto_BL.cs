@@ -30,6 +30,19 @@ namespace Gestion_Proyectos_BL
             }
         }
 
+        public IEnumerable<Proyecto_BE> GetProyectosUsuario(int idUsuario)
+        {
+            try
+            {
+                var proyectos = _proyectoDA.ListarProyectosPorUsuario(idUsuario);
+                return proyectos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al listar proyectos por usuario ==> {ex.Message}");
+            }
+        }
+
         public List<string> GetMembers(int idProyecto, int idFuncion)
         {
             try
