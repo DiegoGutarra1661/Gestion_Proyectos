@@ -336,6 +336,16 @@ namespace Gestion_Proyectos_DA
                         reg.DiasRestantes = dr.GetInt32(13);
                     }
                     reg.AvancePorcentaje = dr.GetDecimal(14);
+                    reg.AvanceAutomaticoPlanificado = dr.GetDecimal(15);
+                    reg.AvancePlanificadoFinal = dr.GetDecimal(16);
+                    reg.AvanceReal = dr.GetDecimal(17);
+                    reg.Desviacion = dr.GetDecimal(18);
+                    reg.FechaFinProyectada = dr.GetString(19);
+                    reg.Proveedor = dr.GetString(20);
+                    reg.ResponsableLiberacion = dr.GetString(21);
+                    reg.DescripcionETALiberacion = dr.GetString(22);
+                    reg.Comentario = dr.GetString(23);
+                    reg.DescripcionSolicitante = dr.GetString(24);
                     reg.ListaMemberes = ListarMembers(reg.IdProyecto);
                     /*if (!dr.IsDBNull(12))
                         reg.Estado = dr.GetInt32(12);

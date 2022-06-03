@@ -118,6 +118,11 @@ namespace Gestion_Proyectos.Controllers
             return View(listaRequerimientos);
         }
 
+        public ActionResult MisProyectos()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult ActualizarRequerimiento(string codigo = "", int estado = 0)
         {
