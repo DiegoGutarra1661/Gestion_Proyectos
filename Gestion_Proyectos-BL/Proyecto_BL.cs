@@ -11,10 +11,11 @@ namespace Gestion_Proyectos_BL
     public class Proyecto_BL
     {
         private readonly Proyecto_DA _proyectoDA;
-
+        private readonly Tarea_DA _tareaDA;
         public Proyecto_BL()
         {
             _proyectoDA = new Proyecto_DA();
+            _tareaDA = new Tarea_DA();
         }
 
         public IEnumerable<Proyecto_BE> GetProyectos(List<int> lstGerencia, List<string> lstEstados, List<int> lstMembers)
@@ -35,6 +36,11 @@ namespace Gestion_Proyectos_BL
             try
             {
                 var proyectos = _proyectoDA.ListarProyectosPorUsuario(idUsuario);
+                foreach(var tareas in proyectos)
+                {   
+                    tareas.Tareas = _tareaDA.ListarTareasPorProyecto(tareas.IdProyecto);
+                }
+
                 return proyectos;
             }
             catch (Exception ex)

@@ -2184,6 +2184,7 @@
     <Content Include="StylesRequerimiento\fonts\icomoon\selection.json" />
     <Content Include="Views\Proyectos\Requerimientos.cshtml" />
     <Content Include="Views\Proyectos\MisProyectos.cshtml" />
+    <Content Include="Views\Shared\_LayoutKanban.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

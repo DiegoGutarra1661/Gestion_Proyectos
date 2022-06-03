@@ -130,5 +130,7 @@ namespace Gestion_Proyectos.Controllers
             _usuarioBL.CerrarSesion();
             return RedirectToAction("Login", "Account");
         }
+
+
     }
 }

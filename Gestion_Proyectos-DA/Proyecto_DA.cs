@@ -234,6 +234,7 @@ namespace Gestion_Proyectos_DA
         public IEnumerable<Proyecto_BE> ListarProyectosPorUsuario(int idUsuario)
         {
             List<Proyecto_BE> lista = new List<Proyecto_BE>();
+           
 
             using (var con = GetSqlConnGestionProyectos())
             {
@@ -245,9 +246,9 @@ namespace Gestion_Proyectos_DA
                 while (dr.Read())
                 {
                     Proyecto_BE reg = new Proyecto_BE();
-                    
-                    reg.Nombre = dr.GetString(0);
-                    reg.EstadoProyecto = dr.GetString(1);
+                    reg.IdProyecto = dr.GetInt32(0);
+                    reg.Nombre = dr.GetString(1);
+                    reg.EstadoProyecto = dr.GetString(2);
                     lista.Add(reg);
 
                 }
