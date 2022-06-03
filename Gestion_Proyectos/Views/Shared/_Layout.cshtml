@@ -6,7 +6,7 @@
     List<string> permisosLecura = Session["permisosLectura"] as List<string>;
     List<int> filtrosGerencia = Session["filtrosGerencia"] as List<int>;
     List<string> filtrosEstado = ((Session["filtrosEstado"] as List<string>) == null ? new List<string>() : (Session["filtrosEstado"] as List<string>));
-    List<int> filtrosMember = ((Session["filtrosMember"] as List<int>) == null ? new List<int>(): (Session["filtrosMember"] as List<int>));
+    List<int> filtrosMember = ((Session["filtrosMember"] as List<int>) == null ? new List<int>() : (Session["filtrosMember"] as List<int>));
     Usuario_BE reg = ((Session["usuario"] as Usuario_BE) != null) ? Session["usuario"] as Usuario_BE : new Usuario_BE();
 
 }
@@ -137,19 +137,28 @@
                                     </a>
                                 </li>
                             </ul>
-                    }
-                    else
-                    {
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", item.Trim())" class="nav-link">
-                                <i class="far fa-list-alt nav-icon"></i>
-                                <p>Listado</p>
-                            </a>
-                        </li>
-                    </ul>
-                    }
-                        
+                        }
+
+                        else
+                        {
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("MisProyectos", "Proyectos")" class="nav-link">
+                                        <i class="far fa-list-alt nav-icon"></i>
+                                        <p>Mis Proyectos</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                        <i class="far fa-list-alt nav-icon"></i>
+                                        <p>Listado</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        }
+
                     </li>
                             }
                         }
@@ -250,7 +259,7 @@
     <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/plugins/jszip/jszip.min.js"></script>
     <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
     <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
@@ -263,8 +272,8 @@
     <script>
         $(function () {
             $('#example1').DataTable({
-                
-                
+
+
             });
             $('#tablaUsuarios').DataTable({
                 "order": [[0, "asc"]],

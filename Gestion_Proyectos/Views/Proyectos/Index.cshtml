@@ -7,7 +7,7 @@
     IEnumerable<string> permisosEscritura = Session["permisosEscritura"] != null ? Session["permisosEscritura"] as IEnumerable<string> : new List<string>();
     // Corregir posible causa del problema
     string escritura = permisosEscritura.Where(pe => pe.Trim() == "Proyectos").FirstOrDefault();
-    var tareas = ViewBag.tareas;
+   
 }
 
 <!-- Content Header (Page header) -->
@@ -49,13 +49,24 @@
 
                                         <th>Nombre</th>
 
-                                        <th>Prioridad</th>
-                                        <th>Área</th>
-                                        <th>Fecha Inicio</th>
-                                        <th>Fecha Conclusión Estimada</th>
-                                        <th>Días de Proyecto</th>
-                                        <th>Porcentaje</th>
+                                        <th>Descripción</th>
                                         <th>Estado</th>
+                                        <th>Prioridad</th>
+                                        <th>Gerencia</th>
+                                        <th>Solicitante</th>
+                                        <th>Proveedor</th>
+                                        <th>Inicio Planificado</th>
+                                        <th>Fin Planificado</th>
+                                        <th>Inicio Real</th>
+                                        <th>Fin Real</th>
+                                        <th>Avance Planificado Fijo</th>
+                                        <th>Avance automático planificado</th>
+                                        <th>Avance Planificado final</th>
+                                        <th>Avance Real</th>
+                                        <th>Desviación</th>
+                                        <th>Responsable Liberación</th>
+                                        <th>ETA Liberación</th>
+                                        <th>Fecha Fin Proyectada</th>
                                         @if (escritura != null)
                                         {
                                             <th>Operaciones</th>
@@ -67,48 +78,55 @@
                                     @foreach (var item in Model)
                                     {
 
-                                        <tr>
-                                            <td style="vertical-align:middle;">
-                                                <a href="#" class="btn btn-sm btn-primary" id="" data-toggle="modal" data-target="#exampleModalRequerimiento" style="display: flex;align-items: center;">
-                                                    <i class="fa-solid fa-list-check" style="margin-right: 10px;"></i> @item.IdProyecto.
-                                                </a>
+                                    <tr>
+                                        <td style="vertical-align:middle;">
+                                            <a href="#" onclick="BuscarTareas('@item.IdProyecto')" class="btn btn-sm btn-primary" id="" data-toggle="modal" data-target="#exampleModalRequerimiento" style="display: flex;align-items: center;">
+                                                <i class="fa-solid fa-list-check" style="margin-right: 10px;"></i> @item.IdProyecto.
+                                            </a>
+                                        </td>
+
+                                        <td style="vertical-align:middle;">@item.Nombre</td>
+                                        <td style="vertical-align:middle;">@item.Descripcion</td>
+                                        <td style="vertical-align:middle;">
+                                            <span class="badge @item.getColorEstado()">@(item.EstadoProyecto)</span>
+                                        </td>
+                                        <td style="vertical-align:middle;">@item.Prioridad</td>
+                                        <td style="vertical-align:middle;">@item.AreaProyecto</td>
+                                        <td style="vertical-align:middle;">@item.DescripcionSolicitante</td>
+                                        <td style="vertical-align:middle;">@item.Proveedor</td>
+                                        <td style="vertical-align:middle;">@(item.FechaInicioEstimada.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicioEstimada.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">@(item.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluidoEstimada.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">@(item.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicio.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">@(item.FechaConcluido.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluido.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">@(item.AvanceAutomaticoPlanificado.ToString() + '%')</td>
+                                        <td style="vertical-align:middle;">@(item.AvancePlanificadoFinal.ToString() + '%')</td>
+                                        <td class="text-center" style="vertical-align:middle;"><span class="badge @item.getColorAvance()">@(item.AvancePorcentaje.ToString() + '%')</span></td>
+                                        <td style="vertical-align:middle;">@(item.Desviacion.ToString() + '%')</td>
+                                        <td style="vertical-align:middle;">@item.ResponsableLiberacion</td>
+                                        <td style="vertical-align:middle;">@item.DescripcionETALiberacion</td>
+                                        <td style="vertical-align:middle;">@item.Comentario</td>
+                                        <td style="vertical-align:middle;">@item.FechaFinProyectada</td>
+                                        @if (escritura != null)
+                                        {
+                                            <td class="text-center" style="vertical-align:middle;">
+                                                <a href="@Url.Action("Editar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="far fa-edit"></i></a>
+                                                <a href="@Url.Action("Asignar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="fas fa-user-plus"></i></a>
+
                                             </td>
+                                        }
+                                        <td style="vertical-align:middle;">
 
-                                            <td style="vertical-align:middle;">@item.Nombre</td>
+                                            <div class="cont" style="width: 100px;">
+                                                @foreach (var ini in item.ListaMemberes)
+                                                {
+                                                    <div class="bg-primary circulo" title="@ini.Alias">
+                                                        <p>@ini.Iniciales</p>
+                                                    </div>
+                                                }
 
-                                            <td style="vertical-align:middle;">@item.Prioridad</td>
-                                            <td style="vertical-align:middle;">@item.AreaProyecto</td>
-                                            <td style="vertical-align:middle;">@(item.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicio.ToString("dd/MM/yyyy"))</td>
-                                            <td style="vertical-align:middle;">@(item.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluidoEstimada.ToString("dd/MM/yyyy"))</td>
-                                            <td style="vertical-align:middle;">
-                                                @item.DiasRestantes
-
-                                            </td>
-                                            <td class="text-center" style="vertical-align:middle;"><span class="badge @item.getColorAvance()">@(item.AvancePorcentaje.ToString() + '%')</span></td>
-                                            <td style="vertical-align:middle;">
-                                                <span class="badge @item.getColorEstado()">@(item.EstadoProyecto)</span>
-                                            </td>
-                                            @if (escritura != null)
-                                            {
-                                                <td class="text-center" style="vertical-align:middle;">
-                                                    <a href="@Url.Action("Editar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="far fa-edit"></i></a>
-                                                    <a href="@Url.Action("Asignar", "Proyectos", new { idProyecto = item.IdProyecto })"><i class="fas fa-user-plus"></i></a>
-
-                                                </td>
-                                            }
-                                            <td style="vertical-align:middle;">
-
-                                                <div class="cont" style="width: 100px;">
-                                                    @foreach (var ini in item.ListaMemberes)
-                                                    {
-                                                        <div class="bg-primary circulo" title="@ini.Alias">
-                                                            <p>@ini.Iniciales</p>
-                                                        </div>
-                                                    }
-
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            </div>
+                                        </td>
+                                    </tr>
 
                                     }
                                 </tbody>
@@ -127,38 +145,26 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0">
-                        
+                        <h5 class="modal-title" id="exampleModalLongTitle">Tareas</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive">
-                            <table id="example2" class="table table-hover">
+                            <table id='example3' class='table table-hover'>
                                 <thead>
                                     <tr>
                                         <th>Tarea</th>
-                                        <th>Estado</th>
                                         <th>Porcentaje</th>
-                                       
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (var tarea in tareas)
-                                    {
-
-                                        <tr>                                        
-                                            <td style="vertical-align:middle;">@tarea.NombreTarea</td>
-                                            <td style="vertical-align:middle;">@tarea.EstadoTarea</td>
-                                            <td style="vertical-align:middle;">@tarea.PorcentajeTarea</td>
-                                        </tr>
-
-                                    }
+                                <tbody class="agregarTablaTareas">
                                 </tbody>
                             </table>
                         </div>
                     </div>
-
                     <div class="modal-footer border-top-0 d-flex justify-content-center">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
@@ -173,7 +179,7 @@
     <script>
         $(document).ready(function () {
             $('#example2').DataTable({
-                "order": [[2, "asc"]],
+                "order": [[4, "asc"]],
                 "paging": true,
                 "lengthChange": true,
                 "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
@@ -181,14 +187,61 @@
                 "ordering": true,
                 "info": true,
                 "autoWidth": true,
+                "responsive": true,
                 "language": {
                     url: "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
                 },
             });
 
-
+           
         });
 
+
+        function BuscarTareas(IdProyecto) {
+
+            if (IdProyecto != "" ) {
+                    $.ajax({
+                        type: "get",
+                        url: '@Url.Action("GetTareasPorProyecto", "Proyectos")' + '?Id=' + IdProyecto,
+                        success: function (listaInformacion) {
+                            if (listaInformacion.data != 0) {
+                                $(listaInformacion.data).each(function (i, value) {
+                                    var estados = "";
+                                    if (value.EstadoTarea == 1) {
+                                        estados = "<span class='badge bg-secondary'>No Iniciado</span>";
+                                    } else if(value.EstadoTarea == 2){
+                                        estados = "<span class='badge bg-warning'>En proceso</span>";
+                                    } else if (value.EstadoTarea == 3) {
+                                        estados = "<span class='badge bg-success'>Concluido</span>";
+                                    } else if (value.EstadoTarea == 4) {
+                                        estados = "<span class='badge bg-danger'>Detenido</span>";
+                                    }
+
+                                    $(".agregarTablaTareas").append("<tr class='removerTablaTareas'>" +
+                                        "<td style='vertical-align:middle;'>" + value.NombreTarea + "</td>" +
+                                        "<td style='vertical-align:middle;'>" + value.PorcentajeTarea + "%</td>" +
+                                        "<td style='vertical-align:middle;'>" + estados+"</td>"+
+                                        "</tr>" + "");
+                                });
+                            } else {
+                                $(".agregarTablaTareas").append("<tr class='removerTablaTareas'>" +
+                                    "<td style='vertical-align:middle;'> No hay tareas</td>" +
+                                    "</tr>" + "");
+                                console.log("No hay informacion");
+                            }
+
+
+                        },
+                        error: function (request, error) {
+                            console.log("Request: " + JSON.stringify(request));
+                        }
+                    });
+
+
+            }
+            $('.removerTablaTareas').remove();
+
+        }
 
 
 

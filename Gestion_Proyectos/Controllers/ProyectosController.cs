@@ -116,6 +116,11 @@ namespace Gestion_Proyectos.Controllers
             return View(listaRequerimientos);
         }
 
+        public ActionResult MisProyectos()
+        {
+            return View();
+        }
+
         [HttpPost]
         public JsonResult ActualizarRequerimiento(string codigo = "", int estado = 0)
         {
@@ -153,6 +158,19 @@ namespace Gestion_Proyectos.Controllers
             catch (Exception ex)
             {
                 return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetTareasPorProyecto(int Id)
+        {
+            try
+            {
+                var tareas = _tareBL.GetTareas(Id);
+                return Json(new { data = tareas, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Tarea_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
 

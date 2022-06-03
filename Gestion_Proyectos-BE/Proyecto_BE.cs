@@ -42,7 +42,14 @@ namespace Gestion_Proyectos_BE
         public string Comentario { get; set; }
         public string ResponsableLiberacion { get; set; }
         public DateTime ETALiberacion { get; set; }
-
+        //
+        public Decimal AvanceAutomaticoPlanificado { get; set; }
+        public Decimal AvancePlanificadoFinal { get; set; }
+        public Decimal AvanceReal { get; set; }
+        public Decimal Desviacion { get; set; }
+        public string FechaFinProyectada { get; set; }
+        public string DescripcionETALiberacion { get; set; }
+        public string DescripcionSolicitante { get; set; }
         public string getColorAvance()
         {
             if (EstadoProyecto == "En proceso" && FechaConcluidoEstimada > DateTime.Now)
