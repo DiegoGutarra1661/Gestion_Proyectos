@@ -11,20 +11,34 @@
         border-radius: 5px;
     }
 
+    .checkSuccess .custom-control-input:checked ~ .custom-control-label::before {     
+        border-color: #28a745!important;
+    }
+
     .checkDanger .custom-control-input:checked ~ .custom-control-label::after {
         background-color: #dc3545;
         border-radius: 5px;
+    }
+    .checkDanger .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: #dc3545 !important;
     }
 
     .checkWarning .custom-control-input:checked ~ .custom-control-label::after {
         background-color: #ffc107;
         border-radius: 5px;
     }
+    .checkWarning .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: #dc3545 !important;
+    }
 
     .checkSecondary .custom-control-input:checked ~ .custom-control-label::after {
         background-color: #6c757d;
         border-radius: 5px;
     }
+    .checkSecondary .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: #6c757d !important;
+    }
+
 </style>
 
     <section class="content-header">
@@ -114,16 +128,16 @@
                                             "<div class='card-header'>" +
                                             "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                             "<div class='card-tools'>" +
-                                            "<a href='#' class='btn btn-tool'>" +
+                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",1)'>" +
                                             "<i class='fas fa-pen' style='color: #6c757d;'></i>" +
                                             "</a>" +
-                                            "<a href='#' class='btn btn-tool'>" +
+                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",4)'>" +
                                             "<i class='fas fa-pen' style='color: #dc3545;'></i>" +
                                             "</a>" +
-                                            "<a href='#' class='btn btn-tool'>" +
+                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",2)'>" +
                                             "<i class='fas fa-pen' style='color:#ffc107;'></i>" +
                                             "</a>" +
-                                            "<a href='#' class='btn btn-tool'>" +
+                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                             "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                             "</a>" +
                                             "<a href='#' class='btn btn-tool'>" +
@@ -147,16 +161,16 @@
                                                     "<div class='card-header'>" +
                                                     "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                                     "<div class='card-tools'>" +
-                                                    "<a href='#' class='btn btn-tool'>" +
+                                                    "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",1)'>" +
                                                     "<i class='fas fa-pen' style='color: #6c757d;'></i>" +
                                                     "</a>" +
-                                                    "<a href='#' class='btn btn-tool'>" +
+                                                    "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",4)'>" +
                                                     "<i class='fas fa-pen' style='color: #dc3545;'></i>" +
                                                     "</a>" +
-                                                    "<a href='#' class='btn btn-tool'>" +
+                                                    "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",2)'>" +
                                                     "<i class='fas fa-pen' style='color:#ffc107;'></i>" +
                                                     "</a>" +
-                                                    "<a href='#' class='btn btn-tool'>" +
+                                                    "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                                     "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                                     "</a>" +
                                                     "<a href='#' class='btn btn-tool'>" +
@@ -177,16 +191,16 @@
                                                         "<div class='card-header'>" +
                                                         "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                                         "<div class='card-tools'>" +
-                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + "," + "'No iniciado'"+")'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",1)'>" +
                                                         "<i class='fas fa-pen' style='color: #6c757d;'></i>" +
                                                         "</a>" +
-                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + "," +"'Detenido'"+")'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",4)'>" +
                                                         "<i class='fas fa-pen' style='color: #dc3545;'></i>" +
                                                         "</a>" +
-                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + "," +"'En proceso'"+")'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",2)'>" +
                                                         "<i class='fas fa-pen' style='color:#ffc107;'></i>" +
                                                         "</a>" +
-                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",'Concluido')'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                                         "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                                         "</a>" +
                                                         "<a href='#' class='btn btn-tool'>" +
@@ -209,16 +223,16 @@
                                                             "<div class='card-header'style='word-break: break-all;'>" +
                                                             "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                                             "<div class='card-tools'>" +
-                                                            "<a href='#' class='btn btn-tool'>" +
+                                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",1)'>" +
                                                             "<i class='fas fa-pen' style='color: #6c757d;'></i>" +
                                                             "</a>" +
-                                                            "<a href='#' class='btn btn-tool'>" +
+                                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",4)'>" +
                                                             "<i class='fas fa-pen' style='color: #dc3545;'></i>" +
                                                             "</a>" +
-                                                            "<a href='#' class='btn btn-tool'>" +
+                                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",2)'>" +
                                                             "<i class='fas fa-pen' style='color:#ffc107;'></i>" +
                                                             "</a>" +
-                                                            "<a href='#' class='btn btn-tool'>" +
+                                                            "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                                             "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                                             "</a>" +
                                                             "<a href='#' class='btn btn-tool'>" +
@@ -284,7 +298,19 @@
 
 
         function ConfirmarActualizacion(codigo,estado) {
-            
+
+            var nombreEstado = "";
+            if (estado == 1) {
+                nombreEstado = "No iniciado";
+            } else if (estado == 2) {
+                nombreEstado = "En proceso";
+            } else if (estado == 3) {
+                nombreEstado = "Concluido";
+            } else if (estado == 4) {
+                nombreEstado = "Detenido";
+            }
+
+
                 Swal.fire({
                     title: '¿Seguro que deseas actualizar estado del proyecto?',
                     text: "Puede editar el estado del requerimiento posteriormente",
@@ -296,7 +322,7 @@
                     confirmButtonText: 'Sí, actualizar!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $.post('@Url.Action("ActualizarProyectoEstado", "Proyectos")', { codigo: codigo, estado: estado },
+                        $.post('@Url.Action("ActualizarProyectoEstado", "Proyectos")', { codigo: codigo, estado: nombreEstado },
                             function (respuesta) {
                                 if (respuesta.success) {
                                     Swal.fire({
