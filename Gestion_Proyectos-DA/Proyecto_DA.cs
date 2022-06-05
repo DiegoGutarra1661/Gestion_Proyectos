@@ -178,6 +178,41 @@ namespace Gestion_Proyectos_DA
             }
         }
 
+        public void ActualizarEstadoProyecto(int idProyecto, string estado)
+        {
+            int rs = 0;
+           
+            using (var con = GetSqlConnGestionProyectos())
+            {
+
+                con.Open();
+
+                try
+                {
+                    // Definir el SqlCommand y el tipo de instruccion
+                    SqlCommand cmd = new SqlCommand("usp_actualizarEstadoProyecto", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@idProyecto", idProyecto);
+                    cmd.Parameters.AddWithValue("@estadoProyecto", estado);
+                    rs = cmd.ExecuteNonQuery();
+                    
+                
+
+                }
+                catch (SqlException ex)
+                {
+                   
+                    con.Close();
+                }
+                finally
+                {
+                    con.Close();
+                }
+
+
+            }
+        }
+
         public IEnumerable<Proyecto_BE> ListarProyectos()
         {
             List<Proyecto_BE> lista = new List<Proyecto_BE>();

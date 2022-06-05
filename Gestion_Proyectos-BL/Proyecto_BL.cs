@@ -175,5 +175,23 @@ namespace Gestion_Proyectos_BL
                 throw new Exception($"Error al quitar asignacion ==> {ex.Message}");
             }
         }
+
+        public string ActualizarEstadoProyecto(int codigo, string estado)
+        {
+            string mensaje = "";
+            try
+            {
+
+                _proyectoDA.ActualizarEstadoProyecto(codigo, estado);
+                mensaje = "Se actualizó el estado del proyecto";
+
+            }
+            catch
+            {
+                mensaje = "Error en actualizar el estado del proyecto";
+
+            }
+            return mensaje;
+        }
     }
 }

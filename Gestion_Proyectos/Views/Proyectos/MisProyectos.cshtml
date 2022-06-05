@@ -5,6 +5,27 @@
     Layout = "~/Views/Shared/_LayoutKanban.cshtml";
 }
 
+<style>
+    .checkSuccess .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #28a745;
+        border-radius: 5px;
+    }
+
+    .checkDanger .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #dc3545;
+        border-radius: 5px;
+    }
+
+    .checkWarning .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #ffc107;
+        border-radius: 5px;
+    }
+
+    .checkSecondary .custom-control-input:checked ~ .custom-control-label::after {
+        background-color: #6c757d;
+        border-radius: 5px;
+    }
+</style>
 
     <section class="content-header">
         <div class="container-fluid">
@@ -87,7 +108,7 @@
                             if (listaInformacion.data != 0) {
 
                                 $(listaInformacion.data).each(function (i, value) {
-                                    
+
                                     if (value.EstadoProyecto == "No iniciado") {
                                         $(".cardPorHacer").append("<div class='card card-secondary card-outline'>" +
                                             "<div class='card-header'>" +
@@ -111,13 +132,13 @@
                                             "</div>" +
                                             "</div >" +
                                             "<div class='card-body'>" +
-                                            "<div class='agregarTareas'>" +
+                                            "<div class='agregarTareas" + value.IdProyecto + "'>" +
 
                                             "</div>" +
                                             "</div>" +
                                             "</div>" + "");
-                                        
-                                            
+
+
 
                                         } else
                                             if (value.EstadoProyecto == "Detenido") {
@@ -144,11 +165,8 @@
                                                     "</div>" +
                                                     "</div >" +
                                                     "<div class='card-body'>" +
-                                                    "<div class='agregarTareas'>" +
-                                                    "<div class='custom-control custom-checkbox'>" +
-                                                    "<input class='custom-control-input' type='checkbox' id='customCheckbox1' checked disabled>" +
-                                                    "<label for='customCheckbox1' class='custom-control-label'></label>" +
-                                                    "</div>" +
+                                                    "<div class='agregarTareas" + value.IdProyecto + "'>" +
+
                                                     "</div>" +
                                                     "</div>" +
                                                     "</div >" + "");
@@ -159,16 +177,16 @@
                                                         "<div class='card-header'>" +
                                                         "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                                         "<div class='card-tools'>" +
-                                                        "<a href='#' class='btn btn-tool'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + "," + "'No iniciado'"+")'>" +
                                                         "<i class='fas fa-pen' style='color: #6c757d;'></i>" +
                                                         "</a>" +
-                                                        "<a href='#' class='btn btn-tool'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + "," +"'Detenido'"+")'>" +
                                                         "<i class='fas fa-pen' style='color: #dc3545;'></i>" +
                                                         "</a>" +
-                                                        "<a href='#' class='btn btn-tool'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + "," +"'En proceso'"+")'>" +
                                                         "<i class='fas fa-pen' style='color:#ffc107;'></i>" +
                                                         "</a>" +
-                                                        "<a href='#' class='btn btn-tool'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",'Concluido')'>" +
                                                         "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                                         "</a>" +
                                                         "<a href='#' class='btn btn-tool'>" +
@@ -177,15 +195,11 @@
                                                         "</div>" +
                                                         "</div >" +
                                                         "<div class='card-body'>" +
-                                                        "<div class='agregarTareas'>" +
-                                                        "<div class='custom-control custom-checkbox'>" +
-                                                        "<input class='custom-control-input' type='checkbox' id='customCheckbox1' checked disabled>" +
-                                                        "<label for='customCheckbox1' class='custom-control-label'></label>" +
-                                                        "</div>" +
+                                                        "<div class='agregarTareas" + value.IdProyecto + "'>" +
+
                                                         "</div>" +
                                                         "</div>" +
                                                         "</div >" + "");
-
 
 
                                                 } else
@@ -213,20 +227,37 @@
                                                             "</div>" +
                                                             "</div >" +
                                                             "<div class='card-body'>" +
-                                                            "<div class='agregarTareas'>" +
-                                                            "<div class='custom-control custom-checkbox'>" +
-                                                            "<input class='custom-control-input' type='checkbox' id='customCheckbox1' checked disabled>" +
-                                                            "<label for='customCheckbox1' class='custom-control-label'></label>" +
-                                                            "</div>" +
+                                                            "<div class='agregarTareas" + value.IdProyecto + "'>" +
+
                                                             "</div>" +
                                                             "</div>" +
                                                             "</div >" + "");
                                                     }
 
 
-                                    
-                                    
 
+                                    $(value.Tareas).each(function (i2, vel) {
+
+
+                                            var agregarTareas = ".agregarTareas" + vel.IdProyecto;
+                                        var styleCheck = "";
+                                        console.log(vel.EstadoTarea)
+                                        if (vel.EstadoTarea == 1) {
+                                            styleCheck = "checkSecondary";
+                                        } else if (vel.EstadoTarea == 2) {
+                                            styleCheck = "checkWarning";
+                                        } else if (vel.EstadoTarea == 3) {
+                                            styleCheck = "checkSuccess";
+                                        } else if (vel.EstadoTarea == 4) {
+                                            styleCheck = "checkDanger";
+                                        }
+
+                                        $(agregarTareas).append("<div class='custom-control custom-checkbox " + styleCheck +"'>" +
+                                                "<input class='custom-control-input' type='checkbox' id='customCheckbox1'  checked disabled>" +
+                                                "<label for='customCheckbox1' class='custom-control-label'>"+vel.NombreTarea+"</label>" +
+                                                "</div>" +"");
+
+                                    });
 
                                 });
 
@@ -251,42 +282,48 @@
 
         });
 
-        function BuscarTareas(IdProyecto) {
+
+        function ConfirmarActualizacion(codigo,estado) {
             
-            if (IdProyecto != "" ) {
-                     $.ajax({
-                        type: "get",
-                        url: '@Url.Action("GetTareasPorProyecto", "Proyectos")' + '?Id=' + IdProyecto,
-                            success: function (listaTareas) {
-                             
-                                if (listaTareas.data != 0) {
-                                    $(listaTareas.data).each(function (i, value) {
-                                        console.log(value);
-                                    console.log(listaInformacion);
-                                    $(".agregarTareas").append("<div class='custom-control custom-checkbox'>" +
-                                        "<input class='custom-control-input' type='checkbox' id='customCheckbox1' checked disabled>"+
-                                        "<label for='customCheckbox1' class='custom-control-label'></label>"+
-                                        "</div>" + "");
-                                });
-                            } else {
-                                $(".agregarTareas").append("<div> a"+
-                                    "</div>" + "");
-                                console.log("No hay informacion");
-                            }
+                Swal.fire({
+                    title: '¿Seguro que deseas actualizar estado del proyecto?',
+                    text: "Puede editar el estado del requerimiento posteriormente",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: 'Sí, actualizar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('@Url.Action("ActualizarProyectoEstado", "Proyectos")', { codigo: codigo, estado: estado },
+                            function (respuesta) {
+                                if (respuesta.success) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: respuesta.mensaje,
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    })
+                                    setTimeout(function () { location.reload(); }, 1500);
+                                } else {
+                                    Swal.fire(
+                                        '¡Error!',
+                                        respuesta.mensaje,
+                                        'error'
+                                    )
+                                }
+                                console.log(respuesta);
 
-
-                        },
-                        error: function (request, error) {
-                            console.log("Request: " + JSON.stringify(request));
-                            console.log(error);
-                        }
-                    });
-
-                
-            }
+                            }).fail(function (error) {
+                                console.log(error);
+                            });
+                    }
+                })
             
+
         }
-
 
 
 

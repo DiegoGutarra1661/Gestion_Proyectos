@@ -199,5 +199,32 @@ namespace Gestion_Proyectos.Controllers
                 return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public JsonResult ActualizarProyectoEstado(int codigo = 0, string estado = "")
+        {
+            string mensaje;
+
+            try
+            {
+
+                mensaje = _proyectoBL.ActualizarEstadoProyecto(codigo, estado);
+
+                if (mensaje.StartsWith("Error") || mensaje.StartsWith("No"))
+                {
+                    return Json(new { success = false, mensaje = mensaje });
+                }
+                else
+                {
+                    return Json(new { success = true, mensaje = mensaje });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return Json(new { success = false, mensaje = mensaje });
+            }
+        }
     }
 }
