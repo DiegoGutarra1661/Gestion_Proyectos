@@ -302,42 +302,7 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $('#agregarMiembro').click(function (e) {
-                var alias = $("#teamMember option:selected").text();
-                var cargo = $("#funcion option:selected").text();
-                var idMiembro = $("#teamMember option:selected").val();
-
-                $("#teamMember option:selected").remove();
-
-                if (cargo == "Coordinador" && idMiembro != undefined) {
-                    $("#coordinadores").append("<input type='hidden' class='form-control' name='ListaCoordinadores' value= " + "'" + idMiembro + "'>");
-                    $("#coordinadores").append("<li style='font-size: 15px' class='d-flex justify-content-between'><span>" + alias + "</span>");
-                }
-
-                else if (cargo == "Desarrollador" && idMiembro != undefined) {
-                    $("#desarrolladores").append("<input type='hidden' class='form-control' name='ListaDesarrolladores' value= " + "'" + idMiembro + "'>");
-                    $("#desarrolladores").append("<li style='font-size: 15px' class='d-flex justify-content-between'><span>" + alias + "</span>");
-                }
-            });
-
-            $("#desarrolladores .close").click(function () {
-                var aliasQuitar = ($(this).siblings('span').html());
-                ($(this).parent().remove());
-                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
-            })
-
-            $("#coordinadores .close").click(function () {
-                var aliasQuitar = ($(this).siblings('span').html());
-                ($(this).parent().remove());
-                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
-            });
-
-
-        });
-
-    </script>
+    
     @RenderSection("Scripts", required: false)
 </body>
 </html>

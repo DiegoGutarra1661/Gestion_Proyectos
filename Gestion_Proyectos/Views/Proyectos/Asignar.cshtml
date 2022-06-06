@@ -71,7 +71,7 @@
                                         {
                                             <li style="font-size:15px" class="d-flex justify-content-between">
                                                 <span>@item </span><button type="button" class="close" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                                    <span aria-hidden="true">x</span>
                                                 </button>
                                             </li>
 
@@ -86,7 +86,7 @@
                                         {
                                             <li style="font-size:15px" class="d-flex justify-content-between">
                                                 <span>@item </span><button type="button" class="close" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                                    <span aria-hidden="true">x</span>
                                                 </button>
                                             </li>
                                         }
@@ -122,5 +122,58 @@
 
 
 @section Scripts {
-    
+    <script>
+        $(document).ready(function () {
+            $('#agregarMiembro').click(function (e) {
+                var alias = $("#teamMember option:selected").text();
+                var cargo = $("#funcion option:selected").text();
+                var idMiembro = $("#teamMember option:selected").val();
+
+
+                if (cargo == "Coordinador" && idMiembro != undefined) {
+                    $("#coordinadores").append("<div><input type='hidden' class='form-control' name='ListaCoordinadores' value= " + "'" + idMiembro + "'>"+
+                        "<li style='font-size: 15px' class='d-flex justify-content-between'><span>" + alias + "</span>"+
+                        "<button type='button' class='close' aria-label='Close'>"+
+                        "<span aria-hidden='true'>x</span></button></div>"+
+                        "");
+
+                    $("#coordinadores .close").click(function () {
+                        ($(this).parent().remove());
+                    });
+
+                }
+
+                else if (cargo == "Desarrollador" && idMiembro != undefined) {
+                    $("#desarrolladores").append("<div><input type='hidden' class='form-control' name='ListaDesarrolladores' value= " + "'" + idMiembro + "'>"+
+                        "<li style='font-size: 15px' class='d-flex justify-content-between'><span>" + alias + "</span>" +
+                        "<button type='button' class='close' aria-label='Close'>" +
+                        "<span aria-hidden='true'>x</span></button></div>" +
+                        "");
+
+                    $("#desarrolladores .close").click(function () {
+                        ($(this).parent().remove());
+
+                    })
+                }
+                
+                
+            });
+            
+
+            $("#desarrolladores .close").click(function () {
+                var aliasQuitar = ($(this).siblings('span').html());
+                ($(this).parent().remove());
+                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
+            })
+
+            $("#coordinadores .close").click(function () {
+                var aliasQuitar = ($(this).siblings('span').html());
+                ($(this).parent().remove());
+                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
+            });
+
+
+        });
+
+    </script>
 }

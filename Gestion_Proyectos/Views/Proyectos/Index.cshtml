@@ -46,24 +46,25 @@
                                     <tr>
 
                                         <th>ID</th>
-
                                         <th>Nombre</th>
 
-                                        <th>Descripción</th>
                                         <th>Estado</th>
-                                        <th>Prioridad</th>
                                         <th>Gerencia</th>
                                         <th>Solicitante</th>
-                                        <th>Proveedor</th>
+                                        <th>Avance Planificado Fijo</th>
+                                        <th>Desviación</th>
+                                        <th>Prioridad</th>
+
                                         <th>Inicio Planificado</th>
                                         <th>Fin Planificado</th>
-                                        <th>Inicio Real</th>
-                                        <th>Fin Real</th>
-                                        <th>Avance Planificado Fijo</th>
                                         <th>Avance automático planificado</th>
                                         <th>Avance Planificado final</th>
                                         <th>Avance Real</th>
-                                        <th>Desviación</th>
+                                        <th>Inicio Real</th>
+                                        <th>Fin Real</th>
+                                        <th>Descripción</th>
+                                        <th>Proveedor</th>
+
                                         <th>Responsable Liberación</th>
                                         <th>ETA Liberación</th>
                                         <th>Fecha Fin Proyectada</th>
@@ -86,25 +87,26 @@
                                         </td>
 
                                         <td style="vertical-align:middle;">@item.Nombre</td>
-                                        <td style="vertical-align:middle;">@item.Descripcion</td>
+
                                         <td style="vertical-align:middle;">
                                             <span class="badge @item.getColorEstado()">@(item.EstadoProyecto)</span>
                                         </td>
-                                        <td style="vertical-align:middle;">@item.Prioridad</td>
                                         <td style="vertical-align:middle;">@item.AreaProyecto</td>
                                         <td style="vertical-align:middle;">@item.DescripcionSolicitante</td>
-                                        <td style="vertical-align:middle;">@item.Proveedor</td>
+                                        <td style="vertical-align:middle;">@(item.AvancePorcentaje.ToString() + '%')</td>
+                                        <td style="vertical-align:middle;">@(item.Desviacion.ToString() + '%')</td>
+                                        <td style="vertical-align:middle;">@item.Prioridad</td>
                                         <td style="vertical-align:middle;">@(item.FechaInicioEstimada.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicioEstimada.ToString("dd/MM/yyyy"))</td>
                                         <td style="vertical-align:middle;">@(item.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluidoEstimada.ToString("dd/MM/yyyy"))</td>
-                                        <td style="vertical-align:middle;">@(item.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicio.ToString("dd/MM/yyyy"))</td>
-                                        <td style="vertical-align:middle;">@(item.FechaConcluido.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluido.ToString("dd/MM/yyyy"))</td>
                                         <td style="vertical-align:middle;">@(item.AvanceAutomaticoPlanificado.ToString() + '%')</td>
                                         <td style="vertical-align:middle;">@(item.AvancePlanificadoFinal.ToString() + '%')</td>
                                         <td class="text-center" style="vertical-align:middle;"><span class="badge @item.getColorAvance()">@(item.AvancePorcentaje.ToString() + '%')</span></td>
-                                        <td style="vertical-align:middle;">@(item.Desviacion.ToString() + '%')</td>
+                                        <td style="vertical-align:middle;">@(item.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaInicio.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">@(item.FechaConcluido.ToString("dd/MM/yyyy") == "01/01/0001" ? "-" : item.FechaConcluido.ToString("dd/MM/yyyy"))</td>
+                                        <td style="vertical-align:middle;">@item.Descripcion</td>
+                                        <td style="vertical-align:middle;">@item.Proveedor</td>
                                         <td style="vertical-align:middle;">@item.ResponsableLiberacion</td>
                                         <td style="vertical-align:middle;">@item.DescripcionETALiberacion</td>
-                                        <td style="vertical-align:middle;">@item.Comentario</td>
                                         <td style="vertical-align:middle;">@item.FechaFinProyectada</td>
                                         @if (escritura != null)
                                         {
@@ -179,7 +181,7 @@
     <script>
         $(document).ready(function () {
             $('#example2').DataTable({
-                "order": [[4, "asc"]],
+                "order": [[7, "asc"]],
                 "paging": true,
                 "lengthChange": true,
                 "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]],
