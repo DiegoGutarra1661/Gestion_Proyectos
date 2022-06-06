@@ -157,7 +157,7 @@
                                         } else
                                             if (value.EstadoProyecto == "Detenido") {
                                                 console.log("En Espera: " + value.Nombre);
-                                                $(".cardEnEspera").append("<div class='card card-secondary card-outline'>" +
+                                                $(".cardEnEspera").append("<div class='card card-danger card-outline'>" +
                                                     "<div class='card-header'>" +
                                                     "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                                     "<div class='card-tools'>" +
@@ -187,7 +187,7 @@
                                             } else
                                                 if (value.EstadoProyecto == "En proceso") {
                                                     console.log("En Proceso: " + value.Nombre);
-                                                    $(".cardEnProceso").append("<div class='card card-secondary card-outline'>" +
+                                                    $(".cardEnProceso").append("<div class='card card-warning card-outline'>" +
                                                         "<div class='card-header'>" +
                                                         "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                                         "<div class='card-tools'>" +
@@ -219,7 +219,7 @@
                                                 } else
                                                     if (value.EstadoProyecto == "Concluido") {
                                                         console.log("Concluido: " + value.Nombre);
-                                                        $(".cardConcluido").append("<div class='card card-secondary card-outline'>" +
+                                                        $(".cardConcluido").append("<div class='card card-success card-outline'>" +
                                                             "<div class='card-header'style='word-break: break-all;'>" +
                                                             "<h5 class='card-title'>" + value.Nombre + "</h5>" +
                                                             "<div class='card-tools'>" +
@@ -311,9 +311,9 @@
             }
 
 
-                Swal.fire({
-                    title: '¿Seguro que deseas actualizar estado del proyecto?',
-                    text: "Puede editar el estado del requerimiento posteriormente",
+            Swal.fire({
+                title: '¿Seguro que deseas actualizar el estado (' + nombreEstado +') del proyecto?',
+                    text: "Puede editar el estado del proyecto posteriormente",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
