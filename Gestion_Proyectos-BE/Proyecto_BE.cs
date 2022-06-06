@@ -50,6 +50,14 @@ namespace Gestion_Proyectos_BE
         public string FechaFinProyectada { get; set; }
         public string DescripcionETALiberacion { get; set; }
         public string DescripcionSolicitante { get; set; }
+        //
+        public string DescripcionSponsor { get; set; }
+        public string SFechaRequerimiento { get; set; }
+        public string SFechaInicioEstimada { get; set; }
+        public string SFechaInicio { get; set; }
+        public string SFechaConclusionEstimada { get; set; }
+        public string SFechaConclusion { get; set; }
+
         public string getColorAvance()
         {
             if (EstadoProyecto == "En proceso" && FechaConcluidoEstimada > DateTime.Now)

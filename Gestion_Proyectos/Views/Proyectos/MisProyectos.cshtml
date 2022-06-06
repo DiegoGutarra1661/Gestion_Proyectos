@@ -11,14 +11,15 @@
         border-radius: 5px;
     }
 
-    .checkSuccess .custom-control-input:checked ~ .custom-control-label::before {     
-        border-color: #28a745!important;
+    .checkSuccess .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: #28a745 !important;
     }
 
     .checkDanger .custom-control-input:checked ~ .custom-control-label::after {
         background-color: #dc3545;
         border-radius: 5px;
     }
+
     .checkDanger .custom-control-input:checked ~ .custom-control-label::before {
         border-color: #dc3545 !important;
     }
@@ -27,6 +28,7 @@
         background-color: #ffc107;
         border-radius: 5px;
     }
+
     .checkWarning .custom-control-input:checked ~ .custom-control-label::before {
         border-color: #dc3545 !important;
     }
@@ -35,76 +37,187 @@
         background-color: #6c757d;
         border-radius: 5px;
     }
+
     .checkSecondary .custom-control-input:checked ~ .custom-control-label::before {
         border-color: #6c757d !important;
     }
-
 </style>
 
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1>Tablero de Proyectos</h1>
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>Tablero de Proyectos</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content pb-3">
+    <div class="container-fluid h-100">
+        <div class="card card-row card-secondary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Por Hacer
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="cardPorHacer">
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="card card-row card-primary">
+            <div class="card-header bg-danger">
+                <h3 class="card-title">
+                    En Espera
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="cardEnEspera">
+
                 </div>
             </div>
         </div>
-    </section>
-
-    <section class="content pb-3">
-        <div class="container-fluid h-100">
-            <div class="card card-row card-secondary">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        Por Hacer
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="cardPorHacer">
-
-                    </div>
-
-
-                </div>
+        <div class="card card-row card-default">
+            <div class="card-header bg-warning">
+                <h3 class="card-title" style="color:white!important;">
+                    En Proceso
+                </h3>
             </div>
-            <div class="card card-row card-primary">
-                <div class="card-header bg-danger">
-                    <h3 class="card-title">
-                        En Espera
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="cardEnEspera">
+            <div class="card-body">
+                <div class="cardEnProceso">
 
-                    </div>
-                </div>
-            </div>
-            <div class="card card-row card-default">
-                <div class="card-header bg-warning">
-                    <h3 class="card-title" style="color:white!important;">
-                        En Proceso
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="cardEnProceso">
-
-                    </div>
-                </div>
-            </div>
-            <div class="card card-row card-success">
-                <div class="card-header">
-                    <h3 class="card-title">
-                        Concluido
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="cardConcluido">
-
-                    </div>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="card card-row card-success">
+            <div class="card-header">
+                <h3 class="card-title">
+                    Concluido
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="cardConcluido">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Vertically centered scrollable modal -->
+
+    <div class="modal fade" id="exampleModalRequerimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Titulo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <label for="validationCustom01">Descripción</label>
+
+                            <textarea class="form-control" id="txtDescripcion" rows="3" disabled></textarea>
+
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Prioridad</label>
+                            <input type="text" class="form-control" id="txtPrioridad" disabled>
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Avance</label>
+                            <input type="text" class="form-control" id="txtAvance" disabled>
+
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Sponsor</label>
+                            <input type="text" class="form-control" id="txtSponsor" disabled>
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Proveedor</label>
+                            <input type="text" class="form-control" id="txtProveedor" disabled>
+
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Responsable Liberación</label>
+                            <input type="text" class="form-control" id="txtResponsable" disabled>
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">ETA Liberación</label>
+                            <input type="text" class="form-control" id="txtETA" disabled>
+
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Fecha Inicio Estimada</label>
+                            <input type="text" class="form-control" id="txtFechaInicioEstimada" disabled>
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Fecha Inicio</label>
+                            <input type="text" class="form-control" id="txtFechaInicio" disabled>
+
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Fecha Conclusión Estimada</label>
+                            <input type="text" class="form-control" id="txtFechaConclusionEstimada" disabled>
+
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom03">Fecha Conclusión</label>
+                            <input type="text" class="form-control" id="txtFechaConclusion" disabled>
+
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 mb-3">
+                            <label for="validationCustom01">Comentarios</label>
+
+                            <textarea class="form-control" id="txtComentario" rows="3" disabled></textarea>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer border-top-0 d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <div class="addButtonEditar">
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
 
 
 
@@ -140,7 +253,7 @@
                                             "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                             "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                             "</a>" +
-                                            "<a href='#' class='btn btn-tool'>" +
+                                            "<a href='#' class='btn btn-tool' onclick='BuscarProyectos(" + value.IdProyecto + ")' data-toggle='modal' data-target='#exampleModalRequerimiento'>" +
                                             "<i class='fas fa-search' style='color: #007bff;'></i>" +
                                             "</a>" +
                                             "</div>" +
@@ -173,7 +286,7 @@
                                                     "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                                     "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                                     "</a>" +
-                                                    "<a href='#' class='btn btn-tool'>" +
+                                                    "<a href='#' class='btn btn-tool' onclick='BuscarProyectos(" + value.IdProyecto + ")' data-toggle='modal' data-target='#exampleModalRequerimiento'>" +
                                                     "<i class='fas fa-search' style='color: #007bff;'></i>" +
                                                     "</a>" +
                                                     "</div>" +
@@ -203,7 +316,7 @@
                                                         "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                                         "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                                         "</a>" +
-                                                        "<a href='#' class='btn btn-tool'>" +
+                                                        "<a href='#' class='btn btn-tool' onclick='BuscarProyectos(" + value.IdProyecto + ")' data-toggle='modal' data-target='#exampleModalRequerimiento'>" +
                                                         "<i class='fas fa-search' style='color: #007bff;'></i>" +
                                                         "</a>" +
                                                         "</div>" +
@@ -235,7 +348,7 @@
                                                             "<a href='#' class='btn btn-tool' onclick='ConfirmarActualizacion(" + value.IdProyecto + ",3)'>" +
                                                             "<i class='fas fa-pen' style='color: #28a745;'></i>" +
                                                             "</a>" +
-                                                            "<a href='#' class='btn btn-tool'>" +
+                                                            "<a href='#' class='btn btn-tool' onclick='BuscarProyectos(" + value.IdProyecto + ")' data-toggle='modal' data-target='#exampleModalRequerimiento'>" +
                                                             "<i class='fas fa-search' style='color: #007bff;'></i>" +
                                                             "</a>" +
                                                             "</div>" +
@@ -347,11 +460,69 @@
                             });
                     }
                 })
-            
+
 
         }
 
+        function BuscarProyectos(IdProyecto) {
 
+             if (IdProyecto != "" ) {
+                    $.ajax({
+                        type: "get",
+                        url: '@Url.Action("BuscarProyectoTablero", "Proyectos")' + '?Id=' + IdProyecto,
+                        success: function (listaInformacion) {
+                            if (listaInformacion.data != null) {
+
+                                $(listaInformacion.data).each(function (i, value) {
+                                    //var fechaRequerimiento = new Date(parseInt(value.FecharRequerimiento.substr(6)));
+                                    //var parsearFechaRequerimiento = formatDate(fechaRequerimiento);
+
+                                    $('#exampleModalLongTitle').text(value.Nombre + " - Fecha Requerimiento: " + value.SFechaRequerimiento);
+                                    $('#txtDescripcion').val(value.Descripcion);
+                                    $('#txtPrioridad').val(value.Prioridad);
+                                    $('#txtAvance').val(value.Avance);
+                                    $('#txtSponsor').val(value.DescripcionSponsor);
+                                    $('#txtProveedor').val(value.Proveedor);
+                                    $('#txtResponsable').val(value.ResponsableLiberacion);
+                                    $('#txtETA').val(value.DescripcionETALiberacion);
+                                    $('#txtFechaInicioEstimada').val(value.SFechaInicioEstimada);
+                                    $('#txtFechaInicio').val(value.SFechaInicio);
+                                    $('#txtFechaConclusionEstimada').val(value.SFechaConclusionEstimada);
+                                    $('#txtFechaConclusion').val(value.SFechaConclusion);
+                                    $('#txtComentario').val(value.Comentario);
+                                    $('.addButtonEditar').append("" +
+                                        "<a class='btn btn-primary deletebuttonEditar' href='/Proyectos/Editar?idProyecto=" + value.IdProyecto + "'>editar</a>" +
+                                        "");
+                                });
+                            } else {
+                                console.log("No hay informacion");
+                            }
+
+
+                        },
+                        error: function (request, error) {
+                            console.log("Request: " + JSON.stringify(request));
+                        }
+                    });
+
+
+            }
+            $('.deletebuttonEditar').remove();
+
+
+        }
+
+        //function padTo2Digits(num) {
+        //    return num.toString().padStart(2, '0');
+        //}
+
+        //function formatDate(date) {
+        //    return [
+        //        padTo2Digits(date.getDate()),
+        //        padTo2Digits(date.getMonth() + 1),
+        //        date.getFullYear(),
+        //    ].join('/');
+        //}
 
 
     </script>

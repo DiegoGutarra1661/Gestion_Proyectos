@@ -75,6 +75,42 @@ namespace Gestion_Proyectos_DA
             return reg;
         }
 
+        public Proyecto_BE BuscarProyectoTablero(int idProyecto)
+        {
+            Proyecto_BE reg = null;
+
+            using (var con = GetSqlConnGestionProyectos())
+            {
+                SqlCommand cmd = new SqlCommand("usp_buscarProyectoTablero", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idProyecto", idProyecto);
+
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    reg = new Proyecto_BE();
+                    reg.IdProyecto = dr.GetInt32(0);
+                    reg.Nombre = dr.GetString(1);
+                    reg.Descripcion = dr.GetString(2);
+                    reg.Avance = dr.GetDecimal(3);
+                    reg.DescripcionSponsor = dr.GetString(4);
+                    reg.Prioridad = dr.GetInt32(5);
+                    reg.SFechaRequerimiento = dr.GetString(6);
+                    reg.SFechaInicioEstimada = dr.GetString(7);
+                    reg.SFechaInicio = dr.GetString(8); 
+                    reg.SFechaConclusionEstimada = dr.GetString(9);
+                    reg.SFechaConclusion = dr.GetString(10);
+                    reg.Proveedor = dr.GetString(11);
+                    reg.ResponsableLiberacion = dr.GetString(12);
+                    reg.DescripcionETALiberacion = dr.GetString(13);
+                    reg.Comentario = dr.GetString(14);
+                }
+                dr.Close(); con.Close();
+            }
+
+            return reg;
+        }
         public void EditarProyecto(Proyecto_BE reg, IEnumerable<Tarea_BE> tareas)
         {
             int rs = 0;

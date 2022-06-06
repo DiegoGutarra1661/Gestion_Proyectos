@@ -200,6 +200,19 @@ namespace Gestion_Proyectos.Controllers
             }
         }
 
+        public JsonResult BuscarProyectoTablero(int Id)
+        {
+            try
+            {
+                var proyecto = _proyectoBL.BuscarProyectoTablero(Id);
+                return Json(new { data = proyecto, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Proyecto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public JsonResult ActualizarProyectoEstado(int codigo = 0, string estado = "")
         {

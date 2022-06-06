@@ -82,6 +82,25 @@ namespace Gestion_Proyectos_BL
             }
         }
 
+        public Proyecto_BE BuscarProyectoTablero(int id)
+        {
+            try
+            {
+                var proyecto = _proyectoDA.BuscarProyectoTablero(id);
+
+                if (proyecto == null)
+                {
+                    throw new Exception("Error ==> No se encontro proyecto");
+                }
+
+                return proyecto;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error en el método Buscar proyecto tablero por codigo ==> {ex.Message}");
+            }
+        }
+
         public string EditarProyecto(Proyecto_BE reg,IEnumerable<Tarea_BE> tareas)
         {
             string mensaje = "";
