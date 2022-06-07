@@ -13,10 +13,12 @@ namespace Gestion_Proyectos_BL
     public class Requerimiento_BL
     {
         private readonly Requerimiento_DA _requerimientoDA;
+        private readonly Proyecto_DA _proyectoDA;
 
         public Requerimiento_BL()
         {
             _requerimientoDA = new Requerimiento_DA();
+            _proyectoDA = new Proyecto_DA();
         }
 
         public string RegistrarRequerimiento(Requerimiento_BE reg, HttpPostedFileBase[] archivos)
@@ -83,7 +85,7 @@ namespace Gestion_Proyectos_BL
                     }
                     else if(estado==2)
                     {
-                        _requerimientoDA.EnviarRequerimiento(cuerpo);
+                        _proyectoDA.EnviarCorreo(_requerimientoDA.BuscarRequerimiento(codigo).CorreoUsuario,"Requerimiento rechazado",cuerpo);
                     }
 
                 }
@@ -117,5 +119,7 @@ namespace Gestion_Proyectos_BL
                 throw new Exception($"Error en el método Buscar requerimiento ==> {ex.Message}");
             }
         }
+
+        
     }
 }

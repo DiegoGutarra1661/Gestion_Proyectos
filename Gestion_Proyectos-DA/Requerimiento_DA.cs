@@ -61,43 +61,12 @@ namespace Gestion_Proyectos_DA
             return validar;
         }
 
-        public void EnviarRequerimiento(string cuerpo)
-        {
-           
-            // Creación y configuración del cliente para el envío de las encuestas
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-            using (SmtpClient client = new SmtpClient("smtp.office365.com", 587))
-            {
-                client.EnableSsl = true;
-                //Cambiar por otro correo :S
-                client.Credentials = new System.Net.NetworkCredential("diego.gutarra@adexperu.org.pe", "@Canela16%$#");
-
-                // Creación de los atributos del correo
-                MailAddress from = new MailAddress("diego.gutarra@adexperu.org.pe", String.Empty, System.Text.Encoding.UTF8);
-                MailAddress to = new MailAddress("alexiavale56@gmail.com");
-                MailMessage message = new MailMessage(from, to);
-                message.Subject = "Para mi chiquitia guapa";
-                message.IsBodyHtml = true;
-                message.Body = cuerpo + "<br><br> " +
-                                        "¡Vamos por más! <br>" +
-                                        "Soluciones TI";
-                message.BodyEncoding = System.Text.Encoding.UTF8;
-
-                message.SubjectEncoding = System.Text.Encoding.UTF8;
-
-                client.Send(message);
-                client.Dispose();
-                Console.WriteLine("Se envió un correo");
-            }
-
-
-
-        }
+       
 
         public void RegistrarRequerimiento(Requerimiento_BE reg, HttpPostedFileBase[] archivos)
         {
 
-            var idRequerimiento = ObtenerIDRequerimiento();
+            var idRequerimiento = ObtenerIDRequerimiento().Trim();
 
             using (var con = GetSqlConnGestionProyectos())
             {
@@ -150,6 +119,8 @@ namespace Gestion_Proyectos_DA
                     }
 
 
+                    EnviarCorreo("shirley.cordova@adexperu.org.pe","angello.gordillo@adexperu.org.pe", "ADEX - Nuevo Requerimiento", "Estimados," + "<br/>" + "<br/>" +
+                    "Se recibió una nueva Solictud de Requerimiento " + idRequerimiento + " con título " + reg.Titulo + " por parte de " + BuscarUsuarioCorreo(reg.Solicitante).Alias + " - " + BuscarUsuarioCorreo(reg.Solicitante).NombreArea + ".");
                     tr.Commit();
                 }
                 catch (SqlException ex)
@@ -164,6 +135,35 @@ namespace Gestion_Proyectos_DA
             }
 
         }
+        public Usuario_BE BuscarUsuarioCorreo(int idUsuario)
+        {
+            Usuario_BE reg = null;
+
+            using (var con = GetSqlConnGestionProyectos())
+            {
+                con.Open();
+
+                SqlCommand cmd = new SqlCommand("usp_buscarUsuario", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@idUsuario", idUsuario);
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    reg = new Usuario_BE();
+
+                    reg.Alias = dr.GetString(0);
+                    reg.NombreArea = dr.GetString(1);
+
+                }
+                dr.Close(); con.Close();
+            }
+
+            return reg;
+        }
+
+
+      
 
         public IEnumerable<Requerimiento_BE> ListarRequerimientos()
         {
@@ -190,6 +190,7 @@ namespace Gestion_Proyectos_DA
                     reg.Resumen = dr.GetString(8);
                     reg.FechaFormateada = dr.GetString(9);
                     reg.DescripcionEstado = dr.GetString(10);
+                    reg.CorreoUsuario = dr.GetString(11);
 
                     lista.Add(reg);
 
@@ -282,5 +283,37 @@ namespace Gestion_Proyectos_DA
 
         }
 
+        public void EnviarCorreo(string tocorreo1,string tocorreo2, string subject, string cuerpo)
+        {
+
+            // Creación y configuración del cliente para el envío de las encuestas
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            using (SmtpClient client = new SmtpClient("smtp.office365.com", 587))
+            {
+                client.EnableSsl = true;
+                //Cambiar por otro correo :S
+                client.Credentials = new System.Net.NetworkCredential("servicedesk.ti@adexperu.org.pe", "@dex2021");
+
+                // Creación de los atributos del correo
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("servicedesk.ti@adexperu.org.pe", String.Empty, System.Text.Encoding.UTF8);
+                message.To.Add(tocorreo1);
+                message.To.Add(tocorreo2);
+                message.Subject = subject;
+                message.IsBodyHtml = true;
+                message.Body = cuerpo + "<br><br> " +
+                                        "¡Vamos por más! <br>" +
+                                        "Soluciones TI";
+                message.BodyEncoding = System.Text.Encoding.UTF8;
+
+                message.SubjectEncoding = System.Text.Encoding.UTF8;
+
+                client.Send(message);
+                client.Dispose();
+                Console.WriteLine("Se envió un correo");
+            }
+
+        }
     }
 }

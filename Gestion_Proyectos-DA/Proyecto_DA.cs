@@ -9,6 +9,7 @@ using System.Data;
 using System.Web;
 using System.Net.Mail;
 using System.Web.Mvc;
+using System.Net;
 
 namespace Gestion_Proyectos_DA
 {
@@ -741,7 +742,36 @@ namespace Gestion_Proyectos_DA
 
             return correo;
         }
+        public void EnviarCorreo(string tocorreo, string subject, string cuerpo)
+        {
 
-        
+            // Creación y configuración del cliente para el envío de las encuestas
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            using (SmtpClient client = new SmtpClient("smtp.office365.com", 587))
+            {
+                client.EnableSsl = true;
+                //Cambiar por otro correo :S
+                client.Credentials = new System.Net.NetworkCredential("servicedesk.ti@adexperu.org.pe", "@dex2021");
+
+                // Creación de los atributos del correo
+                MailAddress from = new MailAddress("servicedesk.ti@adexperu.org.pe", String.Empty, System.Text.Encoding.UTF8);
+                MailAddress to = new MailAddress(tocorreo);
+                MailMessage message = new MailMessage(from, to);
+                message.Subject = subject;
+                message.IsBodyHtml = true;
+                message.Body = cuerpo + "<br><br> " +
+                                        "¡Vamos por más! <br>" +
+                                        "Soluciones TI";
+                message.BodyEncoding = System.Text.Encoding.UTF8;
+
+                message.SubjectEncoding = System.Text.Encoding.UTF8;
+
+                client.Send(message);
+                client.Dispose();
+                Console.WriteLine("Se envió un correo");
+            }
+
+        }
+
     }
 }

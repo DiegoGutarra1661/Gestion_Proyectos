@@ -20,11 +20,12 @@ namespace Gestion_Proyectos_BE
         public string FechaFormateada { get; set; }
         //
         public string DescripcionUsuario { get; set; }
+        public string CorreoUsuario { get; set; }
         public string DescripcionGerencia { get; set; }
         public string DescripcionPresupuesto { get; set; }
 
         public string DescripcionEstado { get; set; }
-
+    
         public string getColorEstado()
         {
             if (DescripcionEstado == "Pendiente")
