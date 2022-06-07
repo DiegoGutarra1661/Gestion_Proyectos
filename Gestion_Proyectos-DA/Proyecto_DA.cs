@@ -627,9 +627,9 @@ namespace Gestion_Proyectos_DA
             }
         }
 
-        public List<string> ListarMembers(int idProyecto, int idFuncion)
+        public List<Usuario_BE> ListarMembers(int idProyecto, int idFuncion)
         {
-            List<string> lista = new List<string>();
+            List<Usuario_BE> lista = new List<Usuario_BE>();
 
             using (var con = GetSqlConnGestionProyectos())
             {
@@ -643,9 +643,10 @@ namespace Gestion_Proyectos_DA
 
                 while (dr.Read())
                 {
-                    string alias = dr.GetString(0);
-
-                    lista.Add(alias);
+                    Usuario_BE usu = new Usuario_BE();
+                    usu.IdUsuario = dr.GetInt32(0);
+                    usu.Alias = dr.GetString(1);
+                    lista.Add(usu);
                 }
 
                 dr.Close(); con.Close();

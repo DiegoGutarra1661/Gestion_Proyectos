@@ -95,6 +95,7 @@ namespace Gestion_Proyectos.Controllers
             Proyecto_BE reg = _proyectoBL.BuscarProyecto(idProyecto);
             reg.AliasCoordinadores = _proyectoBL.GetMembers(idProyecto, 1);
             reg.AliasDesarrolladores = _proyectoBL.GetMembers(idProyecto, 2);
+
             ViewBag.teamMembers = _usuarioBL.GetTeamMembers();
             return View(reg);
         }

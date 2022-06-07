@@ -30,8 +30,8 @@ namespace Gestion_Proyectos_BE
         public string AreaProyecto { get; set; }
         public List<int> ListaCoordinadores { get; set; }
         public List<int> ListaDesarrolladores { get; set; }
-        public List<string> AliasCoordinadores { get; set; }
-        public List<string> AliasDesarrolladores { get; set; }
+        public List<Usuario_BE> AliasCoordinadores { get; set; }
+        public List<Usuario_BE> AliasDesarrolladores { get; set; }
         
         public List<Usuario_BE> ListaMemberes { get; set; }
 

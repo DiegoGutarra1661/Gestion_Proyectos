@@ -49,7 +49,7 @@ namespace Gestion_Proyectos_BL
             }
         }
 
-        public List<string> GetMembers(int idProyecto, int idFuncion)
+        public List<Usuario_BE> GetMembers(int idProyecto, int idFuncion)
         {
             try
             {
