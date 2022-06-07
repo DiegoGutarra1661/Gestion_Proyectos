@@ -8,6 +8,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Web;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 
 namespace Gestion_Proyectos_DA
 {
@@ -58,6 +60,40 @@ namespace Gestion_Proyectos_DA
 
             return validar;
         }
+
+        public void EnviarRequerimiento(string cuerpo)
+        {
+           
+            // Creación y configuración del cliente para el envío de las encuestas
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+            using (SmtpClient client = new SmtpClient("smtp.office365.com", 587))
+            {
+                client.EnableSsl = true;
+                //Cambiar por otro correo :S
+                client.Credentials = new System.Net.NetworkCredential("diego.gutarra@adexperu.org.pe", "@Canela16%$#");
+
+                // Creación de los atributos del correo
+                MailAddress from = new MailAddress("diego.gutarra@adexperu.org.pe", String.Empty, System.Text.Encoding.UTF8);
+                MailAddress to = new MailAddress("alexiavale56@gmail.com");
+                MailMessage message = new MailMessage(from, to);
+                message.Subject = "Para mi chiquitia guapa";
+                message.IsBodyHtml = true;
+                message.Body = cuerpo + "<br><br> " +
+                                        "¡Vamos por más! <br>" +
+                                        "Soluciones TI";
+                message.BodyEncoding = System.Text.Encoding.UTF8;
+
+                message.SubjectEncoding = System.Text.Encoding.UTF8;
+
+                client.Send(message);
+                client.Dispose();
+                Console.WriteLine("Se envió un correo");
+            }
+
+
+
+        }
+
         public void RegistrarRequerimiento(Requerimiento_BE reg, HttpPostedFileBase[] archivos)
         {
 

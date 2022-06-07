@@ -198,16 +198,24 @@
             } else {
                 Swal.fire({
                 title: '¿Seguro que deseas rechazar el requerimiento?',
-                text: "Puede editar el estado del requerimiento posteriormente",
+                    text: "Puede editar el estado del requerimiento posteriormente",
+                    html: `<input type="text" id="correo" class="swal2-input" placeholder="Ingrese mensaje para el correo">`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Sí, rechazar'
+                    confirmButtonText: 'Sí, rechazar',
+                    preConfirm: () => {
+                        const cuerpo = Swal.getPopup().querySelector('#correo').value
+                        if (!cuerpo) {
+                            Swal.showValidationMessage(`Ingrese un mensaje para el correo`)
+                        }
+                        return { correo: cuerpo}
+                    }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.post('@Url.Action("ActualizarRequerimiento", "Proyectos")', { codigo: codigoRequerimiento, estado: estado },
+                    $.post('@Url.Action("ActualizarRequerimiento", "Proyectos")', { codigo: codigoRequerimiento, estado: estado, cuerpo: result.value.correo },
                         function (respuesta) {
                             if (respuesta.success) {
                                 Swal.fire({
@@ -237,7 +245,7 @@
         }
 
         function BuscarDocumentos(IdRequerimiento) {
-
+            var ROOT = '@Url.Content("~")';
             if (IdRequerimiento != "" ) {
                     $.ajax({
                         type: "get",
@@ -247,8 +255,8 @@
 
                                 $(listaInformacion.data).each(function (i, value) {
                                     var link = value.RutaAdjunto
-                                    var url = link.replace("~", "");
-                                    $(".modalDocumentos").append("<a id='adjunto_" + value.IdAdjunto + "' class='btn modalDocumentosDelete' target='_blank' href='" + url + "' style='font-size: 14px; display: flex;'> " +
+                                    var url = link.replace("~/", "");
+                                    $(".modalDocumentos").append("<a id='adjunto_" + value.IdAdjunto + "' class='btn modalDocumentosDelete' target='_blank' href='" + ROOT+ url + "' style='font-size: 14px; display: flex;'> " +
                                         "<i class='fa-solid fa-download' ></i> <label> " + value.NombreAdjunto + "</label>"+
                                         "</a>" + "");
 
@@ -304,7 +312,7 @@
 
 
             }
-           
+
 
         }
 

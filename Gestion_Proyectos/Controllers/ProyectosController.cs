@@ -123,14 +123,14 @@ namespace Gestion_Proyectos.Controllers
         }
 
         [HttpPost]
-        public JsonResult ActualizarRequerimiento(string codigo = "", int estado = 0)
+        public JsonResult ActualizarRequerimiento(string codigo = "", int estado = 0, string cuerpo = "")
         {
             string mensaje;
 
             try
             {
 
-                mensaje = _requerimientoBL.RegistrarRequerimientoProyecto(codigo,estado);
+                mensaje = _requerimientoBL.RegistrarRequerimientoProyecto(codigo,estado, cuerpo);
 
                 if (mensaje.StartsWith("Error") || mensaje.StartsWith("No"))
                 {

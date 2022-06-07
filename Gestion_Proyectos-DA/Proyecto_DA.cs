@@ -742,14 +742,6 @@ namespace Gestion_Proyectos_DA
             return correo;
         }
 
-        public decimal GetAvanceAutomatico(DateTime fInicio, DateTime fFinal)
-        {
-            decimal porcentaje = 0;
-
-
-
-            return porcentaje;
-        }
         
     }
 }

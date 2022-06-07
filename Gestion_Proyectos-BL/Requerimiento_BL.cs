@@ -63,7 +63,7 @@ namespace Gestion_Proyectos_BL
             }
         }
 
-        public string RegistrarRequerimientoProyecto(string codigo, int estado)
+        public string RegistrarRequerimientoProyecto(string codigo, int estado,string cuerpo)
         {
             string mensaje = "";
             try
@@ -80,6 +80,10 @@ namespace Gestion_Proyectos_BL
                     if (estado == 1)
                     {
                         mensaje = "Se actualizó el estado del requerimiento a Aprobado";
+                    }
+                    else if(estado==2)
+                    {
+                        _requerimientoDA.EnviarRequerimiento(cuerpo);
                     }
 
                 }
