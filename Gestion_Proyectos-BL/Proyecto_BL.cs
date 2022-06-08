@@ -31,6 +31,19 @@ namespace Gestion_Proyectos_BL
             }
         }
 
+        public List<Reporte_BE> GetProyectoGerencia()
+        {
+            try
+            {
+                var reportes = _proyectoDA.ListarProyectosGerencia();
+                return reportes;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al listar cantidad de proyectos por gerenica==> {ex.Message}");
+            }
+        }
+
         public IEnumerable<Proyecto_BE> GetProyectosUsuario(int idUsuario)
         {
             try

@@ -100,78 +100,86 @@
                         {
                             foreach (var item in permisosLecura)
                             {
-                    <li class="nav-item menu">
-                        <a href="#" class="nav-link">
-                            @if (item.Trim() == "Proyectos")
-                            {
-                                <i class="fas fa-project-diagram nav-icon"></i>
-                            }
-                            else if (item.Trim() == "Usuarios")
-                            {
-                                <i class="fas fa-users nav-icon"></i>
-                            }
-                            else if (item.Trim() == "Roles")
-                            {
-                                <i class="fas fa-user-tag nav-icon"></i>
-                            }
-                            else if (item.Trim() == "Encuestas")
-                            {
-                                <i class="fas fa-poll nav-icon"></i>
-                            }
-                            else if (item.Trim() == "Requerimientos")
-                            {
-                                <i class="fas fa-solid fa-file-circle-question nav-icon"></i>
-                            }
-                            <p>
-                                @item
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        @if (item.Trim() == "Requerimientos")
-                        {
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Requerimientos", "Proyectos")" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>Listado</p>
+                                <li class="nav-item menu">
+                                    <a href="#" class="nav-link">
+                                        @if (item.Trim() == "Proyectos")
+                                        {
+                                            <i class="fas fa-project-diagram nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Usuarios")
+                                        {
+                                            <i class="fas fa-users nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Roles")
+                                        {
+                                            <i class="fas fa-user-tag nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Encuestas")
+                                        {
+                                            <i class="fas fa-poll nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Requerimientos")
+                                        {
+                                            <i class="fas fa-solid fa-file-circle-question nav-icon"></i>
+                                        }
+                                        <p>
+                                            @item
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
                                     </a>
-                                </li>
-                            </ul>
-                        }
+                                    @if (item.Trim() == "Requerimientos")
+                                    {
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Requerimientos", "Proyectos")" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
 
-                        else if (item.Trim() == "Proyectos")
-                        {
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("MisProyectos", "Proyectos")" class="nav-link">
-                                        <i class="fa-brands fa-flipboard nav-icon"></i>
-                                        <p>Mis Proyectos</p>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index", item.Trim())" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>Listado</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        }
-                        else
-                        {
-                           
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index", item.Trim())" class="nav-link">
-                                        <i class="far fa-list-alt nav-icon"></i>
-                                        <p>Listado</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        }
+                                    else if (item.Trim() == "Proyectos")
+                                    {
+                                        @*<ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Dashboard", "Proyectos")" class="nav-link">
+                                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                                    <p>Dashboard</p>
+                                                </a>
+                                            </li>
+                                        </ul>*@
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("MisProyectos", "Proyectos")" class="nav-link">
+                                                    <i class="fa-brands fa-flipboard nav-icon"></i>
+                                                    <p>Mis Proyectos</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+                                    else
+                                    {
 
-                    </li>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+
+                                </li>
                             }
                         }
 
@@ -271,6 +279,8 @@
     <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <!-- ChartJS -->
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/plugins/jszip/jszip.min.js"></script>
     <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
@@ -278,6 +288,7 @@
     <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+   
     <!-- AdminLTE App -->
     <script src="~/dist/js/adminlte.min.js"></script>
     <!-- Page specific script -->
@@ -302,7 +313,7 @@
         });
     </script>
 
-    
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

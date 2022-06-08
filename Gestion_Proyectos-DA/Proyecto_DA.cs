@@ -773,5 +773,34 @@ namespace Gestion_Proyectos_DA
 
         }
 
+        public List<Reporte_BE> ListarProyectosGerencia()
+        {
+            List<Reporte_BE> lista = new List<Reporte_BE>();
+
+            using (var con = GetSqlConnGestionProyectos())
+            {
+                SqlCommand cmd = new SqlCommand("usp_graficoGerenciaProyecto", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+
+                while (dr.Read())
+                {
+                    Reporte_BE reg = new Reporte_BE();
+                    reg.IdGerencia = dr.GetInt32(0);
+                    reg.NombreGerencia = dr.GetString(1);
+                    reg.CantidadGerenica = dr.GetInt32(2);
+
+                    lista.Add(reg);
+                }
+
+                dr.Close(); con.Close();
+            }
+
+            return lista;
+        }
+
     }
 }

@@ -84,9 +84,9 @@ namespace Gestion_Proyectos.Controllers
         [HttpPost]
         public ActionResult Registrar(Proyecto_BE reg, IEnumerable<Tarea_BE> tareas)
         {
-            
+
             TempData["mensaje"] = _proyectoBL.RegistrarProyecto(reg, tareas);
- 
+
             return RedirectToAction("Index", "Proyectos");
         }
 
@@ -130,7 +130,7 @@ namespace Gestion_Proyectos.Controllers
             try
             {
 
-                mensaje = _requerimientoBL.RegistrarRequerimientoProyecto(codigo,estado, cuerpo);
+                mensaje = _requerimientoBL.RegistrarRequerimientoProyecto(codigo, estado, cuerpo);
 
                 if (mensaje.StartsWith("Error") || mensaje.StartsWith("No"))
                 {
@@ -238,6 +238,24 @@ namespace Gestion_Proyectos.Controllers
             {
                 mensaje = ex.Message;
                 return Json(new { success = false, mensaje = mensaje });
+            }
+        }
+
+
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+         public JsonResult GetProyectoGerencia()
+        {
+            try
+            {
+                var reportes = _proyectoBL.GetProyectoGerencia();
+                return Json(new { data = reportes, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
     }

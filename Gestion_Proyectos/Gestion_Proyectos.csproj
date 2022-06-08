@@ -2185,6 +2185,7 @@
     <Content Include="Views\Proyectos\Requerimientos.cshtml" />
     <Content Include="Views\Proyectos\MisProyectos.cshtml" />
     <Content Include="Views\Shared\_LayoutKanban.cshtml" />
+    <Content Include="Views\Proyectos\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
