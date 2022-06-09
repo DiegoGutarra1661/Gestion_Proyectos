@@ -31,12 +31,32 @@ namespace Gestion_Proyectos_BL
             }
         }
 
-        public List<Reporte_BE> GetProyectoGerencia()
+        public Chart GetProyectoGerencia()
         {
             try
             {
                 var reportes = _proyectoDA.ListarProyectosGerencia();
-                return reportes;
+
+                Chart _chart = new Chart();
+                _chart.labels = reportes.Select(x => x.NombreGerencia).ToArray();
+                _chart.datasets = new List<Datasets>();
+                List<Datasets> _dataSet = new List<Datasets>();
+                _dataSet.Add(new Datasets() { 
+                    label = "Proyectos por gerencia",
+                    data = reportes.Select(x => x.CantidadGerenica).ToArray(),
+                    backgroundColor = new string[] { "rgb(255, 99, 132)",
+                    "rgb(54, 162, 235)",
+                    "rgb(255, 205, 86)",
+                    "rgb(255, 205, 86)",
+                    "rgb(255, 205, 86)",
+                    "rgb(255, 205, 86)",
+                    "rgb(255, 205, 86)",
+                    "rgb(255, 205, 86)" },
+                    hoverOffset = 4
+                });
+                _chart.datasets = _dataSet;
+
+                return _chart;
             }
             catch (Exception ex)
             {
