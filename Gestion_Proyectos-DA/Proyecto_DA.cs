@@ -802,5 +802,34 @@ namespace Gestion_Proyectos_DA
             return lista;
         }
 
+        public List<Reporte_BE> ListarProyectosUsuarioEstado()
+        {
+            List<Reporte_BE> lista = new List<Reporte_BE>();
+
+            using (var con = GetSqlConnGestionProyectos())
+            {
+                SqlCommand cmd = new SqlCommand("usp_graficoProyectosUsuarioEstado", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                con.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+
+                while (dr.Read())
+                {
+                    Reporte_BE reg = new Reporte_BE();
+                    reg.AliasUsuario = dr.GetString(0);
+                    reg.EstadoProyecto = dr.GetString(1);
+                    reg.CantidadProyectosUsuario = dr.GetInt32(2);
+
+                    lista.Add(reg);
+                }
+
+                dr.Close(); con.Close();
+            }
+
+            return lista;
+        }
+
     }
 }

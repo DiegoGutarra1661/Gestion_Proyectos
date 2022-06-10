@@ -39,24 +39,83 @@ namespace Gestion_Proyectos_BL
 
                 Chart _chart = new Chart();
                 _chart.labels = reportes.Select(x => x.NombreGerencia).ToArray();
-                _chart.datasets = new List<Datasets>();
-                List<Datasets> _dataSet = new List<Datasets>();
-                _dataSet.Add(new Datasets() { 
+                _chart.datasets = new List<DatasetsChart>();
+                List<DatasetsChart> _dataSet = new List<DatasetsChart>();
+                _dataSet.Add(new DatasetsChart() { 
                     label = "Proyectos por gerencia",
                     data = reportes.Select(x => x.CantidadGerenica).ToArray(),
                     backgroundColor = new string[] { "rgb(255, 99, 132)",
                     "rgb(54, 162, 235)",
                     "rgb(255, 205, 86)",
-                    "rgb(255, 205, 86)",
-                    "rgb(255, 205, 86)",
-                    "rgb(255, 205, 86)",
-                    "rgb(255, 205, 86)",
-                    "rgb(255, 205, 86)" },
+                    "#30445a",
+                    "#402a4a",
+                    "#383a95",
+                    "#10769e",
+                    "#95598e" },
                     hoverOffset = 4
                 });
                 _chart.datasets = _dataSet;
 
                 return _chart;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al listar cantidad de proyectos por gerenica==> {ex.Message}");
+            }
+        }
+
+        public Bar GetProyectoUsuarioEstado()
+        {
+            try
+            {
+                var reportes = _proyectoDA.ListarProyectosUsuarioEstado();
+                Bar _bar = new Bar();
+                var nombresUsuario = reportes.Select(x => x.AliasUsuario).ToArray();
+                _bar.labels = (string[])nombresUsuario.Distinct();
+                _bar.datasets = new List<DatasetsBar>();
+                List<DatasetsBar> _dataSet = new List<DatasetsBar>();
+                foreach (var reporte in reportes)
+                {
+                    foreach(var datas in _dataSet)
+                    {
+                        if(reporte.EstadoProyecto == "No iniciado")
+                        {
+                            datas.label = "Por hacer";
+                            datas.data = reportes.Select(x => x.CantidadProyectosUsuario).ToArray();
+                            datas.backgroundColor = "#30445a";
+                            datas.borderColor = "#000000";
+                            
+                        }else if(reporte.EstadoProyecto == "Detenido")
+                        {
+                            //datas.label = "Por hacer";
+                            //datas.data = reportes.Where(x => x.EstadoProyecto == "Detenido").FirstOrDefault();
+                            datas.backgroundColor = "#402a4a";
+                            datas.borderColor = "#000000";
+
+                        }
+                        else if (reporte.EstadoProyecto == "En proceso")
+                        {
+                            datas.label = "En proceso";
+                            datas.data = reportes.Select(x => x.CantidadProyectosUsuario).ToArray();
+                            datas.backgroundColor = "#383a95";
+                            datas.borderColor = "#000000";
+
+                        }
+                        else if (reporte.EstadoProyecto == "Concluido")
+                        {
+                            datas.label = "Concluido";
+                            datas.data = reportes.Select(x => x.CantidadProyectosUsuario).ToArray();
+                            datas.backgroundColor = "#10769e";
+                            datas.borderColor = "#000000";
+
+                        }
+                        _dataSet.Add(datas);
+                    }
+                }
+
+                _bar.datasets = _dataSet;
+
+                return _bar;
             }
             catch (Exception ex)
             {

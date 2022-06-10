@@ -11,5 +11,11 @@ namespace Gestion_Proyectos_BE
         public int IdGerencia { get; set; }
         public string NombreGerencia { get; set; }
         public int CantidadGerenica { get; set; }
+        //
+
+        public string AliasUsuario { get; set; }
+        public string EstadoProyecto { get; set; }
+        public int CantidadProyectosUsuario { get; set; }
+
     }
 }

@@ -251,11 +251,24 @@ namespace Gestion_Proyectos.Controllers
             try
             {
                 var reportes = _proyectoBL.GetProyectoGerencia();
-                return Json(new { data = reportes, mensaje = "", success = true }, JsonRequestBehavior.AllowGet);
+                return Json(reportes, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { data = new Adjunto_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+                return Json(new { data = new Reporte_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetProyectoUsuariosEstado()
+        {
+            try
+            {
+                var reportes = _proyectoBL.GetProyectoGerencia();
+                return Json(reportes, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { data = new Reporte_BE(), mensaje = ex.Message, success = false }, JsonRequestBehavior.AllowGet);
             }
         }
     }

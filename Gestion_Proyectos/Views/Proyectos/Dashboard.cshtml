@@ -76,76 +76,36 @@
 
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    
     <script>
-
-
-        let arrGerencia = [];
+      
         $(document).ready(function () {
-           
-           
-                     $.ajax({
-                        type: "get",
-                        url: '@Url.Action("GetProyectoGerencia", "Proyectos")',
-                         success: function (listaInformacion) {
-                             $(listaInformacion.data).each(function (i, value) {
-                                 
-                                 const obj = {
-                                     nombre: value.NombreGerencia,
-                                 }
-                                 arrGerencia.push(obj);
-                                
-                             });
-                             console.log(arrGerencia);
-                        },
-                        error: function (request, error) {
-                            console.log("Request: " + JSON.stringify(request));
-                        }
-                     });
+            
+                $.ajax({
+                      type: "get",
+                      url: '@Url.Action("GetProyectoGerencia", "Proyectos")',
+                      success: function (data) {
+                          const config = {
+                              type: 'pie',
+                              data: data,
+                          };
 
-         
-         
+                          const myChart = new Chart(
+                              document.getElementById('myChart'),
+                              config
+                          );
+                       
+                      },
+                     error: function (request, error) {
+                      console.log("Request: " + JSON.stringify(request));
+                     }
+                 });
+            
+            
         });
 
         
-       
 
-        const data = {
-            labels: [
-                "A",
-                "B",
-                "C",
-                "D",
-                "F",
-                "G",
-                "H",
-                "I"
-            ],
-            datasets: [{
-                label: 'Gerencia por proyecto',
-                data: [10, 100, 100,40,20,30,23,2],
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)',
-                    'rgb(255, 205, 86)',
-                    'rgb(255, 205, 86)',
-                    'rgb(255, 205, 86)',
-                    'rgb(255, 205, 86)',
-                    'rgb(255, 205, 86)'
-                ],
-                hoverOffset: 4
-            }]
-        };
-        const config = {
-            type: 'pie',
-            data: data,
-        };
 
-        const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
     </script>
 }
