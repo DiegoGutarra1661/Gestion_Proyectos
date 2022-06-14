@@ -17,10 +17,12 @@ namespace Gestion_Proyectos.Filters
             {
                 if (filterContext.Controller is AccountController == false)
                 {
-                    
+                    if (filterContext.Controller is RequerimientoController == false)
+                    {
+
                         var urlHelp = new UrlHelper(HttpContext.Current.Request.RequestContext);
                         filterContext.Result = new RedirectResult(urlHelp.Action("Login", "Account", new { rutaOrigen = filterContext.HttpContext.Request.Url.ToString() }));
-       
+                    }
                 }
             }
             base.OnActionExecuting(filterContext);

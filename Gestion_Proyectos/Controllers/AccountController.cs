@@ -43,8 +43,8 @@ namespace Gestion_Proyectos.Controllers
             var isCaptchaValid = await IsCaptchaValid(token);
             if (isCaptchaValid)
             {
-                if (_usuarioBL.EstaEnAD(correo, clave))
-                {
+                //if (_usuarioBL.EstaEnAD(correo, clave))
+                //{
                     var usuario = _usuarioBL.Login(correo);
                     if (usuario != null)
                     {
@@ -61,7 +61,7 @@ namespace Gestion_Proyectos.Controllers
                             }
                             else
                             {
-                                return RedirectToAction("Index", "Proyecto");
+                                return RedirectToAction("Index", "Proyectos");
                             }
                         }
                         else
@@ -78,13 +78,13 @@ namespace Gestion_Proyectos.Controllers
                         return View();
                     }
 
-                }
-                else
-                {
-                    ViewBag.mensaje = "Credenciales incorrectas.";
-                    ViewBag.rutaOrigen = rutaOrigen;
-                    return View();
-                }
+                //}
+                //else
+                //{
+                //    ViewBag.mensaje = "Credenciales incorrectas.";
+                //    ViewBag.rutaOrigen = rutaOrigen;
+                //    return View();
+                //}
             }
             else
             {
@@ -130,5 +130,7 @@ namespace Gestion_Proyectos.Controllers
             _usuarioBL.CerrarSesion();
             return RedirectToAction("Login", "Account");
         }
+
+
     }
 }

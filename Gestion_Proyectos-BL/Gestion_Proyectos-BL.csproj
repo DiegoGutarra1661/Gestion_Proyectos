@@ -49,6 +49,7 @@
     <Compile Include="Gerencia_BL.cs" />
     <Compile Include="Permiso_BL.cs" />
     <Compile Include="Proyecto_BL.cs" />
+    <Compile Include="Requerimiento_BL.cs" />
     <Compile Include="Rol_BL.cs" />
     <Compile Include="Tarea_BL.cs" />
     <Compile Include="Usuario_BL.cs" />

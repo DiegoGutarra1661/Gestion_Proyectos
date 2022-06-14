@@ -13,7 +13,8 @@ namespace Gestion_Proyectos_BE
         public string NombreTarea { get; set; }
         public Decimal PorcentajeTarea { get; set; }
         public int EstadoTarea { get; set; }
-
+        //
+        public string EstadoProyecto { get; set; }
         public string getColorTareas()
         {
             if (EstadoTarea == 2)

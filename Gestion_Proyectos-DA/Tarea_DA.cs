@@ -64,7 +64,7 @@ namespace Gestion_Proyectos_DA
                     reg.NombreTarea = dr.GetString(2);
                     reg.PorcentajeTarea = dr.GetDecimal(3);
                     reg.EstadoTarea = dr.GetInt32(4);
-
+                    reg.EstadoProyecto = dr.GetString(5);
                     lista.Add(reg);
                 }
 

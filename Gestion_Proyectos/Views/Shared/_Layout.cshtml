@@ -6,7 +6,7 @@
     List<string> permisosLecura = Session["permisosLectura"] as List<string>;
     List<int> filtrosGerencia = Session["filtrosGerencia"] as List<int>;
     List<string> filtrosEstado = ((Session["filtrosEstado"] as List<string>) == null ? new List<string>() : (Session["filtrosEstado"] as List<string>));
-    List<int> filtrosMember = ((Session["filtrosMember"] as List<int>) == null ? new List<int>(): (Session["filtrosMember"] as List<int>));
+    List<int> filtrosMember = ((Session["filtrosMember"] as List<int>) == null ? new List<int>() : (Session["filtrosMember"] as List<int>));
     Usuario_BE reg = ((Session["usuario"] as Usuario_BE) != null) ? Session["usuario"] as Usuario_BE : new Usuario_BE();
 
 }
@@ -89,7 +89,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="@Url.Action("CerrarSesion", "Home")" class="nav-link">
+                                    <a href="@Url.Action("Logout", "Account")" class="nav-link">
                                         <i class="nav-icon fas fa-sign-out-alt"></i>
                                         <p>Cerrar Sesión</p>
                                     </a>
@@ -118,19 +118,67 @@
                                         {
                                             <i class="fas fa-poll nav-icon"></i>
                                         }
+                                        else if (item.Trim() == "Requerimientos")
+                                        {
+                                            <i class="fas fa-solid fa-file-circle-question nav-icon"></i>
+                                        }
                                         <p>
                                             @item
                                             <i class="fas fa-angle-left right"></i>
                                         </p>
                                     </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="@Url.Action("Index", item.Trim())" class="nav-link">
-                                                <i class="far fa-list-alt nav-icon"></i>
-                                                <p>Listado</p>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    @if (item.Trim() == "Requerimientos")
+                                    {
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Requerimientos", "Proyectos")" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+
+                                    else if (item.Trim() == "Proyectos")
+                                    {
+                                        <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Dashboard", "Proyectos")" class="nav-link">
+                                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                                        <p>Dashboard</p>
+                                                    </a>
+                                                </li>
+                                        </ul>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("MisProyectos", "Proyectos")" class="nav-link">
+                                                    <i class="fa-brands fa-flipboard nav-icon"></i>
+                                                    <p>Mis Proyectos</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+                                    else
+                                    {
+
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+
                                 </li>
                             }
                         }
@@ -148,7 +196,7 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer text-center">
-            <strong>Copyright &copy; 2021 <a href="https://www.adexperu.org.pe">ADEX Perú</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="https://www.adexperu.org.pe">ADEX Perú</a>.</strong> All rights reserved.
         </footer>
 
 
@@ -231,21 +279,26 @@
     <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>   
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/plugins/jszip/jszip.min.js"></script>
     <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
     <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
     <!-- AdminLTE App -->
     <script src="~/dist/js/adminlte.min.js"></script>
     <!-- Page specific script -->
     <script>
         $(function () {
             $('#example1').DataTable({
-                
-                
+
+
             });
             $('#tablaUsuarios').DataTable({
                 "order": [[0, "asc"]],
@@ -262,42 +315,7 @@
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $('#agregarMiembro').click(function (e) {
-                var alias = $("#teamMember option:selected").text();
-                var cargo = $("#funcion option:selected").text();
-                var idMiembro = $("#teamMember option:selected").val();
 
-                $("#teamMember option:selected").remove();
-
-                if (cargo == "Coordinador" && idMiembro != undefined) {
-                    $("#coordinadores").append("<input type='hidden' class='form-control' name='ListaCoordinadores' value= " + "'" + idMiembro + "'>");
-                    $("#coordinadores").append("<li style='font-size: 15px' class='d-flex justify-content-between'><span>" + alias + "</span>");
-                }
-
-                else if (cargo == "Desarrollador" && idMiembro != undefined) {
-                    $("#desarrolladores").append("<input type='hidden' class='form-control' name='ListaDesarrolladores' value= " + "'" + idMiembro + "'>");
-                    $("#desarrolladores").append("<li style='font-size: 15px' class='d-flex justify-content-between'><span>" + alias + "</span>");
-                }
-            });
-
-            $("#desarrolladores .close").click(function () {
-                var aliasQuitar = ($(this).siblings('span').html());
-                ($(this).parent().remove());
-                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
-            })
-
-            $("#coordinadores .close").click(function () {
-                var aliasQuitar = ($(this).siblings('span').html());
-                ($(this).parent().remove());
-                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
-            });
-
-
-        });
-
-    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

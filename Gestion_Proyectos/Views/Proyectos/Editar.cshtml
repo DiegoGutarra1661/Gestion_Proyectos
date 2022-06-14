@@ -29,7 +29,7 @@
 
                             <div class="row m-auto  col-md-10">
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-2">
 
                                     <label for="IdProyecto">ID Proyecto</label>
                                     <input required readonly type="text" class="form-control" id="IdProyecto" name="IdProyecto" value="@Model.IdProyecto">
@@ -42,6 +42,15 @@
 
                                     <label for="Nombre">Nombre</label>
                                     <input required type="text" class="form-control" id="Nombre" name="Nombre" value="@Model.Nombre">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-4">
+
+                                    <label for="FecharRequerimiento">Fecha Requerimiento</label>
+                                    <input type="date" class="form-control" id="FecharRequerimiento" name="FecharRequerimiento" value="@Model.FecharRequerimiento.ToString("yyyy-MM-dd")">
                                     <div class="invalid-feedback">
                                         Este campo es obligatorio.
                                     </div>
@@ -64,7 +73,7 @@
 
                             <div class="row m-auto  col-md-10">
 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
 
                                     <label for="EstadoProyecto">Estado Proyecto</label>
                                     <select required class="custom-select" name="EstadoProyecto" id="EstadoProyecto">
@@ -78,14 +87,18 @@
                                         Seleccione un estado del proyecto
                                     </div>
                                 </div>
+                                <div class="form-group col-md-4">
 
-                                <div class="form-group col-md-6">
-
-                                    <label for="Avance">Avance</label>
-                                    <input required type="number" step="0.5" min="0" max="100" class="form-control" id="Avance" name="Avance" value="@Model.Avance">
+                                    <label for="Prioridad">Prioridad</label>
+                                    <input required type="number" step="1" min="1" max="5" class="form-control" id="Prioridad" name="Prioridad" value="@Model.Prioridad">
                                     <div class="invalid-feedback">
                                         Este campo es obligatorio.
                                     </div>
+                                </div>
+                                <div class="form-group col-md-4">
+
+                                    <label for="Avance">Avance (Porcentaje)</label>
+                                    <input type="number" step="0.5" min="0" max="100" class="form-control" id="Avance" name="Avance" value="@Model.Avance" readonly>
                                 </div>
                             </div>
 
@@ -99,27 +112,34 @@
                                         Este campo es obligatorio.
                                     </div>
                                 </div>
-
                                 <div class="form-group col-md-6">
 
-                                    <label for="Prioridad">Prioridad</label>
-                                    <input required type="number" step="1" min="1" max="5" class="form-control" id="Prioridad" name="Prioridad" value="@Model.Prioridad">
-                                    <div class="invalid-feedback">
-                                        Este campo es obligatorio.
-                                    </div>
+                                    <label for="Proveedor">Proveedor</label>
+                                    <input type="text" class="form-control" id="Proveedor" name="Proveedor" value=@Model.Proveedor>
+
                                 </div>
+
                             </div>
 
                             <div class="row m-auto  col-md-10">
 
                                 <div class="form-group col-md-6">
 
-                                    <label for="FecharRequerimiento">Fecha Requerimiento</label>
-                                    <input type="date" class="form-control" id="FecharRequerimiento" name="FecharRequerimiento" value="@Model.FecharRequerimiento.ToString("yyyy-MM-dd")">
-                                    <div class="invalid-feedback">
-                                        Este campo es obligatorio.
-                                    </div>
+                                    <label for="Responsable">Responsable Liberación</label>
+                                    <input type="text" class="form-control" id="ResponsableLiberacion" name="ResponsableLiberacion" value=@Model.ResponsableLiberacion>
                                 </div>
+                                <div class="form-group col-md-6">
+
+                                    <label for="ETA">ETA Liberación</label>
+                                    <input type="date" class="form-control" id="ETA" name="ETALiberacion" value=@Model.ETALiberacion.ToString("yyyy-MM-dd")>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+
 
                                 <div class="form-group col-md-6">
 
@@ -129,16 +149,16 @@
                                         Este campo es obligatorio.
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row m-auto  col-md-10">
-
                                 <div class="form-group col-md-6">
 
                                     <label for="FechaInicio">Fecha Inicio</label>
                                     <input type="date" class="form-control" id="FechaInicio" name="FechaInicio" value="@Model.FechaInicio.ToString("yyyy-MM-dd")">
 
                                 </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
 
                                 <div class="form-group col-md-6">
 
@@ -148,15 +168,21 @@
                                         Este campo es obligatorio.
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row m-auto  col-md-10">
-
                                 <div class="form-group col-md-6">
 
                                     <label for="FechaConcluido">Fecha Conclusión</label>
                                     <input type="date" class="form-control" id="FechaConcluido" name="FechaConcluido" value="@Model.FechaConcluido.ToString("yyyy-MM-dd")">
                                 </div>
+                            </div>
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-12">
+
+                                    <label for="Comentario">Comentarios</label>
+
+                                    @Html.TextArea("Comentario", Model.Comentario, new { @class = "form-control" })
+                                </div>
+
                             </div>
                             <div class="row m-auto  col-md-10">
 
@@ -216,8 +242,8 @@
                                             </select>
                                         </div>
                                         @*<div class="col-md-2 col-sm-6 col-12 p-2">
-                                                <a href="javascript:void(0)" type="button" class="btn btn-sm btn-danger eliminar" id="btn-eliminar" data-value="@tarea.IdTarea"><i class='fa-solid fa-trash'></i></a>
-                                            </div>*@
+                        <a href="javascript:void(0)" type="button" class="btn btn-sm btn-danger eliminar" id="btn-eliminar" data-value="@tarea.IdTarea"><i class='fa-solid fa-trash'></i></a>
+                    </div>*@
                                     </div>
                                     contadorTareas++;
                                 }

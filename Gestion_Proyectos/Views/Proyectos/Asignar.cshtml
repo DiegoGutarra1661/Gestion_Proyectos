@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Asignar Proyecto";
     IEnumerable<Usuario_BE> teamMembers = (IEnumerable<Usuario_BE>)ViewBag.teamMembers;
+
+  
 }
 
 <!-- Content Header (Page header) -->
@@ -37,11 +39,9 @@
                                         <option disabled value="">Seleccione</option>
                                         @foreach (var item in teamMembers)
                                         {
-                                            if (Model.AliasCoordinadores.Where(c => c == item.Alias).FirstOrDefault() == null &&
-                                                (Model.AliasDesarrolladores.Where(c => c == item.Alias).FirstOrDefault() == null))
-                                            {
+                                           
                                                 <option value="@item.IdUsuario">@item.Alias</option>
-                                            }
+                                            
 
                                         }
                                     </select>
@@ -69,12 +69,13 @@
                                     <ul id="coordinadores">
                                         @foreach (var item in Model.AliasCoordinadores)
                                         {
+                                        <div id="cord-@item.IdUsuario" class="coordinadoresContenedor">
                                             <li style="font-size:15px" class="d-flex justify-content-between">
-                                                <span>@item </span><button type="button" class="close" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                                <span class="alias" >@item.Alias </span><button type="button" class="close" aria-label="Close">
+                                                    <span aria-hidden="true">x</span>
                                                 </button>
                                             </li>
-
+                                        </div>
                                         }
                                     </ul>
                                 </div>
@@ -84,11 +85,13 @@
                                     <ul id="desarrolladores">
                                         @foreach (var item in Model.AliasDesarrolladores)
                                         {
+                                        <div id="des-@item.IdUsuario" class="desarrolladorContenedor">
                                             <li style="font-size:15px" class="d-flex justify-content-between">
-                                                <span>@item </span><button type="button" class="close" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
+                                                <span class="alias" >@item.Alias </span><button type="button" class="close" aria-label="Close">
+                                                    <span aria-hidden="true">x</span>
                                                 </button>
                                             </li>
+                                        </div>
                                         }
                                     </ul>
                                 </div>
@@ -122,5 +125,86 @@
 
 
 @section Scripts {
-    
+    <script>
+        let arrMiembros = [];
+
+        $(document).ready(function () {
+
+           
+
+           
+
+          
+
+            $('#agregarMiembro').click(function (e) {
+                var alias = $("#teamMember option:selected").text();
+                var cargo = $("#funcion option:selected").text();
+                var idMiembro = $("#teamMember option:selected").val();
+
+                if (arrMiembros.some(data => data.id == idMiembro)) {
+                    return;
+                }
+
+                const obj = {
+                    id: idMiembro,
+                    nombre: alias,
+                    cargo: cargo,
+                }
+                arrMiembros.push(obj);
+
+              
+                console.log(arrMiembros);
+
+
+                if (cargo == "Coordinador") {
+                    $("#coordinadores").append(`<div id=cord-${obj.id}><input type="hidden" class="form-control" name="ListaCoordinadores" value="${obj.id}">
+                        <li style="font-size: 15px" class="d-flex justify-content-between"><span>${obj.nombre}</span> 
+                        <button type="button" onclick="eliminarUsuarioCargo(${obj.id},'Coordinador')" class="close" aria-label="Close">
+                        <span aria-hidden="true">x</span></button></div>
+                        `);
+
+                    
+                }
+
+                else if (cargo == "Desarrollador") {
+                    $("#desarrolladores").append(`<div id=des-${obj.id}><input type="hidden" class="form-control" name="ListaDesarrolladores" value="${obj.id}">
+                        <li style="font-size: 15px" class="d-flex justify-content-between"><span>${obj.nombre}</span> 
+                        <button type="button" onclick="eliminarUsuarioCargo(${obj.id},'Desarrollador')" class="close" aria-label="Close">
+                        <span aria-hidden="true">x</span></button></div>
+                        `);
+                }
+
+                
+
+                
+            });
+
+
+            
+            $("#desarrolladores .close").click(function () {
+                
+                var aliasQuitar = ($(this).siblings('span').html());
+                ($(this).parent().remove());
+                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
+            })
+
+            $("#coordinadores .close").click(function () {
+                var aliasQuitar = ($(this).siblings('span').html());
+                ($(this).parent().remove());
+                $("#lstQuitar").append("<input type='hidden' class='form-control' name='ListaQuitar' value= " + "'" + aliasQuitar + "'>");
+            });
+
+
+        });
+        function eliminarUsuarioCargo(idUsuario,tipo) {
+            if (tipo == "Desarrollador") {
+                $(`#des-${idUsuario}`).remove();
+
+            } else {
+                $(`#cord-${idUsuario}`).remove();
+            }
+            arrMiembros = JSON.parse(JSON.stringify(arrMiembros.filter(obj => obj.id != idUsuario)))
+        }
+
+    </script>
 }
