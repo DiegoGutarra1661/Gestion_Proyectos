@@ -19,7 +19,7 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
 
                 <!-- PIE CHART -->
                 <div class="card card-danger">
@@ -42,12 +42,12 @@
 
             </div>
             <!-- /.col (LEFT) -->
-            <div class="col-md-6">
+            <div class="col-md-12">
 
                 <!-- BAR CHART -->
                 <div class="card card-success">
                     <div class="card-header">
-                        <h3 class="card-title">Bar Chart</h3>
+                        <h3 class="card-title">Proyectos por estado</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -58,7 +58,7 @@
                     </div>
                     <div class="card-body">
                         <div class="chart">
-                            <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            <canvas id="barChart" style="min-height: 500px; height: 500px; max-height: 500px; max-width: 100%;"></canvas>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -78,9 +78,9 @@
 @section Scripts {
     
     <script>
-      
+
         $(document).ready(function () {
-            
+
                 $.ajax({
                       type: "get",
                       url: '@Url.Action("GetProyectoGerencia", "Proyectos")',
@@ -94,17 +94,44 @@
                               document.getElementById('myChart'),
                               config
                           );
-                       
+
                       },
                      error: function (request, error) {
                       console.log("Request: " + JSON.stringify(request));
                      }
                  });
-            
-            
+                 $.ajax({
+                      type: "get",
+                      url: '@Url.Action("GetProyectoUsuariosEstado", "Proyectos")',
+                      success: function (data) {
+                          const config1 = {
+                              type: 'bar',
+                              data: data,
+                              options: {
+                                  indexAxis: 'y',
+                                  responsive: true,
+                                  plugins: {
+                                      legend: {
+                                          position: 'right',
+                                      }
+                                  }
+                              },
+                          };
+
+                          const myChart1 = new Chart(
+                              document.getElementById('barChart'),
+                              config1
+                          );
+
+                      },
+                     error: function (request, error) {
+                      console.log("Request: " + JSON.stringify(request));
+                     }
+                 });
+
         });
 
-        
+
 
 
     </script>

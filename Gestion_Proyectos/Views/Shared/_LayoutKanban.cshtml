@@ -143,6 +143,14 @@
                         {
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a href="@Url.Action("Dashboard", "Proyectos")" class="nav-link">
+                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                        <p>Dashboard</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
                                     <a href="@Url.Action("MisProyectos", "Proyectos")" class="nav-link">
                                         <i class="fa-brands fa-flipboard nav-icon"></i>
                                         <p>Mis Proyectos</p>
@@ -160,7 +168,7 @@
                         }
                         else
                         {
-                           
+
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index", item.Trim())" class="nav-link">

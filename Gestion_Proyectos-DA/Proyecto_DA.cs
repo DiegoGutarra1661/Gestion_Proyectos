@@ -781,7 +781,6 @@ namespace Gestion_Proyectos_DA
             {
                 SqlCommand cmd = new SqlCommand("usp_graficoGerenciaProyecto", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 con.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
 
@@ -802,7 +801,7 @@ namespace Gestion_Proyectos_DA
             return lista;
         }
 
-        public List<Reporte_BE> ListarProyectosUsuarioEstado()
+        public List<Reporte_BE> ListarProyectosUsuarioEstado(int condicion, string estado)
         {
             List<Reporte_BE> lista = new List<Reporte_BE>();
 
@@ -810,20 +809,35 @@ namespace Gestion_Proyectos_DA
             {
                 SqlCommand cmd = new SqlCommand("usp_graficoProyectosUsuarioEstado", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
+                cmd.Parameters.AddWithValue("@condicion", condicion);
+                cmd.Parameters.AddWithValue("@estado", estado);
                 con.Open();
                 SqlDataReader dr = cmd.ExecuteReader();
 
-
-                while (dr.Read())
+                if(condicion == 1)
                 {
-                    Reporte_BE reg = new Reporte_BE();
-                    reg.AliasUsuario = dr.GetString(0);
-                    reg.EstadoProyecto = dr.GetString(1);
-                    reg.CantidadProyectosUsuario = dr.GetInt32(2);
+                    while (dr.Read())
+                    {
+                        Reporte_BE reg = new Reporte_BE();
+                        reg.AliasUsuario = dr.GetString(0);
+                       
 
-                    lista.Add(reg);
+                        lista.Add(reg);
+                    }
                 }
+                else
+                {
+                    while (dr.Read())
+                    {
+                        Reporte_BE reg = new Reporte_BE();
+                        reg.AliasUsuario = dr.GetString(0);
+                        reg.EstadoProyecto = dr.GetString(1);
+                        reg.CantidadProyectosUsuario = dr.GetInt32(2);
+
+                        lista.Add(reg);
+                    }
+                }
+                
 
                 dr.Close(); con.Close();
             }

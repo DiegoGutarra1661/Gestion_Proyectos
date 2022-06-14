@@ -51,8 +51,7 @@ namespace Gestion_Proyectos_BL
                     "#402a4a",
                     "#383a95",
                     "#10769e",
-                    "#95598e" },
-                    hoverOffset = 4
+                    "#95598e" }
                 });
                 _chart.datasets = _dataSet;
 
@@ -68,50 +67,41 @@ namespace Gestion_Proyectos_BL
         {
             try
             {
-                var reportes = _proyectoDA.ListarProyectosUsuarioEstado();
+                var reportes = _proyectoDA.ListarProyectosUsuarioEstado(1,"");
+               
                 Bar _bar = new Bar();
-                var nombresUsuario = reportes.Select(x => x.AliasUsuario).ToArray();
-                _bar.labels = (string[])nombresUsuario.Distinct();
+                _bar.labels = reportes.Select(x => x.AliasUsuario).ToArray();
                 _bar.datasets = new List<DatasetsBar>();
                 List<DatasetsBar> _dataSet = new List<DatasetsBar>();
-                foreach (var reporte in reportes)
+                _dataSet.Add(new DatasetsBar()
                 {
-                    foreach(var datas in _dataSet)
-                    {
-                        if(reporte.EstadoProyecto == "No iniciado")
-                        {
-                            datas.label = "Por hacer";
-                            datas.data = reportes.Select(x => x.CantidadProyectosUsuario).ToArray();
-                            datas.backgroundColor = "#30445a";
-                            datas.borderColor = "#000000";
-                            
-                        }else if(reporte.EstadoProyecto == "Detenido")
-                        {
-                            //datas.label = "Por hacer";
-                            //datas.data = reportes.Where(x => x.EstadoProyecto == "Detenido").FirstOrDefault();
-                            datas.backgroundColor = "#402a4a";
-                            datas.borderColor = "#000000";
+                    label = "Por hacer",
+                    data = _proyectoDA.ListarProyectosUsuarioEstado(2, "No iniciado").Select(x => x.CantidadProyectosUsuario).ToArray(),
+                    backgroundColor = "#6c757d",
+                    borderColor = "#000000"
+                });
+                _dataSet.Add(new DatasetsBar()
+                {
+                    label = "En espera",
+                    data = _proyectoDA.ListarProyectosUsuarioEstado(2, "Detenido").Select(x => x.CantidadProyectosUsuario).ToArray(),
+                    backgroundColor = "#dc3545",
+                    borderColor = "#000000"
+                });
+                _dataSet.Add(new DatasetsBar()
+                {
+                    label = "En proceso",
+                    data = _proyectoDA.ListarProyectosUsuarioEstado(2, "En proceso").Select(x => x.CantidadProyectosUsuario).ToArray(),
+                    backgroundColor = "#ffc107",
+                    borderColor = "#000000",
+                });
+                _dataSet.Add(new DatasetsBar()
+                {
+                    label = "Concluido",
+                    data = _proyectoDA.ListarProyectosUsuarioEstado(2, "Concluido").Select(x => x.CantidadProyectosUsuario).ToArray(),
+                    backgroundColor = "#28a745",
+                    borderColor = "#000000",
+                });
 
-                        }
-                        else if (reporte.EstadoProyecto == "En proceso")
-                        {
-                            datas.label = "En proceso";
-                            datas.data = reportes.Select(x => x.CantidadProyectosUsuario).ToArray();
-                            datas.backgroundColor = "#383a95";
-                            datas.borderColor = "#000000";
-
-                        }
-                        else if (reporte.EstadoProyecto == "Concluido")
-                        {
-                            datas.label = "Concluido";
-                            datas.data = reportes.Select(x => x.CantidadProyectosUsuario).ToArray();
-                            datas.backgroundColor = "#10769e";
-                            datas.borderColor = "#000000";
-
-                        }
-                        _dataSet.Add(datas);
-                    }
-                }
 
                 _bar.datasets = _dataSet;
 

@@ -263,7 +263,7 @@ namespace Gestion_Proyectos.Controllers
         {
             try
             {
-                var reportes = _proyectoBL.GetProyectoGerencia();
+                var reportes = _proyectoBL.GetProyectoUsuarioEstado();
                 return Json(reportes, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
