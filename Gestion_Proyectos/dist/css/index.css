@@ -1,0 +1,47 @@
+﻿/**/
+
+.badge-counter {
+    position: absolute;
+    transform: scale(.8);
+    transform-origin: top right;
+    right: -.40rem;
+    margin-top: -.25rem
+}
+.dropdown-item {
+    white-space: normal;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-left: 1px solid #e3e6f0;
+    border-right: 1px solid #e3e6f0;
+    border-bottom: 1px solid #e3e6f0;
+    line-height: 1.3rem;
+}
+
+.dropdown-list .dropdown-item:active {
+    background-color: #eaecf4;
+    color: #3a3b45;
+}
+/**/
+.circulo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-right: 3px;
+}
+
+.circulo > p {
+    font-family: sans-serif;
+    color: white;
+    font-size: 9px;
+    margin-top: 17px;
+    font-weight: bold;
+}
+
+.cont {
+    display: flex;
+    justify-content: flex-start;
+}

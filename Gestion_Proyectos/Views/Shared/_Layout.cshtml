@@ -1,43 +1,321 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using Gestion_Proyectos_BL
+@using Gestion_Proyectos_BE
+@{
+    var listaGerencia = (List<Gerencia_BE>)ViewBag.gerencias ?? new List<Gerencia_BE>();
+    var listaTeamMembers = (List<Usuario_BE>)ViewBag.members ?? new List<Usuario_BE>();
+    List<string> permisosLecura = Session["permisosLectura"] as List<string>;
+    List<int> filtrosGerencia = Session["filtrosGerencia"] as List<int>;
+    List<string> filtrosEstado = ((Session["filtrosEstado"] as List<string>) == null ? new List<string>() : (Session["filtrosEstado"] as List<string>));
+    List<int> filtrosMember = ((Session["filtrosMember"] as List<int>) == null ? new List<int>() : (Session["filtrosMember"] as List<int>));
+    Usuario_BE reg = ((Session["usuario"] as Usuario_BE) != null) ? Session["usuario"] as Usuario_BE : new Usuario_BE();
+
+}
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
-    @Styles.Render("~/Content/css")
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/dist/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+
+    <title>@ViewBag.Title</title>
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nombre de la aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
-        </footer>
-    </div>
+<body class="hold-transition sidebar-mini">
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+            </ul>
+            @if (ViewBag.Title == "Inicio - Gestión de Proyectos")
+            {
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-primary" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                            Filtrar Proyectos
+                        </a>
+                    </li>
+                </ul>
+            }
+        </nav>
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="@Url.Action("Index", "Proyectos")" class="brand-link d-flex flex-column justify-content-center text-center">
+                <img src="~/Images/logo_adex.png" alt="AdminLTE Logo" class="img-fluid w-50 m-auto">
+                <span class="brand-text font-weight-light">Gestión de Proyectos</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+                        <li class="nav-item menu">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    @if (reg != null)
+                                    {
+                                        @reg.Alias
+                                    }
+
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Logout", "Account")" class="nav-link">
+                                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                                        <p>Cerrar Sesión</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @if (permisosLecura != null)
+                        {
+                            foreach (var item in permisosLecura)
+                            {
+                                <li class="nav-item menu">
+                                    <a href="#" class="nav-link">
+                                        @if (item.Trim() == "Proyectos")
+                                        {
+                                            <i class="fas fa-project-diagram nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Usuarios")
+                                        {
+                                            <i class="fas fa-users nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Roles")
+                                        {
+                                            <i class="fas fa-user-tag nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Encuestas")
+                                        {
+                                            <i class="fas fa-poll nav-icon"></i>
+                                        }
+                                        else if (item.Trim() == "Requerimientos")
+                                        {
+                                            <i class="fas fa-solid fa-file-circle-question nav-icon"></i>
+                                        }
+                                        <p>
+                                            @item
+                                            <i class="fas fa-angle-left right"></i>
+                                        </p>
+                                    </a>
+                                    @if (item.Trim() == "Requerimientos")
+                                    {
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Requerimientos", "Proyectos")" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+
+                                    else if (item.Trim() == "Proyectos")
+                                    {
+                                        <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="@Url.Action("Dashboard", "Proyectos")" class="nav-link">
+                                                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                                                        <p>Dashboard</p>
+                                                    </a>
+                                                </li>
+                                        </ul>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("MisProyectos", "Proyectos")" class="nav-link">
+                                                    <i class="fa-brands fa-flipboard nav-icon"></i>
+                                                    <p>Mis Proyectos</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+                                    else
+                                    {
+
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="@Url.Action("Index", item.Trim())" class="nav-link">
+                                                    <i class="far fa-list-alt nav-icon"></i>
+                                                    <p>Listado</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    }
+
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer text-center">
+            <strong>Copyright &copy; @DateTime.Now.Year <a href="https://www.adexperu.org.pe">ADEX Perú</a>.</strong> All rights reserved.
+        </footer>
+
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <form method="get" action="@Url.Action("AñadirFiltros", "Proyectos")">
+                <!-- Control sidebar content goes here -->
+                <div class="p-3 control-sidebar-content">
+                    <h5>Filtros de Proyectos</h5>
+                    <hr class="mb-2" />
+                    <h6>Gerencia</h6>
+                    @if (filtrosGerencia != null)
+                    {
+                        foreach (var item in listaGerencia)
+                        {
+                            <div class="mb-1">
+                                <input type="checkbox" value="@item.IdGerencia" class="mr-1 dark-mode" name="lstGerencia"
+                                       @(filtrosGerencia.Where(c => c == item.IdGerencia).FirstOrDefault() != 0 ? "checked" : "") />
+                                <span>@item.Descripcion</span>
+                            </div>
+                        }
+                    }
+
+                    <hr class="mb-2" />
+                    <h6>Estado</h6>
+                    <div class="mb-1">
+                        <input type="checkbox" value="No iniciado" class="mr-1" name="lstEstado"
+                               @(filtrosEstado.Where(c => c == "No iniciado").FirstOrDefault() != null ? "checked" : "") />
+                        <span>No iniciado</span>
+                    </div>
+                    <div class="mb-1">
+                        <input type="checkbox" value="En proceso" class="mr-1" name="lstEstado"
+                               @(filtrosEstado.Where(c => c == "En proceso").FirstOrDefault() != null ? "checked" : "") />
+                        <span>En proceso</span>
+                    </div>
+                    <div class="mb-1">
+                        <input type="checkbox" value="Concluido" class="mr-1" name="lstEstado"
+                               @(filtrosEstado.Where(c => c == "Concluido").FirstOrDefault() != null ? "checked" : "") />
+                        <span>Concluido</span>
+                    </div>
+                    <div class="mb-1">
+                        <input type="checkbox" value="Detenido" class="mr-1" name="lstEstado"
+                               @(filtrosEstado.Where(c => c == "Detenido").FirstOrDefault() != null ? "checked" : "") />
+                        <span>Detenido</span>
+                    </div>
+
+                    <hr class="mb-2" />
+                    <h6>Team Member</h6>
+                    @foreach (var item in listaTeamMembers)
+                    {
+                        <div class="mb-1">
+                            <input type="checkbox" value="@item.IdUsuario" class="mr-1 dark-mode" name="lstMember"
+                                   @(filtrosMember.Where(c => c == item.IdUsuario).FirstOrDefault() != 0 ? "checked" : "") />
+                            <span>@item.Alias</span>
+                        </div>
+                    }
+                </div>
+
+                <div class="m-auto text-center">
+                    <button type="submit" class="btn btn-primary">
+                        Filtrar
+                    </button>
+                </div>
+
+
+            </form>
+        </aside>
+        <!-- /.control-sidebar -->
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/plugins/jszip/jszip.min.js"></script>
+    <script src="~/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            $('#example1').DataTable({
+
+
+            });
+            $('#tablaUsuarios').DataTable({
+                "order": [[0, "asc"]],
+                "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]]
+            });
+            $('#tablaRoles').DataTable({
+                "order": [[0, "asc"]],
+                "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]]
+            });
+            $('#tablaEncuestas').DataTable({
+                "order": [[0, "asc"]],
+                "lengthMenu": [[50, 100, 150, -1], [50, 100, 150, "All"]]
+            });
+        });
+    </script>
+
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

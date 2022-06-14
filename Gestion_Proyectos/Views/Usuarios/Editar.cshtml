@@ -1,0 +1,151 @@
+﻿@model Gestion_Proyectos_BE.Usuario_BE
+@using Gestion_Proyectos_BE
+@{
+    ViewBag.Title = "Actualizar Usuario";
+    List<Rol_BE> roles = ViewBag.roles;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>Actualizar Usuario</h2>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form action="@Url.Action("Editar")" method="post" class="needs-validation" novalidate>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-12">
+
+                                    <label for="IdUsuario">ID Usuario</label>
+                                    <input required readonly type="text" class="form-control" id="IdUsuario" name="IdUsuario" value="@Model.IdUsuario">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+                                <div class="form-group col-md-12">
+
+                                    <label for="Correo">Correo</label>
+                                    <input required type="email" class="form-control" id="Correo" name="Correo" value="@Model.Correo">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="Alias">Nombre</label>
+                                    <input required type="text" class="form-control" id="Alias" name="Alias" value="@Model.Alias">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="Iniciales">Iniciales (Nombre y Apellido Pat.)</label>
+                                    <input type="text" class="form-control" id="Iniciales" name="Iniciales" value="@Model.Iniciales" maxlength="2">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+                                    <label for="Roles">Roles</label>
+
+                                    @for (int i = 0; i < roles.Count(); i++)
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="ListaRoles"
+                                                   @((Model.ListaRoles.Where(r => r == roles[i].IdRol).FirstOrDefault()) != 0 ? "checked" : "") value="@roles[i].IdRol" id="@roles[i].Nombre">
+                                            <label class="form-check-label" for="@roles[i].Nombre">
+                                                @roles[i].Nombre
+                                            </label>
+                                        </div>
+                                    }
+
+                                </div>
+
+                                <div class="form-group col-md-6">
+
+                                    <label for="IdArea">Área</label>
+                                    @Html.DropDownList("IdArea", (SelectList)ViewBag.areas, new { @class = "custom-select" })
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row m-auto col-md-10 ">
+
+                                <div class="form-group col-md-6 m-auto">
+
+                                    <button class="btn btn-primary col-md-12" type="submit">Guardar Cambios</button>
+
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+
+@section Scripts {
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}

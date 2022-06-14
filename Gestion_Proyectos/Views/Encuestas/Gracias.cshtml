@@ -1,0 +1,12 @@
+﻿@using Gestion_Proyectos_BE
+@{
+    ViewBag.Title = "Gracias";
+}
+
+<div class="container text-center">
+    <h1>@TempData["mensaje"]</h1>
+    <h2>Muchas gracias por tu opinión, @((Session["usuario"] as Usuario).Alias)</h2>
+    <h3>¡Vamos por más!</h3>
+    <h3>Soluciones TI</h3>
+    <img class="w-25" src="~/Images/logo_adex_azul.png" />
+</div>

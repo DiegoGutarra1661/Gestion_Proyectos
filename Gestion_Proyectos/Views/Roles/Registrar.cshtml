@@ -1,0 +1,106 @@
+﻿@using Gestion_Proyectos_BE
+@{
+    ViewBag.Title = "Registrar Rol";
+    IEnumerable<Permiso_BE> permisos = ViewBag.permisos;
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>Registrar Rol</h2>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form action="@Url.Action("Registrar")" method="post" class="needs-validation" novalidate>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-12">
+
+                                    <label for="Nombre">Nombre</label>
+                                    <input required type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Ingrese el Nombre">
+                                    <div class="invalid-feedback">
+                                        Este campo es obligatorio.
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row m-auto  col-md-10">
+
+                                <div class="form-group col-md-6">
+                                    <label for="Roles">Permisos</label>
+
+                                    @foreach (var item in permisos)
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="ListaPermisos" value="@item.IdPermiso" id="@item.Nombre">
+                                            <label class="form-check-label" for="@item.Nombre">
+                                                @item.Nombre
+                                            </label>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+
+                            <div class="row m-auto col-md-10 ">
+
+                                <div class="form-group col-md-6 m-auto">
+
+                                    <button class="btn btn-primary col-md-12" type="submit">Registrar Rol</button>
+
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+
+
+@section Scripts {
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+}

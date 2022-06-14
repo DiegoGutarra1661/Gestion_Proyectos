@@ -1,0 +1,91 @@
+﻿@using Gestion_Proyectos_BE;
+@model IEnumerable<Gestion_Proyectos_BE.Usuario_BE>
+
+@{
+    ViewBag.Title = "Usuarios - Gestión de Proyectos";
+    Usuario_BE reg = (Usuario_BE)Session["usuario"];
+    IEnumerable<string> permisosEscritura;
+    if (Session["permisosEscritura"] as IEnumerable<string> != null)
+    {
+        permisosEscritura = Session["permisosEscritura"] as IEnumerable<string>;
+    }
+    else
+    {
+        permisosEscritura = new List<String>();
+    }
+    string escritura = permisosEscritura.Where(pe => pe.Trim() == "Usuarios").FirstOrDefault();
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <h3>Listado de Usuarios</h3>
+            </div>
+            @if (escritura != null)
+            {
+                <a href="@Url.Action("Registrar", "Usuarios")" class="btn btn-primary ml-auto">Nuevo Usuario</a>
+            }
+            <!--<a><button class="btn btn-primary" type="button">Nuevo Proyecto</button></a>-->
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        @if (TempData["mensaje"] != null)
+                        {
+                            <div class="alert alert-info" role="alert">
+                                <b><span>@TempData["mensaje"]</span></b>
+                            </div>
+                        }
+
+                        <table id="tablaUsuarios" class="table table-sm table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 3%">ID</th>
+                                    <th style="width: 20%">Correo</th>
+                                    <th style="width: 20%">Alias</th>
+                                    <th style="width: 20%">Área</th>
+                                    @if (escritura != null)
+                                    {
+                                        <th style="width: 3%">Editar</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.IdUsuario</td>
+                                        <td>@item.Correo</td>
+                                        <td>@item.Alias</td>
+                                        <td>@item.NombreArea</td>
+                                        @if (escritura != null)
+                                        {
+                                            <td class="text-center"><a href="@Url.Action("Editar", "Usuarios", new { idUsuario = item.IdUsuario })"><i class="far fa-edit"></i></a></td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
