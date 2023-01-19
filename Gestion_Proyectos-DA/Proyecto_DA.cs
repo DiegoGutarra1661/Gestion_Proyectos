@@ -494,86 +494,132 @@ namespace Gestion_Proyectos_DA
             }
         }
 
-        public void RegistrarProyecto(Proyecto_BE reg, IEnumerable<Tarea_BE> tareas)
+        public dto_Error RegistrarProyecto(Proyecto_BE reg, DataTable tbl)
         {
             Usuario_BE usu = HttpContext.Current.Session["usuario"] != null ? HttpContext.Current.Session["usuario"] as Usuario_BE : new Usuario_BE();
-
-            int rs = 0;
-            using (var con = GetSqlConnGestionProyectos())
+            var con = GetSqlConnGestionProyectos();
+            con.Open();
+            var error = new dto_Error();
+            using (var cmd = new SqlCommand("usp_registrarProyecto", con))
             {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@nombre", ((object)reg.Nombre) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@descripcion", ((object)reg.Descripcion) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@estadoProyecto", ((object)reg.EstadoProyecto) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@avance", ((object)reg.Avance) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@idUsuarioSponsor", ((object)reg.IdUsuarioSponsor) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@prioridad", ((object)reg.Prioridad) ?? DBNull.Value);
+                if (reg.FecharRequerimiento.ToString("dd/MM/yyyy") == "01/01/0001")
+                    cmd.Parameters.AddWithValue("@fechaRequerimiento", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@fechaRequerimiento", reg.FecharRequerimiento.ToString("dd/MM/yyyy"));
+                if (reg.FechaInicioEstimada.ToString("dd/MM/yyyy") == "01/01/0001")
+                    cmd.Parameters.AddWithValue("@fechaInicioEstimada", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@fechaInicioEstimada", reg.FechaInicioEstimada.ToString("dd/MM/yyyy"));
+                if (reg.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001")
+                    cmd.Parameters.AddWithValue("@fechaInicio", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@fechaInicio", reg.FechaInicio.ToString("dd/MM/yyyy"));
+                if (reg.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001")
+                    cmd.Parameters.AddWithValue("@fechaConcluidoEstimada", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@fechaConcluidoEstimada", reg.FechaConcluidoEstimada.ToString("dd/MM/yyyy"));
+                if (reg.FechaConcluido.ToString("dd/MM/yyyy") == "01/01/0001")
+                    cmd.Parameters.AddWithValue("@fechaConcluido", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@fechaConcluido", reg.FechaConcluido.ToString("dd/MM/yyyy"));
+                cmd.Parameters.AddWithValue("@idUsuarioCreacion", usu.IdUsuario);
+                cmd.Parameters.AddWithValue("@proveedor", ((object)reg.Proveedor) ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@comentario", ((object)reg.Comentario) ?? DBNull.Value);
 
-                con.Open();
-                SqlTransaction tr = con.BeginTransaction(IsolationLevel.Serializable);
-
-                try
+                cmd.Parameters.AddWithValue("@tbltarea", tbl).SqlDbType = SqlDbType.Structured;
+                SqlDataReader read = cmd.ExecuteReader();
+                while (read.Read())
                 {
-                    // Definir el SqlCommand y el tipo de instruccion
-                    SqlCommand cmd = new SqlCommand("usp_registrarProyecto", con, tr);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@nombre", reg.Nombre);
-                    if (string.IsNullOrEmpty(reg.Descripcion))
-                        cmd.Parameters.AddWithValue("@descripcion", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@descripcion", reg.Descripcion);
-                    cmd.Parameters.AddWithValue("@estadoProyecto", reg.EstadoProyecto);
-                    cmd.Parameters.AddWithValue("@avance", reg.Avance);
-                    cmd.Parameters.AddWithValue("@idUsuarioSponsor", reg.IdUsuarioSponsor);
-                    cmd.Parameters.AddWithValue("@prioridad", reg.Prioridad);
-                    if (reg.FecharRequerimiento.ToString("dd/MM/yyyy") == "01/01/0001")
-                        cmd.Parameters.AddWithValue("@fechaRequerimiento", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@fechaRequerimiento", reg.FecharRequerimiento.ToString("dd/MM/yyyy"));
-                    if (reg.FechaInicioEstimada.ToString("dd/MM/yyyy") == "01/01/0001")
-                        cmd.Parameters.AddWithValue("@fechaInicioEstimada", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@fechaInicioEstimada", reg.FechaInicioEstimada.ToString("dd/MM/yyyy"));
-                    if (reg.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001")
-                        cmd.Parameters.AddWithValue("@fechaInicio", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@fechaInicio", reg.FechaInicio.ToString("dd/MM/yyyy"));
-                    if (reg.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001")
-                        cmd.Parameters.AddWithValue("@fechaConcluidoEstimada", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@fechaConcluidoEstimada", reg.FechaConcluidoEstimada.ToString("dd/MM/yyyy"));
-                    if (reg.FechaConcluido.ToString("dd/MM/yyyy") == "01/01/0001")
-                        cmd.Parameters.AddWithValue("@fechaConcluido", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@fechaConcluido", reg.FechaConcluido.ToString("dd/MM/yyyy"));
-                    cmd.Parameters.AddWithValue("@idUsuarioCreacion", usu.IdUsuario);
-                    cmd.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
-
-                    cmd.Parameters.AddWithValue("@proveedor", reg.Proveedor);
-                    cmd.Parameters.AddWithValue("@comentario", reg.Comentario);
-
-                    rs = cmd.ExecuteNonQuery();
-
-
-                    foreach (var tarea in tareas)
-                    {
-                        cmd = new SqlCommand("usp_registrarTarea", con, tr);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@idProyecto", 0);
-                        cmd.Parameters.AddWithValue("@nombreTarea", tarea.NombreTarea);
-                        cmd.Parameters.AddWithValue("@porcentaje", tarea.PorcentajeTarea);
-                        rs = cmd.ExecuteNonQuery();
-                    }
-
-                    tr.Commit();
-
+                    error.ErrorNumber = Convert.ToInt32(read["ErrorNumber"]);
+                    error.ErrorMsg = Convert.ToString(read["ErrorMsg"]);
+                    error.RowKey = Convert.ToInt32(read["RowKey"]);
                 }
-                catch (SqlException ex)
-                {
-
-                    tr.Rollback();
-                    con.Close();
-                }
-                finally
-                {
-                    con.Close();
-                }
-
-
             }
+            con.Close();
+            return error;
+            //int rs = 0;
+            //using (var con = GetSqlConnGestionProyectos())
+            //{
+
+            //    con.Open();
+            //    SqlTransaction tr = con.BeginTransaction(IsolationLevel.Serializable);
+
+            //    try
+            //    {
+            //        // Definir el SqlCommand y el tipo de instruccion
+            //        SqlCommand cmd = new SqlCommand("usp_registrarProyecto", con, tr);
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("@nombre", reg.Nombre);
+            //        if (string.IsNullOrEmpty(reg.Descripcion))
+            //            cmd.Parameters.AddWithValue("@descripcion", DBNull.Value);
+            //        else
+            //            cmd.Parameters.AddWithValue("@descripcion", reg.Descripcion);
+            //        cmd.Parameters.AddWithValue("@estadoProyecto", reg.EstadoProyecto);
+            //        cmd.Parameters.AddWithValue("@avance", reg.Avance);
+            //        cmd.Parameters.AddWithValue("@idUsuarioSponsor", reg.IdUsuarioSponsor);
+            //        cmd.Parameters.AddWithValue("@prioridad", reg.Prioridad);
+            //        if (reg.FecharRequerimiento.ToString("dd/MM/yyyy") == "01/01/0001")
+            //            cmd.Parameters.AddWithValue("@fechaRequerimiento", DBNull.Value);
+            //        else
+            //            cmd.Parameters.AddWithValue("@fechaRequerimiento", reg.FecharRequerimiento.ToString("dd/MM/yyyy"));
+            //        if (reg.FechaInicioEstimada.ToString("dd/MM/yyyy") == "01/01/0001")
+            //            cmd.Parameters.AddWithValue("@fechaInicioEstimada", DBNull.Value);
+            //        else
+            //            cmd.Parameters.AddWithValue("@fechaInicioEstimada", reg.FechaInicioEstimada.ToString("dd/MM/yyyy"));
+            //        if (reg.FechaInicio.ToString("dd/MM/yyyy") == "01/01/0001")
+            //            cmd.Parameters.AddWithValue("@fechaInicio", DBNull.Value);
+            //        else
+            //            cmd.Parameters.AddWithValue("@fechaInicio", reg.FechaInicio.ToString("dd/MM/yyyy"));
+            //        if (reg.FechaConcluidoEstimada.ToString("dd/MM/yyyy") == "01/01/0001")
+            //            cmd.Parameters.AddWithValue("@fechaConcluidoEstimada", DBNull.Value);
+            //        else
+            //            cmd.Parameters.AddWithValue("@fechaConcluidoEstimada", reg.FechaConcluidoEstimada.ToString("dd/MM/yyyy"));
+            //        if (reg.FechaConcluido.ToString("dd/MM/yyyy") == "01/01/0001")
+            //            cmd.Parameters.AddWithValue("@fechaConcluido", DBNull.Value);
+            //        else
+            //            cmd.Parameters.AddWithValue("@fechaConcluido", reg.FechaConcluido.ToString("dd/MM/yyyy"));
+            //        cmd.Parameters.AddWithValue("@idUsuarioCreacion", usu.IdUsuario);
+            //        cmd.Parameters.AddWithValue("@fechaCreacion", DateTime.Now);
+
+            //        cmd.Parameters.AddWithValue("@proveedor", reg.Proveedor);
+            //        cmd.Parameters.AddWithValue("@comentario", reg.Comentario);
+
+            //        rs = cmd.ExecuteNonQuery();
+
+
+            //        foreach (var tarea in tareas)
+            //        {
+            //            cmd = new SqlCommand("usp_registrarTarea", con, tr);
+            //            cmd.CommandType = CommandType.StoredProcedure;
+            //            cmd.Parameters.AddWithValue("@idProyecto", 0);
+            //            cmd.Parameters.AddWithValue("@nombreTarea", tarea.NombreTarea);
+            //            cmd.Parameters.AddWithValue("@porcentaje", tarea.PorcentajeTarea);
+            //            rs = cmd.ExecuteNonQuery();
+            //        }
+
+            //        tr.Commit();
+
+            //    }
+            //    catch (SqlException ex)
+            //    {
+
+            //        tr.Rollback();
+            //        con.Close();
+            //    }
+            //    finally
+            //    {
+            //        con.Close();
+            //    }
+
+
+            //}
         }
 
         public void AsignarProyecto(Proyecto_BE reg)

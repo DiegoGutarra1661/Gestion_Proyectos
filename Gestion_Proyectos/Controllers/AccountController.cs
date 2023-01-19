@@ -41,10 +41,10 @@ namespace Gestion_Proyectos.Controllers
         public async Task<ActionResult> Login(string correo, string clave, string rutaOrigen = "", string token = "")
         {
             var isCaptchaValid = await IsCaptchaValid(token);
-            if (isCaptchaValid)
-            {
-                if (_usuarioBL.EstaEnAD(correo, clave))
-                {
+            //if (isCaptchaValid)
+            //{
+            //    if (_usuarioBL.EstaEnAD(correo, clave))
+            //    {
                     var usuario = _usuarioBL.Login(correo);
                     if (usuario != null)
                     {
@@ -78,20 +78,20 @@ namespace Gestion_Proyectos.Controllers
                         return View();
                     }
 
-                }
-                else
-                {
-                    ViewBag.mensaje = "Credenciales incorrectas.";
-                    ViewBag.rutaOrigen = rutaOrigen;
-                    return View();
-                }
-            }
-            else
-            {
-                ViewBag.mensaje = "Falló en el captcha";
-                ViewBag.rutaOrigen = rutaOrigen;
-                return View();
-            }
+            //    }
+            //    else
+            //    {
+            //        ViewBag.mensaje = "Credenciales incorrectas.";
+            //        ViewBag.rutaOrigen = rutaOrigen;
+            //        return View();
+            //    }
+            //}
+            //else
+            //{
+            //    ViewBag.mensaje = "Falló en el captcha";
+            //    ViewBag.rutaOrigen = rutaOrigen;
+            //    return View();
+            //}
 
         }
 

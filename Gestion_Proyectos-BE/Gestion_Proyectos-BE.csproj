@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Adjunto_BE.cs" />
     <Compile Include="Area_BE.cs" />
+    <Compile Include="dto_Error.cs" />
     <Compile Include="Encuesta_BE.cs" />
     <Compile Include="Gerencia_BE.cs" />
     <Compile Include="Grafico_BE.cs" />

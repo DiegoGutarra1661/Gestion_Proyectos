@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -218,6 +219,16 @@ namespace Gestion_Proyectos_BL
         public string RegistrarProyecto(Proyecto_BE reg, IEnumerable<Tarea_BE> tareas)
         {
             string mensaje = "";
+            
+            var error = new dto_Error();
+
+            DataTable dt = new DataTable();
+            dt.Clear();
+            dt.Columns.Add("NombreTarea");
+            dt.Columns.Add("PorcentajeTarea");
+            dt.Columns.Add("EstadoTarea");
+          
+           
             try
             {
 
@@ -229,16 +240,26 @@ namespace Gestion_Proyectos_BL
                     }
                     else
                     {
-                        _proyectoDA.RegistrarProyecto(reg, tareas);
+                        foreach (var item in tareas)
+                        {
+                            DataRow row = dt.NewRow();
+                            row["NombreTarea"] = item.NombreTarea;
+                            row["PorcentajeTarea"] = item.PorcentajeTarea;
+                            row["EstadoTarea"] = item.EstadoTarea;
+                            dt.Rows.Add(row);
+                        }
+
+                        error = _proyectoDA.RegistrarProyecto(reg, dt);
+                        mensaje = error.ErrorMsg;
                     }
+
                 }
                 else
                 {
-                    tareas = new List<Tarea_BE>();
-                    _proyectoDA.RegistrarProyecto(reg, tareas);
+                    error = _proyectoDA.RegistrarProyecto(reg, dt);
+                    mensaje = error.ErrorMsg;
                 }
 
-                mensaje = "Proyecto '" + reg.Nombre + "' registrado correctamente";
             }
             catch (Exception ex)
             {
